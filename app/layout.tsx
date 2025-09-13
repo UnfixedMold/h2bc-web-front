@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import FooterBar from './components/FooterBar';
+import SiteHeader from './components/SiteHeader';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,10 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+        <SiteHeader />
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
+        <FooterBar />
         <Script
           type="module"
           src="https://unpkg.com/@google/model-viewer@4.1.0/dist/model-viewer.min.js"
