@@ -1,5 +1,4 @@
 import { NavLinks } from './components/header'
-import { unifrakturMaguntia } from './fonts'
 
 
 export default function Home() {
@@ -27,7 +26,7 @@ export default function Home() {
 
         <NavLinks
           ulClassName="space-y-4 sm:space-y-6 text-xl sm:text-2xl text-center md:text-left mt-8 md:mt-0"
-          linkClassName={`${unifrakturMaguntia.className} hover-glow-pink`}
+          linkClassName="hover-glow-pink"
         />
       </div>
     </div>

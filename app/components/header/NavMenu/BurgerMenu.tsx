@@ -7,7 +7,6 @@ import NavLinks from "../NavLinks";
 interface BurgerMenuProps {
   activePath: string;
   linkClassName?: string;
-  activeLinkClassName?: string;
   mobileUlClassName?: string;
   buttonClassName?: string;
   panelClassName?: string;
@@ -16,7 +15,6 @@ interface BurgerMenuProps {
 export default function BurgerMenu({
   activePath,
   linkClassName = "",
-  activeLinkClassName = "",
   mobileUlClassName = "flex flex-col items-stretch py-2",
   buttonClassName = "p-2 rounded-md hover:bg-black/5 active:bg-black/10 transition-colors",
   panelClassName = "transition-all duration-200",
@@ -50,7 +48,6 @@ export default function BurgerMenu({
             activePath={activePath}
             ulClassName={mobileUlClassName || "flex flex-col items-stretch text-center py-2 divide-y divide-black/10"}
             linkClassName={`${linkClassName} block w-full text-center px-6 py-4 text-2xl`}
-            activeLinkClassName={activeLinkClassName}
           />
         </div>
       </div>

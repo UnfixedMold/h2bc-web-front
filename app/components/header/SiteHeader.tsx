@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavMenu, ShopLinks } from ".";
-import { unifrakturMaguntia } from "../../fonts";
 
 export default function SiteHeader() {
   
@@ -15,8 +14,7 @@ export default function SiteHeader() {
         <NavMenu
           activePath={pathname}
           ulClassName="flex items-center gap-2 sm:gap-3 md:gap-5 lg:gap-12 text-xl sm:text-2xl tracking-wide"
-          linkClassName={`${unifrakturMaguntia.className} hover-glow-pink rounded-md transition-colors`}
-          activeLinkClassName="text-pink-400"
+          linkClassName="hover-glow-pink rounded-md transition-colors"
         />
       </nav>
 
