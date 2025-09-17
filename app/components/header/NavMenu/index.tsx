@@ -1,6 +1,5 @@
-"use client";
-import NavLinks from "./NavLinks";
-import BurgerMenu from "./BurgerMenu";
+import NavLinks from '../NavLinks';
+import BurgerMenu from './BurgerMenu';
 
 interface NavMenuProps {
   activePath: string;
@@ -16,11 +15,9 @@ export default function NavMenu({
   ulClassName = '',
   linkClassName = '',
   activeLinkClassName = '',
-  
 }: NavMenuProps) {
   return (
     <nav aria-label="Main navigation" className={navClassName}>
-      {/* Desktop menu */}
       <div className="hidden md:block">
         <NavLinks
           activePath={activePath}
@@ -29,8 +26,6 @@ export default function NavMenu({
           activeLinkClassName={activeLinkClassName}
         />
       </div>
-
-      {/* Mobile burger */}
       <BurgerMenu
         activePath={activePath}
         linkClassName={linkClassName}
