@@ -1,17 +1,29 @@
 import Link from 'next/link';
 import { FiUser, FiShoppingCart } from 'react-icons/fi';
 
-const SIZE = 25;
+const ICON_SIZE = 25;
+
+const SHOP_LINKS = [
+    {
+        href: '/profile',
+        label: 'Profile',
+        Icon: FiUser,
+    },
+    {
+        href: '/cart',
+        label: 'Cart',
+        Icon: FiShoppingCart,
+    },
+];
 
 export default function ShopLinks() {
     return (
         <div className="flex items-center gap-6">
-            <Link href="/profile" aria-label="Profile">
-                <FiUser size={SIZE} className="text-black hover:text-pink-400 transition-colors" />
-            </Link>
-            <Link href="/cart" aria-label="Cart">
-                <FiShoppingCart size={SIZE} className="text-black hover:text-pink-400 transition-colors" />
-            </Link>
+            {SHOP_LINKS.map(({ href, label, Icon }) => (
+                <Link key={href} href={href} aria-label={label}>
+                    <Icon size={ICON_SIZE} className="text-black hover:text-pink-400 transition-colors" />
+                </Link>
+            ))}
         </div>
     );
 }
