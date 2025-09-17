@@ -1,7 +1,7 @@
 import PageHeading from '../components/PageHeading'
 
 export const metadata = {
-  title: 'About | h2bc',
+  title: 'About',
   description: 'About h2bc',
 }
 

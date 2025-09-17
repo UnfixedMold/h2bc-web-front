@@ -1,12 +1,9 @@
-import Link from 'next/link'
-import { unifrakturMaguntia } from '../fonts'
-
 export const metadata = {
-  title: 'Gallery | h2bc',
+  title: 'Gallery',
   description: 'Video gallery',
 }
 
-const videos: { id: string; title: string }[] = [
+const VIDEOS: { id: string; title: string }[] = [
   { id: 'qI8fDbBXW2s', title: '2DRIP' }
 ]
 
@@ -14,9 +11,9 @@ export default function GalleryPage() {
   return (
     <main className="w-full py-12">
       <div className="space-y-16">
-        {videos.map(v => (
+        {VIDEOS.map(v => (
           <div key={v.id} className="w-full">
-            <div className="w-full max-w-7xl mx-auto">
+            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <div className="relative w-full" style={{aspectRatio:'16/9'}}>
                 <iframe
                   src={`https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1&color=white`}

@@ -1,11 +1,10 @@
-'use client'
-
-import NavMenu from './components/NavMenu'
+import { NavLinks } from './components/header'
 import { unifrakturMaguntia } from './fonts'
+
 
 export default function Home() {
   return (
-  <div className="flex-1 flex items-center justify-center p-6">
+    <div className="flex-1 flex items-center justify-center p-6">
       <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <div className="aspect-square w-56 sm:w-64 md:w-72">
           {/* @ts-ignore */}
@@ -26,9 +25,8 @@ export default function Home() {
           />
         </div>
 
-        <NavMenu
-          navClassName="mt-8 md:mt-0"
-          ulClassName="space-y-4 sm:space-y-6 text-xl sm:text-2xl text-center md:text-left"
+        <NavLinks
+          ulClassName="space-y-4 sm:space-y-6 text-xl sm:text-2xl text-center md:text-left mt-8 md:mt-0"
           linkClassName={`${unifrakturMaguntia.className} hover-glow-pink`}
         />
       </div>
