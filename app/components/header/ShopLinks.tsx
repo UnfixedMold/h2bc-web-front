@@ -21,7 +21,7 @@ export default function ShopLinks() {
         <div className="flex items-center gap-6">
             {SHOP_LINKS.map(({ href, label, Icon }) => (
                 <Link key={href} href={href} aria-label={label}>
-                    <Icon size={ICON_SIZE} className="text-black hover:text-pink-400 transition-colors" />
+                    <Icon size={ICON_SIZE} className="text-black hover:text-pink-400 transition-colors align-middle" />
                 </Link>
             ))}
         </div>
