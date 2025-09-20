@@ -1,5 +1,6 @@
 "use client";
 import { Category } from './ShopContent'
+import TextButton from '@/app/components/ui/TextButton'
 
 export default function CategoryFilter({
   categories,
@@ -21,15 +22,15 @@ export default function CategoryFilter({
                 {categories.map(cat => {
                   const selected = active === cat
                   return (
-                    <button
+                    <TextButton
                       key={cat}
-                      role="tab"
-                      aria-selected={selected}
+                      active={selected}
                       onClick={() => onChange(cat)}
-                      className={`shrink-0 text-sm cursor-pointer ${selected ? 'text-black font-bold hover:underline' : 'text-black hover:underline'} whitespace-nowrap`}
+                      ariaSelected={selected}
+                      className="shrink-0 text-sm whitespace-nowrap"
                     >
-                      {selected ? `> ${cat}` : cat}
-                    </button>
+                      {cat}
+                    </TextButton>
                   )
                 })}
               </div>
@@ -45,13 +46,14 @@ export default function CategoryFilter({
             {categories.map(cat => {
               const selected = active === cat
               return (
-                <button
+                <TextButton
                   key={cat}
+                  active={selected}
                   onClick={() => onChange(cat)}
-                  className={`w-full text-left cursor-pointer ${selected ? 'text-black font-bold hover:underline' : 'text-black hover:underline'}`}
+                  className="w-full text-left"
                 >
-                  {selected ? `> ${cat}` : cat}
-                </button>
+                  {cat}
+                </TextButton>
               )
             })}
           </nav>

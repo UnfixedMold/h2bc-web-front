@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { FiInstagram, FiYoutube } from 'react-icons/fi';
+import ImageButton from '@/app/components/ui/ImageButton';
 
 export const INSTAGRAM_HANDLE = '_h2bc';
 export const YOUTUBE_HANDLE = '_h2bc';
@@ -23,16 +23,9 @@ export default function SocialIcons() {
   return (
     <div className="flex items-center gap-5">
       {SOCIAL_LINKS.map(({ href, label, Icon }) => (
-        <Link
-          key={label}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center text-gray-600 hover:text-black"
-          aria-label={label}
-        >
+        <ImageButton key={label} href={href} external ariaLabel={label}>
           <Icon size={ICON_SIZE} />
-        </Link>
+        </ImageButton>
       ))}
     </div>
   );

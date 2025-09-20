@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { FiUser, FiShoppingCart } from 'react-icons/fi';
+import ImageButton from '@/app/components/ui/ImageButton';
 
 const ICON_SIZE = 25;
 
@@ -20,9 +20,9 @@ export default function ShopLinks() {
     return (
         <div className="flex items-center gap-6">
             {SHOP_LINKS.map(({ href, label, Icon }) => (
-                <Link key={href} href={href} aria-label={label}>
-                    <Icon size={ICON_SIZE} className="text-black hover:text-pink-400 transition-colors align-middle" />
-                </Link>
+                <ImageButton key={href} href={href} ariaLabel={label}>
+                    <Icon size={ICON_SIZE} />
+                </ImageButton>
             ))}
         </div>
     );
