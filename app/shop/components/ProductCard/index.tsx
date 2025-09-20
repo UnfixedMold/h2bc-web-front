@@ -14,6 +14,7 @@ export interface ProductCardProps {
     image: string
     hoverImage?: string
     soldOut?: boolean
+    priority?: boolean
 }
 
 function formatPriceEUR(value: number, currency = 'EUR') {
@@ -24,7 +25,7 @@ function formatPriceEUR(value: number, currency = 'EUR') {
     return `€${formatted} ${currency}`
 }
 
-export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut }: ProductCardProps) {
+export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut, priority }: ProductCardProps) {
     const href = `/shop/${slug}`
 
     return (
@@ -43,7 +44,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                             sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
                             className={`${styles.glowImg} object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
                             draggable={false}
-                            priority
+                            priority={!!priority}
                         />
                         {hoverImage && (
                             <Image
@@ -53,7 +54,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                                 sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
                                 className={`${styles.glowImg} object-contain transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100`}
                                 draggable={false}
-                                loading="eager"
+                                loading="lazy"
                             />
                         )}
                     </div>

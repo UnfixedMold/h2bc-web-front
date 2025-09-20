@@ -2,8 +2,8 @@
 
 .glowImg {
   filter:
-    drop-shadow(0 0 22px rgba(236, 72, 153, 0.20))
-    drop-shadow(0 0 68px rgba(236, 72, 153, 0.13))
-    drop-shadow(0 0 132px rgba(236, 72, 153, 0.09));
+    drop-shadow(0 0 20px rgba(236, 72, 153, 0.18))
+    drop-shadow(0 0 60px rgba(236, 72, 153, 0.12))
+    drop-shadow(0 0 120px rgba(236, 72, 153, 0.08));
   transition: filter 250ms ease;
 }

@@ -19,6 +19,8 @@ export interface ProductItem {
 
 const CATEGORIES: Category[] = ['ALL', 'PRINT ON DEMAND', 'BELTS', 'BEANIES', 'JEWELERY']
 
+export const PRIORITY_COUNT = 4
+
 export default function ShopContent({ products }: { products: ProductItem[] }) {
   const [active, setActive] = useState<Category>('ALL')
 
@@ -44,8 +46,8 @@ export default function ShopContent({ products }: { products: ProductItem[] }) {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 sm:gap-12">
-            {filtered.map(p => (
-              <ProductCard key={p.slug} {...p} />
+            {filtered.map((p, idx) => (
+              <ProductCard key={p.slug} {...p} priority={idx < PRIORITY_COUNT} />
             ))}
           </div>
         )}

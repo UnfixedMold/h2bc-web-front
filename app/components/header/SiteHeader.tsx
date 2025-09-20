@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { NavLinks, ShopLinks } from ".";
 import BurgerMenu from "./NavMenu/BurgerMenu";
@@ -20,7 +21,15 @@ export default function SiteHeader() {
       </div>
 
       <Link href="/" aria-label="Home" className="col-start-2 md:col-start-1 justify-self-center md:justify-self-start">
-        <img src="/bw-logo.svg" alt="h2bc" className="h-14 sm:h-16 md:h-20 w-auto" />
+        <Image
+          src="/bw-logo.svg"
+          alt="h2bc"
+          width={200}
+          height={80}
+          sizes="(min-width:1024px) 200px, (min-width:768px) 180px, 160px"
+          className="h-14 sm:h-16 md:h-20 w-auto"
+          priority
+        />
       </Link>
 
       <nav aria-label="Primary" className="col-start-2 hidden md:flex items-center justify-center">
