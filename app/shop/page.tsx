@@ -12,6 +12,7 @@ interface ProductItem {
     pricePrefix?: string
     image: string
     hoverImage?: string
+    soldOut?: boolean
 }
 
 const PRODUCTS: ProductItem[] = [
@@ -34,14 +35,16 @@ const PRODUCTS: ProductItem[] = [
         name: 'H2BC BEANIE',
         price: 24.99,
         image: '/products/h2bc_beanie/front.png',
-        hoverImage: '/products/h2bc_beanie/front.png'
+        hoverImage: '/products/h2bc_beanie/front.png',
+        soldOut: true
     },
     {
         slug: 'cat-studded-belt',
         name: 'STUDDED CAT BELT',
         price: 59.99,
         image: '/products/studded_cat_belt/front.png',
-        hoverImage: '/products/studded_cat_belt/front.png'
+        hoverImage: '/products/studded_cat_belt/front.png',
+        soldOut: true
     },
     {
         slug: 'trainer-shorts',
@@ -52,12 +55,19 @@ const PRODUCTS: ProductItem[] = [
     },
 ]
 
+function sortProducts(products: ProductItem[]): ProductItem[] {
+    const inStock = products.filter(p => !p.soldOut)
+    const sold = products.filter(p => p.soldOut)
+    return [...inStock, ...sold]
+}
+
 export default function ShopPage() {
+    const sortedProducts = sortProducts(PRODUCTS)
     return (
         <main className="w-full py-10 sm:py-14">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
-                    {PRODUCTS.map(p => (
+                    {sortedProducts.map(p => (
                         <ProductCard key={p.slug} {...p} />
                     ))}
                 </div>

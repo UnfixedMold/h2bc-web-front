@@ -1,66 +1,80 @@
 "use client";
 import Link from 'next/link'
-import { useState } from 'react'
 import Image from 'next/image'
 import styles from './ProductCard.module.css'
 import { screens } from '@/lib/breakpoints'
+import { edwardianScript } from '@/app/fonts'
 
 export interface ProductCardProps {
-  slug: string
-  name: string
-  price: number
-  currency?: string
-  pricePrefix?: string
-  image: string
-  hoverImage?: string
+    slug: string
+    name: string
+    price: number
+    currency?: string
+    pricePrefix?: string
+    image: string
+    hoverImage?: string
+    soldOut?: boolean
 }
 
 function formatPriceEUR(value: number, currency = 'EUR') {
-  const formatted = value.toLocaleString('lt-LT', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
-  return `€${formatted} ${currency}`
+    const formatted = value.toLocaleString('lt-LT', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })
+    return `€${formatted} ${currency}`
 }
 
-export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage }: ProductCardProps) {
-  const href = `/shop/${slug}`
-  const [isHover, setIsHover] = useState(false)
-  const currentSrc = isHover && hoverImage ? hoverImage : image
+export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut }: ProductCardProps) {
+    const href = `/shop/${slug}`
 
-  return (
-    <div className="group w-full max-w-sm mx-auto">
-      <Link
-        href={href}
-        aria-label={`View ${name}`}
-        className="block"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-        onFocus={() => setIsHover(true)}
-        onBlur={() => setIsHover(false)}
-      >
-        <div className={`${styles.glow} relative w-full aspect-square`}>
-          <Image
-            src={currentSrc}
-            alt={name}
-            fill
-            sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-            className={`${styles.glowImg} object-contain`}
-            draggable={false}
-            priority={false}
-          />
+
+    return (
+        <div className="group w-full max-w-sm mx-auto">
+            <Link
+                href={href}
+                aria-label={`View ${name}`}
+                className="block"
+            >
+                <div className={`${styles.glow} relative w-full aspect-square`}>
+                    <div className={`relative w-full h-full ${soldOut ? 'opacity-40' : ''}`}>
+                        <Image
+                            src={image}
+                            alt={name}
+                            fill
+                            sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
+                            className={`${styles.glowImg} object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
+                            draggable={false}
+                            priority
+                        />
+                        {hoverImage && (
+                            <Image
+                                src={hoverImage}
+                                alt={name}
+                                fill
+                                sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
+                                className={`${styles.glowImg} object-contain transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100`}
+                                draggable={false}
+                                loading="eager"
+                            />
+                        )}
+                    </div>
+                    {soldOut && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <span className={`${edwardianScript.className} text-black/90 text-5xl select-none`}>Sold Out</span>
+                        </div>
+                    )}
+                </div>
+            </Link>
+
+            <div className="mt-4 text-center">
+                <Link href={href} className="inline-block group-hover:underline text-lg tracking-wide">
+                    {name}
+                </Link>
+            </div>
+            <div className="mt-1 text-center text-base font-medium">
+                {pricePrefix ? `${pricePrefix} ` : ''}
+                {formatPriceEUR(price, currency)}
+            </div>
         </div>
-      </Link>
-
-      <div className="mt-4 text-center">
-        <Link href={href} className="inline-block group-hover:underline text-lg tracking-wide">
-          {name}
-        </Link>
-      </div>
-      <div className="mt-1 text-center text-base font-medium">
-        {pricePrefix ? `${pricePrefix} ` : ''}
-        {formatPriceEUR(price, currency)}
-      </div>
-    </div>
-  )
+    )
 }
