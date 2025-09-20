@@ -36,6 +36,20 @@ const PRODUCTS: ProductItem[] = [
         image: '/products/h2bc_beanie/front.png',
         hoverImage: '/products/h2bc_beanie/front.png'
     },
+    {
+        slug: 'cat-studded-belt',
+        name: 'STUDDED CAT BELT',
+        price: 59.99,
+        image: '/products/studded_cat_belt/front.png',
+        hoverImage: '/products/studded_cat_belt/front.png'
+    },
+    {
+        slug: 'trainer-shorts',
+        name: 'TRAINER SHORTS',
+        price: 45.55,
+        image: '/products/trainer_shorts/front-blank.png',
+        hoverImage: '/products/trainer_shorts/back-blank.png'
+    },
 ]
 
 export default function ShopPage() {
