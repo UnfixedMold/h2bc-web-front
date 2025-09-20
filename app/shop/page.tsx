@@ -1,4 +1,4 @@
-import ProductCard from './components/ProductCard'
+import ShopContent from './components/ShopContent'
 
 export const metadata = {
     title: 'Shop',
@@ -13,6 +13,7 @@ interface ProductItem {
     image: string
     hoverImage?: string
     soldOut?: boolean
+    category: 'PRINT ON DEMAND' | 'BELTS' | 'BEANIES' | 'JEWELERY'
 }
 
 const PRODUCTS: ProductItem[] = [
@@ -22,6 +23,7 @@ const PRODUCTS: ProductItem[] = [
         price: 34.85,
         image: '/products/meduza_tee/1.png',
         hoverImage: '/products/meduza_tee/2.png',
+        category: 'PRINT ON DEMAND',
     },
     {
         slug: 'meduza-hood',
@@ -29,6 +31,7 @@ const PRODUCTS: ProductItem[] = [
         price: 66.66,
         image: '/products/meduza_hood/front.png',
         hoverImage: '/products/meduza_hood/back.png',
+        category: 'PRINT ON DEMAND',
     },
     {
         slug: 'h2bc-bean',
@@ -36,41 +39,33 @@ const PRODUCTS: ProductItem[] = [
         price: 24.99,
         image: '/products/h2bc_beanie/front.png',
         hoverImage: '/products/h2bc_beanie/front.png',
-        soldOut: true
+        soldOut: true,
+        category: 'BEANIES',
     },
     {
         slug: 'cat-studded-belt',
-        name: 'STUDDED CAT BELT',
+        name: 'STUDDED PU$$Y BELT',
         price: 59.99,
         image: '/products/studded_cat_belt/front.png',
         hoverImage: '/products/studded_cat_belt/front.png',
-        soldOut: true
+        soldOut: true,
+        category: 'BELTS',
     },
     {
         slug: 'trainer-shorts',
         name: 'TRAINER SHORTS',
         price: 45.55,
         image: '/products/trainer_shorts/front-blank.png',
-        hoverImage: '/products/trainer_shorts/back-blank.png'
+        hoverImage: '/products/trainer_shorts/back-blank.png',
+        category: 'PRINT ON DEMAND',
     },
 ]
 
-function sortProducts(products: ProductItem[]): ProductItem[] {
-    const inStock = products.filter(p => !p.soldOut)
-    const sold = products.filter(p => p.soldOut)
-    return [...inStock, ...sold]
-}
-
 export default function ShopPage() {
-    const sortedProducts = sortProducts(PRODUCTS)
     return (
         <main className="w-full py-10 sm:py-14">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
-                    {sortedProducts.map(p => (
-                        <ProductCard key={p.slug} {...p} />
-                    ))}
-                </div>
+                <ShopContent products={PRODUCTS} />
             </div>
         </main>
     )

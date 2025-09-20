@@ -27,7 +27,6 @@ function formatPriceEUR(value: number, currency = 'EUR') {
 export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut }: ProductCardProps) {
     const href = `/shop/${slug}`
 
-
     return (
         <div className="group w-full max-w-sm mx-auto">
             <Link
