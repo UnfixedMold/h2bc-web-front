@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import TextButton from '@/app/components/ui/TextButton'
 import OutlineButton from '@/app/components/ui/OutlineButton'
 import StepperButton from '@/app/components/ui/StepperButton'
-import ProductGallery from './ProductGallery'
+import ProductGallery from './Gallery/ProductGallery'
 
 export interface ProductDetailData {
   slug: string

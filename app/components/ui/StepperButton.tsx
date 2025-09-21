@@ -1,5 +1,6 @@
 "use client";
 import { HTMLAttributes } from 'react'
+import TextButton from './TextButton'
 
 type Props = Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   value: number
@@ -26,25 +27,25 @@ export default function StepperButton({
 
   return (
     <div className={`inline-flex items-stretch border border-black${className ? ' ' + className : ''}`} {...rest}>
-      <button
-        type="button"
-        aria-label={decrementAriaLabel}
+      <TextButton
+        variant="secondary"
+        ariaSelected={false}
         disabled={!canDecrement}
-        className={`px-3 py-1 text-black select-none${canDecrement ? ' cursor-pointer hover:font-bold' : ' cursor-not-allowed text-black/40'}`}
+        className="px-2 py-1"
         onClick={() => canDecrement && onChange(Math.max(min, value - 1))}
       >
         -
-      </button>
+      </TextButton>
       <span className="px-4 py-1 min-w-10 text-center">{value}</span>
-      <button
-        type="button"
-        aria-label={incrementAriaLabel}
+      <TextButton
+        variant="secondary"
+        ariaSelected={false}
         disabled={!canIncrement}
-        className={`px-3 py-1 text-black select-none${canIncrement ? ' cursor-pointer hover:font-bold' : ' cursor-not-allowed text-black/40'}`}
+        className="px-2 py-1"
         onClick={() => canIncrement && onChange(Math.min(typeof max === 'number' ? max : value + 1, value + 1))}
       >
         +
-      </button>
+      </TextButton>
     </div>
   )
 }

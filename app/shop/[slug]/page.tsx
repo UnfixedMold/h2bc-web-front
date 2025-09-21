@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import ProductDetail, { ProductDetailData } from './ProductDetail'
+import ProductDetail, { ProductDetailData } from './components/ProductDetail'
 
 interface Props { params: Promise<{ slug: string }> }
 
