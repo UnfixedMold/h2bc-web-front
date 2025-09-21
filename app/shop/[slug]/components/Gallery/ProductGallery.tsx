@@ -41,7 +41,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
             type="button"
             aria-label="Open image in full screen"
             onClick={() => setOpen(true)}
-            className="absolute inset-0 z-0 cursor-pointer"
+            className="absolute inset-0 z-0 cursor-zoom-in"
           />
         </div>
         {canNavigate ? (
