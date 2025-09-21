@@ -8,7 +8,7 @@ export default function Home() {
         <div className="aspect-square w-56 sm:w-64 md:w-72">
           {/* @ts-expect-error: model-viewer is a custom element */}
           <model-viewer
-            src="/y2k_sport_sunglass.glb"
+            src="/y2k-sport-sunglass.glb"
             camera-controls
             disable-zoom
             disable-pan
