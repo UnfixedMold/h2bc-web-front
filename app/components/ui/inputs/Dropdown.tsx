@@ -45,7 +45,7 @@ export default function Dropdown({ options, value, onChange, className = '', wra
       >
         <span className="flex-1 min-w-0 truncate text-left">{label}</span>
         <span className="flex items-center justify-center w-6 h-6 ml-2">
-          <span className={`font-mono text-[12px] leading-[12px] origin-center select-none transition-transform ${open ? 'rotate-180' : 'rotate-0'}`}>v</span>
+          <span className="font-mono text-[18px] leading-[18px] origin-center select-none">v</span>
         </span>
       </button>
 
