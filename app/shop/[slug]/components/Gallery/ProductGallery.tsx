@@ -1,9 +1,8 @@
 "use client";
 import Image from 'next/image'
 import { useState } from 'react'
-import styles from '@/app/shop/components/ProductCard/ProductCard.module.css'
 import { screens } from '@/lib/breakpoints'
-import TextButton from '@/app/components/ui/TextButton'
+import TextButton from '@/app/components/ui/buttons/TextButton'
 import GalleryModal from './GalleryModal'
 
 export default function ProductGallery({ images, name }: { images: string[]; name: string }) {
@@ -28,13 +27,13 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
             </TextButton>
           </div>
         ) : <div />}
-        <div className={`${styles.glow} relative w-full aspect-square`}>
+        <div className={`relative w-full aspect-square`}>
           <Image
             src={images[activeImage]}
             alt={name}
             fill
             sizes={`(min-width:${screens.lg}) 50vw, 100vw`}
-            className={`${styles.glowImg} object-contain`}
+            className={`pink-img-shadow object-contain`}
             priority
           />
           <button

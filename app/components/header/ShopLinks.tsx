@@ -1,5 +1,5 @@
 import { FiUser, FiShoppingCart } from 'react-icons/fi';
-import ImageButton from '@/app/components/ui/ImageButton';
+import ImageButton from '@/app/components/ui/buttons/ImageButton';
 
 const ICON_SIZE = 25;
 

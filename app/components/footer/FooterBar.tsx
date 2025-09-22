@@ -1,7 +1,7 @@
 "use client";
 import SocialIcons from './SocialIcons';
 import RightsNotice from './RightsNotice';
-import LinkTextButton from '@/app/components/ui/LinkTextButton';
+import TextButton from '@/app/components/ui/buttons/TextButton';
 
 const FOOTER_LINKS = [
     { href: '/privacy', label: 'Privacy Policy' },
@@ -16,9 +16,9 @@ export default function FooterBar() {
                 {/* Left: policy links (stacked small, inline large) */}
                 <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
                     {FOOTER_LINKS.map(link => (
-                        <LinkTextButton key={link.href} href={link.href} className="uppercase text-xs">
+                        <TextButton key={link.href} href={link.href} className="uppercase text-xs">
                             {link.label}
-                        </LinkTextButton>
+                        </TextButton>
                     ))}
                 </div>
                 {/* Right group: rights notice + social icons */}

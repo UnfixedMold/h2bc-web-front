@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { navItems } from '../../navItems'
-import { edwardianScript } from '@/app/fonts'
+import { unifrakturMaguntia } from '@/app/fonts'
 
 interface NavLinksProps {
     activePath?: string
@@ -25,7 +25,7 @@ export default function NavLinks({
                     <li key={href}>
                         <Link
                             href={href}
-                            className={[edwardianScript.className, linkClassName, isActive ? "text-pink-400" : ''].filter(Boolean).join(' ')}
+                            className={[unifrakturMaguntia.className, linkClassName, isActive ? "text-pink-400" : ''].filter(Boolean).join(' ')}
                         >
                             {label}
                         </Link>

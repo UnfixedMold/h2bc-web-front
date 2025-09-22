@@ -1,6 +1,6 @@
 
 import Image from 'next/image';
-import LinkTextButton from './components/ui/LinkTextButton';
+import TextButton from './components/ui/buttons/TextButton';
 
 export default function NotFound() {
     return (
@@ -14,7 +14,7 @@ export default function NotFound() {
                     className="mb-10 sm:mb-12 max-w-xs"
                     priority
                 />
-                <LinkTextButton href="/shop">{"<"} BACK TO SHOP</LinkTextButton>
+                <TextButton href="/shop">{"<"} BACK TO SHOP</TextButton>
             </div>
         </main>
     )

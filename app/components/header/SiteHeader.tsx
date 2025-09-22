@@ -15,7 +15,7 @@ export default function SiteHeader() {
       <div className="col-start-1 flex items-center gap-3 min-w-0">
         <BurgerMenu
           activePath={pathname}
-          linkClassName="hover-glow-pink rounded-md transition-colors leading-none align-middle"
+          linkClassName="pink-text-shadow rounded-md transition-colors leading-none align-middle"
           mobileUlClassName="flex flex-col items-stretch py-2"
         />
       </div>
@@ -26,8 +26,7 @@ export default function SiteHeader() {
           alt="h2bc"
           width={200}
           height={80}
-          sizes="(min-width:1024px) 200px, (min-width:768px) 180px, 160px"
-          className="h-14 sm:h-16 md:h-20 w-auto"
+          className="h-12 md:h-18 w-auto"
           priority
         />
       </Link>
@@ -35,8 +34,8 @@ export default function SiteHeader() {
       <nav aria-label="Primary" className="col-start-2 hidden md:flex items-center justify-center">
         <NavLinks
           activePath={pathname}
-          ulClassName="flex items-center gap-5 lg:gap-12 text-2xl lg:text-3xl leading-none tracking-wide"
-          linkClassName="hover-glow-pink rounded-md transition-colors leading-none align-middle"
+          ulClassName="flex items-center gap-5 lg:gap-12 text-2xl leading-none tracking-wide"
+          linkClassName="pink-text-shadow rounded-md transition-colors leading-none align-middle"
         />
       </nav>
 

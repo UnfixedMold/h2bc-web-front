@@ -1,6 +1,6 @@
 "use client";
 import { HTMLAttributes } from 'react'
-import TextButton from './TextButton'
+import TextButton from '../buttons/TextButton'
 
 type Props = Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> & {
   value: number

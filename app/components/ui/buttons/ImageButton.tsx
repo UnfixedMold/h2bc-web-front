@@ -11,18 +11,18 @@ type Props = {
 }
 
 export default function ImageButton({ href, children, external, ariaLabel, className = '' }: Props) {
-  const base = 'inline-flex items-center text-black hover:text-pink-400 transition-colors align-middle'
-  const cls = className ? `${base} ${className}` : base
+  const base = 'inline-flex items-center text-black transition-colors align-middle border-b-2 border-transparent hover:border-black pb-0.5';
+  const cls = className ? `${base} ${className}` : base;
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" aria-label={ariaLabel} className={cls}>
         {children}
       </a>
-    )
+    );
   }
   return (
     <Link href={href} aria-label={ariaLabel} className={cls}>
       {children}
     </Link>
-  )
+  );
 }

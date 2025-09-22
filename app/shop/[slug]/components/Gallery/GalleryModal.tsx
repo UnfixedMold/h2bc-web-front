@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
-import TextButton from '@/app/components/ui/TextButton'
+import TextButton from '@/app/components/ui/buttons/TextButton'
 
 export default function GalleryModal({
   open,

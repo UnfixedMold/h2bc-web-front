@@ -1,6 +1,6 @@
 "use client";
 import { Category } from './ShopContent'
-import TextButton from '@/app/components/ui/TextButton'
+import TextButton from '@/app/components/ui/buttons/TextButton'
 
 export default function CategoryFilter({
   categories,

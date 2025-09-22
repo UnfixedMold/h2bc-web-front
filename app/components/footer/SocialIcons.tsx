@@ -1,5 +1,5 @@
 import { FiInstagram, FiYoutube } from 'react-icons/fi';
-import ImageButton from '@/app/components/ui/ImageButton';
+import ImageButton from '@/app/components/ui/buttons/ImageButton';
 
 export const INSTAGRAM_HANDLE = '_h2bc';
 export const YOUTUBE_HANDLE = '_h2bc';

@@ -1,7 +1,6 @@
 "use client";
 import Link from 'next/link'
 import Image from 'next/image'
-import styles from './ProductCard.module.css'
 import { screens } from '@/lib/breakpoints'
 import { edwardianScript } from '@/app/fonts'
 
@@ -35,14 +34,14 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                 aria-label={`View ${name}`}
                 className="block"
             >
-                <div className={`${styles.glow} relative w-full aspect-square`}>
+                <div className={`relative w-full aspect-square`}>
                     <div className={`relative w-full h-full ${soldOut ? 'opacity-40' : ''}`}>
                         <Image
                             src={image}
                             alt={name}
                             fill
                             sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-                            className={`${styles.glowImg} object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
+                               className={`pink-img-shadow object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
                             draggable={false}
                             priority={!!priority}
                         />
@@ -52,7 +51,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                                 alt={name}
                                 fill
                                 sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-                                className={`${styles.glowImg} object-contain transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100`}
+                                   className={`pink-img-shadow object-contain transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100`}
                                 draggable={false}
                                 loading="lazy"
                             />

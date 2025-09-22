@@ -1,8 +1,8 @@
 "use client";
 import { useMemo, useState } from 'react'
-import TextButton from '@/app/components/ui/TextButton'
-import OutlineButton from '@/app/components/ui/OutlineButton'
-import StepperButton from '@/app/components/ui/StepperButton'
+import TextButton from '@/app/components/ui/buttons/TextButton'
+import PrimaryButton from '@/app/components/ui//buttons/PrimaryButton'
+import StepperInput from '@/app/components/ui/inputs/StepperInput'
 import ProductGallery from './Gallery/ProductGallery'
 
 export interface ProductDetailData {
@@ -54,7 +54,7 @@ export default function ProductDetail({ data }: { data: ProductDetailData }) {
 
         <div className="mt-6">
           <div className="mb-2 text-sm">Quantity</div>
-          <StepperButton value={qty} onChange={setQty} min={1} />
+          <StepperInput value={qty} onChange={setQty} min={1} />
         </div>
 
         {data.description && (
@@ -69,7 +69,7 @@ export default function ProductDetail({ data }: { data: ProductDetailData }) {
         )}
 
         <div className="mt-8">
-          <OutlineButton
+          <PrimaryButton
             fullWidth
             disabled={!canAdd}
             onClick={() => {
@@ -78,7 +78,7 @@ export default function ProductDetail({ data }: { data: ProductDetailData }) {
             }}
           >
             {data.soldOut ? 'Sold Out' : 'Add to cart'}
-          </OutlineButton>
+          </PrimaryButton>
         </div>
       </section>
     </div>
