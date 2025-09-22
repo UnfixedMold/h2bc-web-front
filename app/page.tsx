@@ -25,7 +25,7 @@ export default function Home() {
         </div>
 
         <NavLinks
-          ulClassName="space-y-4 sm:space-y-6 text-xl sm:text-2xl text-center md:text-left mt-8 md:mt-0"
+          ulClassName="flex flex-col items-center justify-center space-y-5 text-4xl sm:text-5xl md:text-4xl mt-8 md:mt-0 sm:flex-row sm:space-y-0 sm:gap-8 md:flex-col md:space-y-5 md:gap-0"
           linkClassName="hover-glow-pink"
         />
       </div>

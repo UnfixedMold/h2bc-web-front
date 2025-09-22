@@ -92,7 +92,7 @@ export default async function ProductDetailPage({ params }: Props) {
     if (!data) notFound()
 
     return (
-        <main className="w-full py-10 sm:py-14">
+        <main className="w-full pt-8 sm:pt-10 pb-12">
             <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
                 <ProductDetail data={data} />
             </div>

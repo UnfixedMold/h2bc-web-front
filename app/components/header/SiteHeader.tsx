@@ -35,7 +35,7 @@ export default function SiteHeader() {
       <nav aria-label="Primary" className="col-start-2 hidden md:flex items-center justify-center">
         <NavLinks
           activePath={pathname}
-          ulClassName="flex items-center gap-5 lg:gap-12 text-2xl leading-none tracking-wide"
+          ulClassName="flex items-center gap-5 lg:gap-12 text-2xl lg:text-3xl leading-none tracking-wide"
           linkClassName="hover-glow-pink rounded-md transition-colors leading-none align-middle"
         />
       </nav>

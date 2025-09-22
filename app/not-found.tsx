@@ -14,7 +14,7 @@ export default function NotFound() {
                     className="mb-10 sm:mb-12 max-w-xs"
                     priority
                 />
-                <LinkTextButton href="/shop">{"<"} Back to shop</LinkTextButton>
+                <LinkTextButton href="/shop">{"<"} BACK TO SHOP</LinkTextButton>
             </div>
         </main>
     )

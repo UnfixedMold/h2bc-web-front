@@ -47,7 +47,7 @@ export default function BurgerMenu({
           <NavLinks
             activePath={activePath}
             ulClassName={mobileUlClassName || "flex flex-col items-stretch text-center py-2 divide-y divide-black/10"}
-            linkClassName={`${linkClassName} block w-full text-center px-6 py-4 text-2xl`}
+            linkClassName={`${linkClassName} block w-full text-center px-6 py-4 text-3xl`}
           />
         </div>
       </div>
