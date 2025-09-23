@@ -4,7 +4,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { twMerge } from "tailwind-merge";
 import TextButton from "../buttons/TextButton";
 
-type Option = { value: string; label: string;};
+type Option = { value: string; label: string };
 type Variant = "primary" | "secondary";
 type Align = "left" | "right";
 
@@ -16,6 +16,7 @@ type Props = {
   align?: Align;
   arrowSize?: number;
   getDisplayLabel?: (option: Option | undefined) => string;
+  disabled?: boolean;
   containerClassName?: string;
   inputClassName?: string;
   labelClassName?: string;
@@ -28,10 +29,11 @@ export default function Dropdown({
   options,
   value,
   onChange,
-  variant = "primary",
-  align = "left",
-  arrowSize = 18,
+  variant = "secondary",
+  align = "right",
+  arrowSize = 14,
   getDisplayLabel,
+  disabled = false,
   containerClassName = "",
   inputClassName = "",
   labelClassName = "",
@@ -49,7 +51,7 @@ export default function Dropdown({
   const textAlign = align === "right" ? "text-right" : "text-left";
   const menuAnchor = align === "right" ? "right-0" : "left-0";
 
-  const onBlur: React.FocusEventHandler<HTMLDivElement> = e => {
+  const onBlur: React.FocusEventHandler<HTMLDivElement> = (e) => {
     const next = e.relatedTarget as Node | null;
     if (next && wrapRef.current?.contains(next)) return;
     setOpen(false);
@@ -58,12 +60,13 @@ export default function Dropdown({
   const baseContainer = "relative inline-flex";
   const baseInput =
     variant === "primary"
-      ? "inline-flex items-center border border-black bg-white cursor-pointer px-2"
-      : "inline-flex items-center bg-transparent cursor-pointer border-b-2 border-transparent hover:border-black";
-  const baseLabel = twMerge("truncate leading-none text-sm", variant === "secondary" && "font-bold");
-  const baseArrow = "ml-1 flex items-center justify-center";
-  const baseMenu = "absolute top-full z-10 bg-white border border-black mt-1 shadow-xl whitespace-nowrap";
-  const baseItem = "block w-full cursor-pointer text-sm text-left";
+      ? "inline-flex items-center gap-1 border border-black bg-white cursor-pointer"
+      : "inline-flex items-center gap-1 bg-transparent cursor-pointer border-b border-transparent hover:border-black";
+  const baseLabel = twMerge(variant === "secondary" && "font-bold", "leading-none truncate");
+  const baseArrow = "flex items-center justify-center";
+  const baseMenu =
+    "absolute top-full z-10 bg-white border border-black mt-1 shadow-xl whitespace-nowrap";
+  const baseItem = "block w-full cursor-pointer text-left";
 
   return (
     <div
@@ -74,10 +77,17 @@ export default function Dropdown({
     >
       <button
         type="button"
-        className={twMerge(baseInput, justify, inputClassName, variant === "secondary" && open && "border-black")}
+        disabled={disabled}
+        className={twMerge(
+          baseInput,
+          justify,
+          inputClassName,
+          variant === "secondary" && open && "border-black",
+          disabled && "cursor-not-allowed text-black/40 hover:border-transparent"
+        )}
         aria-haspopup="listbox"
         aria-expanded={open}
-        onClick={() => setOpen(s => !s)}
+        onClick={() => !disabled && setOpen(s => !s)}
       >
         <span className={twMerge(baseLabel, textAlign, labelClassName)}>{display}</span>
         <span className={twMerge(baseArrow, arrowClassName)}>
@@ -85,7 +95,7 @@ export default function Dropdown({
         </span>
       </button>
 
-      {open && (
+      {open && !disabled && (
         <div className={twMerge(baseMenu, menuAnchor, menuClassName)} role="listbox">
           {options.map(o => (
             <TextButton
