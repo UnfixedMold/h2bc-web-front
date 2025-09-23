@@ -58,7 +58,7 @@ export default function ContactForm({
               Topic
             </label>
             <Dropdown
-              id="topic"
+              size="md"
               options={[
                 { value: "order", label: "Order / Shipping" },
                 { value: "returns", label: "Returns & Refunds" },

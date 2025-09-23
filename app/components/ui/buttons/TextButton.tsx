@@ -1,56 +1,85 @@
 "use client";
-import { MouseEventHandler, ReactNode } from 'react'
-import Link from 'next/link'
+import { MouseEventHandler, ReactNode } from "react";
+import Link from "next/link";
 
-type TextButtonProps = {
-  children: ReactNode
-  href?: string
-  active?: boolean
-  onClick?: MouseEventHandler<HTMLButtonElement>
-  className?: string
-  ariaSelected?: boolean
-  variant?: 'primary' | 'secondary'
-  showArrow?: boolean
-  disabled?: boolean
+export type TextButtonProps = {
+  children: ReactNode;
+  href?: string;
+  active?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+  className?: string;
+  ariaSelected?: boolean;
+  variant?: "primary" | "secondary";
+  showArrow?: boolean;
+  disabled?: boolean;
+};
+
+function cx(...parts: Array<string | false | undefined>) {
+  return parts.filter(Boolean).join(" ");
 }
 
 export default function TextButton({
   children,
   href,
-  active,
+  active = false,
   onClick,
-  className = '',
+  className = "",
   ariaSelected,
-  variant = 'primary',
+  variant = "primary",
   showArrow = true,
-  disabled,
+  disabled = false,
 }: TextButtonProps) {
-  const base = (
-    disabled
-      ? 'cursor-not-allowed text-black/40'
-      : variant === 'primary'
-        ? `cursor-pointer text-black ${active ? 'font-bold' : ''} hover:underline`
-        : `cursor-pointer text-black ${active ? 'underline' : ''} hover:font-bold`
-  ).trim()
-  const cls = className ? `${base} ${className}` : base
+  const base =
+    variant === "primary"
+      ? cx("text-black", "cursor-pointer", active && "font-bold", !disabled && "hover:underline")
+      : cx("text-black", "cursor-pointer", active && "underline", !disabled && "hover:font-bold");
+
+  const cls = cx(
+    base,
+    disabled && "cursor-not-allowed text-black/40 pointer-events-none",
+    className
+  );
+
+  const content =
+    variant === "primary" && active && showArrow ? (
+      <span>
+        {"> "}
+        {children}
+      </span>
+    ) : (
+      children
+    );
 
   if (href) {
+    // For disabled links: make it inert but keep markup stable
+    if (disabled) {
+      return (
+        <span className={cls} aria-selected={ariaSelected} aria-disabled="true">
+          {content}
+        </span>
+      );
+    }
     return (
-      <Link href={href} className={cls} aria-selected={ariaSelected}>
-        {children}
+      <Link
+        href={href}
+        className={cls}
+        aria-selected={ariaSelected}
+        onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
+      >
+        {content}
       </Link>
-    )
+    );
   }
 
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={onClick as MouseEventHandler<HTMLButtonElement>}
       aria-selected={ariaSelected}
       disabled={disabled}
       className={cls}
     >
-      {variant === 'primary' && active && showArrow ? <span>{'> '}{children}</span> : children}
+      {content}
     </button>
-  )
+  );
 }
