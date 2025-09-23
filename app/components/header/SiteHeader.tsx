@@ -11,8 +11,8 @@ import Dropdown from "../ui/inputs/Dropdown";
 import ImageButton from "@/app/components/ui/buttons/ImageButton";
 
 const REGION_OPTIONS = [
-  { value: "lt", label: "EUR € | Lithuania", shortLabel: "LT" },
-  { value: "eu", label: "EUR € | Rest of Europe", shortLabel: "EU" },
+  { value: "lt", label: "EUR € | Lithuania", shortLabel: "€ LT" },
+  { value: "eu", label: "EUR € | Rest of Europe", shortLabel: "€ EU" },
 ];
 
 const SHOP_LINKS = [
@@ -42,7 +42,7 @@ export default function SiteHeader() {
     onChange: setRegion,
     getDisplayLabel,
     variant: "secondary" as const,
-    inputClassName: "h-[29px] min-w-[50px]",
+    inputClassName: "h-[29px] min-w-[60px]",
     labelClassName: "text-sm font-bold",
     arrowSize: 25,
     itemClassName: "px-4 py-3 min-w-[200px] text-xs",

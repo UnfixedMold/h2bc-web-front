@@ -58,10 +58,10 @@ export default function Dropdown({
   const baseContainer = "relative inline-flex";
   const baseInput =
     variant === "primary"
-      ? "inline-flex items-center border border-black bg-white cursor-pointer min-h-[40px] px-2"
-      : "inline-flex items-center bg-transparent cursor-pointer border-b-2 border-transparent hover:border-black min-h-[40px]";
+      ? "inline-flex items-center border border-black bg-white cursor-pointer px-2"
+      : "inline-flex items-center bg-transparent cursor-pointer border-b-2 border-transparent hover:border-black";
   const baseLabel = twMerge("truncate leading-none text-sm", variant === "secondary" && "font-bold");
-  const baseArrow = "ml-1 flex items-center justify-center h-full";
+  const baseArrow = "ml-1 flex items-center justify-center";
   const baseMenu = "absolute top-full z-10 bg-white border border-black mt-1 shadow-xl whitespace-nowrap";
   const baseItem = "block w-full cursor-pointer text-sm text-left";
 
