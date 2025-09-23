@@ -36,8 +36,8 @@ export default function ContactForm({
         className="block w-full max-w-none flex flex-col gap-6"
       >
         {/* Row: Email + Topic */}
-        <div className="w-full max-w-none flex flex-col sm:flex-row gap-4">
-          <div className="w-full max-w-none flex-1 basis-0 min-w-0">
+        <div className="w-full max-w-none grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+          <div className="w-full max-w-none flex flex-col justify-center">
             <label htmlFor="email" className="block text-sm mb-2 tracking-wide">
               Email
             </label>
@@ -47,27 +47,34 @@ export default function ContactForm({
               type="email"
               required
               placeholder="you@example.com"
+              className="flex w-full max-w-none border border-black px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
             />
             {state?.fieldErrors?.email && (
               <p className="text-red-600 text-xs mt-1">{state.fieldErrors.email}</p>
             )}
           </div>
 
-          <div className="flex flex-col flex-1">
-            <label htmlFor="topic" className="mb-2 text-sm">
+          <div className="w-full max-w-none flex flex-col justify-center">
+            <label htmlFor="topic" className="block text-sm mb-2 tracking-wide">
               Topic
             </label>
             <Dropdown
-              size="md"
               options={[
                 { value: "order", label: "Order / Shipping" },
-                { value: "returns", label: "Returns & Refunds" },
-                { value: "product", label: "Product Question" },
-                { value: "collab", label: "Collaboration" },
-                { value: "other", label: "Other" },
+                { value: "returns", label: "Returns & Refunds"},
+                { value: "product", label: "Product Question"},
+                { value: "collab", label: "Collaboration"},
+                { value: "other", label: "Other"},
               ]}
               value={topic}
               onChange={setTopic}
+              variant="primary"
+              align="left"
+              inputClassName="flex w-full max-w-none border border-black px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
+              labelClassName="text-sm w-full"
+              arrowSize={25}
+              itemClassName="px-3 py-2 w-full text-sm"
+              menuClassName="w-full min-w-0"
             />
             {state?.fieldErrors?.topic && (
               <p className="text-red-600 text-xs mt-1">{state.fieldErrors.topic}</p>
