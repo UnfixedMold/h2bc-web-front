@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import { RegionProvider } from "./providers/RegionProvider";
 import FooterBar from './components/footer';
 import { SiteHeader } from './components/header';
 
@@ -28,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
-        <SiteHeader />
-        <div className="flex-1 flex flex-col">
-          {children}
-        </div>
-        <FooterBar />
+        <RegionProvider>
+          <SiteHeader />
+          <div className="flex-1 flex flex-col">
+            {children}
+          </div>
+          <FooterBar />
+        </RegionProvider>
         <Script
           type="module"
           src="https://unpkg.com/@google/model-viewer@4.1.0/dist/model-viewer.min.js"

@@ -2,18 +2,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState, useCallback } from "react";
 import { FiUser, FiShoppingCart } from "react-icons/fi";
 
 import { NavLinks } from ".";
 import { BurgerMenuPanel, BurgerMenuProvider, BurgerMenuTrigger } from "./BurgerMenu";
 import Dropdown from "../ui/inputs/Dropdown";
 import ImageButton from "@/app/components/ui/buttons/ImageButton";
+import { useRegion } from "@/app/providers/RegionProvider";
 
-const REGION_OPTIONS = [
-  { value: "lt", label: "EUR € | Lithuania", shortLabel: "€ LT" },
-  { value: "eu", label: "EUR € | Rest of Europe", shortLabel: "€ EU" },
-];
 
 const SHOP_LINKS = [
   { href: "/profile", label: "Profile", Icon: FiUser },
@@ -24,30 +20,37 @@ const SHOP_ICON_SIZE = 25;
 
 export default function SiteHeader() {
   const pathname = usePathname();
-  const [region, setRegion] = useState("lt");
-
-  const getDisplayLabel = useCallback(
-    (opt?: { value?: string }) =>
-      opt?.value
-        ? REGION_OPTIONS.find(o => o.value === opt.value)?.shortLabel ?? ""
-        : "",
-    []
-  );
-
-  if (pathname === "/") return null;
-
+  const { regions, selectedRegionId, setSelectedRegionId, loading, error } = useRegion();
+  const regionOptions = regions.map(r => ({
+    value: r.id,
+    label: r.name,
+    shortLabel: r.metadata?.shortName
+  }));
+  const dropdownDisabled = error || loading || regionOptions.length === 0;
+  const defaultShortName = process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME ?? "";
+  const getDisplayLabel = (opt?: { value?: string }) => {
+    if (dropdownDisabled) return defaultShortName;
+    if (!opt?.value) return "";
+    const found = regionOptions.find(o => o.value === opt.value);
+    return found?.shortLabel || "";
+  };
   const regionDropdownConfig = {
-    options: REGION_OPTIONS,
-    value: region,
-    onChange: setRegion,
+    options: regionOptions.map(o => ({
+      value: o.value,
+      label: o.label || "",
+      shortLabel: o.shortLabel || ""
+    })),
+    value: selectedRegionId,
+    onChange: setSelectedRegionId,
     getDisplayLabel,
     variant: "secondary" as const,
-    inputClassName: "h-[29px] min-w-[60px]",
+    inputClassName: "h-[29px] min-w-[60px] border-b-2",
     labelClassName: "text-sm font-bold",
     arrowSize: 25,
     itemClassName: "px-4 py-3 min-w-[200px] text-xs",
+    disabled: dropdownDisabled,
   };
-
+  if (pathname === "/") return null;
   return (
     <header className="relative z-50 w-full px-4 sm:px-8 md:px-12 lg:px-18 py-6 sm:py-8 md:py-10 lg:py-12">
       {/* 3-part grid always */}
