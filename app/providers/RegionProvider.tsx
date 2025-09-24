@@ -1,76 +1,86 @@
-"use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { sdk } from "@/lib/medusa";
 
-if (!process.env.NEXT_PUBLIC_DEFAULT_REGION_ID) {
-    throw new Error("NEXT_PUBLIC_DEFAULT_REGION_ID env variable must be set");
-}
+"use client"
 
-if (!process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME) {
-    throw new Error("NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME env variable must be set");
-}
+import React, { createContext, useContext, useEffect, useState } from "react"
+import Cookies from "js-cookie"
+import { sdk } from "@/lib/medusa"
 
-const DEFAULT_REGION_SHORT_NAME = process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME;
-const DEFAULT_REGION_ID = process.env.NEXT_PUBLIC_DEFAULT_REGION_ID;
+const DEFAULT_REGION_ID = process.env.NEXT_PUBLIC_DEFAULT_REGION_ID!
+const DEFAULT_REGION_SHORT_NAME = process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME!
+
+export const REGION_COOKIE_EXPIRES = 365;
 
 export type Region = {
-    id: string;
-    name: string;
-    metadata?: { shortName?: string };
-};
-
-interface RegionContextType {
-    regions: Region[];
-    selectedRegionId: string;
-    setSelectedRegionId: (id: string) => void;
-    loading: boolean;
-    error: boolean;
-    defaultRegionShortName: string | undefined;
+  id: string
+  name: string
+  shortName?: string
 }
 
-const RegionContext = createContext<RegionContextType | undefined>(undefined);
+interface RegionContextType {
+  regions: Region[]
+  selectedRegionId: string
+  setSelectedRegionId: (id: string) => void
+  loading: boolean
+  error: boolean
+  defaultRegionShortName: string
+}
+
+const RegionContext = createContext<RegionContextType | null>(null)
 
 export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
-    const [regions, setRegions] = useState<Region[]>([]);
-    const [selectedRegionId, setSelectedRegionId] = useState<string>(DEFAULT_REGION_ID);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+  const cookieRegionId = Cookies.get("region_id")
+  const [regions, setRegions] = useState<Region[]>([])
+  const [selectedRegionId, _setSelectedRegionId] = useState<string>(cookieRegionId || DEFAULT_REGION_ID)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-    useEffect(() => {
-        sdk.store.region.list()
-            .then(({ regions }) => {
-                
-                const mappedRegions: Region[] = regions.map(r => ({
-                    id: r.id,
-                    name: r.name,
-                    metadata: r.metadata && typeof r.metadata === 'object' ? { shortName: r.metadata.shortName } : undefined,
-                }));
+  const setSelectedRegionId = (id: string) => {
+    _setSelectedRegionId(id)
+    Cookies.set("region_id", id, { expires: REGION_COOKIE_EXPIRES, path: "/" })
+  }
 
-                setRegions(mappedRegions);
+  useEffect(() => {
+    const fetchRegions = async () => {
+      try {
+        const { regions } = await sdk.store.region.list()
+        const mapped = regions.map(r => ({
+          id: r.id,
+          name: r.name,
+          shortName: r.metadata?.shortName
+        }))
 
-                const defaultRegion = mappedRegions.find(r => r.id === DEFAULT_REGION_ID) || mappedRegions[0];
+        setRegions(mapped)
 
-                setSelectedRegionId(defaultRegion?.id);
-                
-                setError(false);
-            })
-            .catch(() => {
-                setRegions([]);
-                setSelectedRegionId(DEFAULT_REGION_ID);
-                setError(true);
-            })
-            .finally(() => setLoading(false));
-    }, []);
+        if (!mapped.some(r => r.id === selectedRegionId)) {
+          setSelectedRegionId(mapped[0]?.id || DEFAULT_REGION_ID)
+        }
 
-    return (
-        <RegionContext.Provider value={{ regions, selectedRegionId, setSelectedRegionId, loading, error, defaultRegionShortName: DEFAULT_REGION_SHORT_NAME }}>
-            {children}
-        </RegionContext.Provider>
-    );
-};
+        setError(false)
+
+      } catch (e) {
+        
+        console.error("Failed to fetch regions:", e)
+        setRegions([])
+        setSelectedRegionId(DEFAULT_REGION_ID)
+        setError(true)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchRegions()
+  }, [])
+
+  return (
+    <RegionContext.Provider
+      value={{ regions, selectedRegionId, setSelectedRegionId, loading, error, defaultRegionShortName: DEFAULT_REGION_SHORT_NAME }}
+    >
+      {children}
+    </RegionContext.Provider>
+  )
+}
 
 export const useRegion = () => {
-    const ctx = useContext(RegionContext);
-    if (!ctx) throw new Error("useRegion must be used within a RegionProvider");
-    return ctx;
-};
+  const ctx = useContext(RegionContext)
+  if (!ctx) throw new Error("useRegion must be used within a RegionProvider")
+  return ctx
+}

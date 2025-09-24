@@ -24,7 +24,7 @@ export default function SiteHeader() {
   const regionOptions = regions.map(r => ({
     value: r.id,
     label: r.name,
-    shortLabel: r.metadata?.shortName
+    shortLabel: r.shortName
   }));
   const dropdownDisabled = error || loading || regionOptions.length === 0;
   const defaultShortName = process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME ?? "";
