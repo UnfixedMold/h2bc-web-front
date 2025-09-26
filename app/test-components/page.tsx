@@ -6,6 +6,7 @@ import ImageButton from '@/app/components/ui/buttons/ImageButton';
 import Dropdown from '@/app/components/ui/inputs/Dropdown';
 import StepperInput from '@/app/components/ui/inputs/StepperInput';
 import { TextInput, TextArea } from '@/app/components/ui/inputs/TextFields';
+import { FiHome, FiShoppingCart, FiUser, FiHeart, FiSearch } from 'react-icons/fi';
 
 export default function TestComponentsPage() {
   const [dropdownValue, setDropdownValue] = useState('option1');
@@ -70,10 +71,19 @@ export default function TestComponentsPage() {
             <h3 className="text-lg font-medium mb-4">Text Button Component</h3>
             <div className="space-y-4">
               <div>
-                <h4 className="text-md font-medium mb-2">Text Button States</h4>
+                <h4 className="text-md font-medium mb-2">Sizes</h4>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <TextButton size="sm">Small Text Button</TextButton>
+                  <TextButton size="md">Medium Text Button</TextButton>
+                  <TextButton size="lg">Large Text Button</TextButton>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-md font-medium mb-2">States</h4>
                 <div className="flex flex-wrap gap-4 items-center">
                   <TextButton>Normal Text Button</TextButton>
-                  <TextButton active>Active Text Button (with arrow)</TextButton>
+                  <TextButton active>Active Text Button</TextButton>
                   <TextButton disabled>Disabled Text Button</TextButton>
                 </div>
               </div>
@@ -83,10 +93,26 @@ export default function TestComponentsPage() {
           {/* Image Buttons */}
           <div>
             <h3 className="text-lg font-medium mb-4">Image Button Component</h3>
-            <div className="flex flex-wrap gap-4 items-center">
-              <ImageButton href="/shop">Internal Link</ImageButton>
-              <ImageButton href="https://example.com" external>External Link</ImageButton>
-              <ImageButton href="/contact" ariaLabel="Contact us">Contact Button</ImageButton>
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-md font-medium mb-2">Sizes</h4>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <ImageButton href="/" size="sm"><FiHome size={16} /></ImageButton>
+                  <ImageButton href="/" size="md"><FiHome size={20} /></ImageButton>
+                  <ImageButton href="/" size="lg"><FiHome size={24} /></ImageButton>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-md font-medium mb-2">States</h4>
+                <div className="flex flex-wrap gap-4 items-center">
+                  <ImageButton href="/"><FiHome size={20} /></ImageButton>
+                  <ImageButton href="/shop" active><FiShoppingCart size={20} /></ImageButton>
+                  <ImageButton href="/profile"><FiUser size={20} /></ImageButton>
+                  <ImageButton href="/favorites"><FiHeart size={20} /></ImageButton>
+                  <ImageButton href="https://example.com" external ariaLabel="Search"><FiSearch size={20} /></ImageButton>
+                </div>
+              </div>
             </div>
           </div>
         </div>

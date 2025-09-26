@@ -2,6 +2,8 @@
 import { MouseEventHandler, ReactNode } from "react";
 import Link from "next/link";
 
+type TextButtonSize = 'sm' | 'md' | 'lg'
+
 export type TextButtonProps = {
   children: ReactNode;
   href?: string;
@@ -10,10 +12,17 @@ export type TextButtonProps = {
   className?: string;
   ariaSelected?: boolean;
   disabled?: boolean;
+  size?: TextButtonSize;
 };
 
 function cx(...parts: Array<string | false | undefined>) {
   return parts.filter(Boolean).join(" ");
+}
+
+const textButtonSizes = {
+  sm: 'text-sm',
+  md: 'text-base',
+  lg: 'text-lg'
 }
 
 export default function TextButton({
@@ -24,11 +33,14 @@ export default function TextButton({
   className = "",
   ariaSelected,
   disabled = false,
+  size = 'md',
 }: TextButtonProps) {
   const base = cx("text-black", "cursor-pointer", active && "font-bold", !disabled && "hover:underline");
+  const sizeClasses = textButtonSizes[size];
 
   const cls = cx(
     base,
+    sizeClasses,
     disabled && "cursor-not-allowed text-black/40 pointer-events-none",
     className
   );
