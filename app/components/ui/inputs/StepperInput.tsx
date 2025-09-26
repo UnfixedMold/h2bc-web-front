@@ -28,7 +28,6 @@ export default function StepperButton({
   return (
     <div className={`inline-flex items-stretch border border-black${className ? ' ' + className : ''}`} {...rest}>
       <TextButton
-        variant="secondary"
         ariaSelected={false}
         disabled={!canDecrement}
         className="px-2 py-1"
@@ -38,7 +37,6 @@ export default function StepperButton({
       </TextButton>
       <span className="px-4 py-1 min-w-10 text-center">{value}</span>
       <TextButton
-        variant="secondary"
         ariaSelected={false}
         disabled={!canIncrement}
         className="px-2 py-1"

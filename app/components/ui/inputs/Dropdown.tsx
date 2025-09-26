@@ -107,7 +107,6 @@ export default function Dropdown({
                 onChange(o.value);
                 setOpen(false);
               }}
-              variant="primary"
             >
               {o.label}
             </TextButton>

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 
-import PrimaryButton from "@/app/components/ui/buttons/PrimaryButton";
+import Button from "@/app/components/ui/buttons/Button";
 import Dropdown from "@/app/components/ui/inputs/Dropdown";
 import { TextInput, TextArea } from "@/app/components/ui/inputs/TextFields";
 
@@ -113,8 +113,8 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <PrimaryButton type="submit" fullWidth disabled={pending}>
+    <Button type="submit" variant="primary" fullWidth disabled={pending}>
       {pending ? "Sending…" : "Send"}
-    </PrimaryButton>
+    </Button>
   );
 }

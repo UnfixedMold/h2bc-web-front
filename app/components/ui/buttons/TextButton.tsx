@@ -9,8 +9,6 @@ export type TextButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
   className?: string;
   ariaSelected?: boolean;
-  variant?: "primary" | "secondary";
-  showArrow?: boolean;
   disabled?: boolean;
 };
 
@@ -25,14 +23,9 @@ export default function TextButton({
   onClick,
   className = "",
   ariaSelected,
-  variant = "primary",
-  showArrow = true,
   disabled = false,
 }: TextButtonProps) {
-  const base =
-    variant === "primary"
-      ? cx("text-black", "cursor-pointer", active && "font-bold", !disabled && "hover:underline")
-      : cx("text-black", "cursor-pointer", active && "underline", !disabled && "hover:font-bold");
+  const base = cx("text-black", "cursor-pointer", active && "font-bold", !disabled && "hover:underline");
 
   const cls = cx(
     base,
@@ -40,15 +33,14 @@ export default function TextButton({
     className
   );
 
-  const content =
-    variant === "primary" && active && showArrow ? (
-      <span>
-        {"> "}
-        {children}
-      </span>
-    ) : (
-      children
-    );
+  const content = active ? (
+    <span>
+      {"> "}
+      {children}
+    </span>
+  ) : (
+    children
+  );
 
   if (href) {
     // For disabled links: make it inert but keep markup stable
