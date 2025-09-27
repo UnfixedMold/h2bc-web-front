@@ -1,21 +1,40 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(0 0% 6%);
+  --color-muted: hsl(0 0% 42%);
+  --color-border: hsl(0 0% 90%);
+  --color-accent: hsl(330 90% 70%);
+  --color-success: hsl(120 60% 35%);
+  --color-error: hsl(0 70% 50%);
+
+  --font-body: Arial, Helvetica, sans-serif;
+}
+
+@theme inline {
+  --font-heading: var(--font-unifraktur), serif;
+  --font-decorative: var(--font-edwardian), cursive;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
 }
 
 @layer utilities {
-  .pink-img-shadow {
+  .accent-img-shadow {
     filter:
-      drop-shadow(0 0 22px rgba(236, 72, 153, 0.19))
-      drop-shadow(0 0 64px rgba(236, 72, 153, 0.12))
-      drop-shadow(0 0 128px rgba(236, 72, 153, 0.09));
+      drop-shadow(0 0 22px rgba(236, 72, 153, 0.19)) drop-shadow(0 0 64px rgba(236, 72, 153, 0.12)) drop-shadow(0 0 128px rgba(236, 72, 153, 0.09));
     transition: filter 250ms ease;
   }
-  .pink-text-shadow {
+
+  .accent-text-shadow {
     transition: text-shadow 0.25s ease;
   }
-  .pink-text-shadow:hover {
+
+  .accent-text-shadow:hover {
     text-shadow:
       0 0 4px rgba(255, 255, 255, 0.9),
       0 0 12px rgba(236, 72, 153, 0.9),
@@ -23,10 +42,11 @@ body {
       0 0 48px rgba(236, 72, 153, 0.7);
   }
 
-  .pink-box-shadow {
+  .accent-box-shadow {
     transition: box-shadow 0.2s ease;
   }
-  .pink-box-shadow:hover {
+
+  .accent-box-shadow:hover {
     box-shadow: 0 0 16px 4px rgba(236, 72, 153, 0.7);
   }
 }

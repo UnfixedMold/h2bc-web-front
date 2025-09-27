@@ -26,7 +26,6 @@ export default function Home() {
 
         <NavLinks
           ulClassName="flex flex-col items-center justify-center space-y-5 text-4xl md:mt-0 sm:flex-row sm:space-y-0 sm:gap-8 md:flex-col md:space-y-5 md:gap-0"
-          linkClassName="pink-text-shadow"
         />
       </div>
     </div>

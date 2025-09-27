@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { FiUser, FiShoppingCart } from "react-icons/fi";
 
 import { NavLinks } from ".";
-import { BurgerMenuPanel, BurgerMenuProvider, BurgerMenuTrigger } from "./BurgerMenu";
+import BurgerMenu from "./BurgerMenu";
 import Dropdown from "../ui/inputs/Dropdown";
 import ImageButton from "@/app/components/ui/buttons/ImageButton";
 import { useRegion } from "@/app/providers/RegionProvider";
@@ -58,12 +58,9 @@ export default function SiteHeader() {
         {/* LEFT */}
         <div className="flex items-center gap-2">
           {/* mobile: burger + region */}
-          <BurgerMenuProvider activePath={pathname}>
-            <div className="md:hidden">
-              <BurgerMenuTrigger />
-              <BurgerMenuPanel />
-            </div>
-          </BurgerMenuProvider>
+          <div className="md:hidden">
+            <BurgerMenu activePath={pathname} />
+          </div>
 
           <div className="md:hidden">
             <Dropdown {...regionDropdownConfig} align="left" />
@@ -101,7 +98,6 @@ export default function SiteHeader() {
             <NavLinks
               activePath={pathname}
               ulClassName="flex items-center gap-5 lg:gap-12 text-2xl leading-none tracking-wide"
-              linkClassName="pink-text-shadow rounded-md transition-colors leading-none align-middle"
             />
           </nav>
         </div>

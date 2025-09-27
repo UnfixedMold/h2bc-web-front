@@ -2,7 +2,6 @@
 import { useMemo, useState } from 'react'
 import ProductCard from './ProductCard'
 import CategoryFilter from './CategoryFilter'
-import { edwardianScript } from '@/app/fonts'
 
 export type Category = 'ALL' | 'PRINT ON DEMAND' | 'BELTS' | 'BEANIES' | 'JEWELERY'
 
@@ -42,7 +41,7 @@ export default function ShopContent({ products }: { products: ProductItem[] }) {
       <section>
         {filtered.length === 0 ? (
           <div className="flex items-center justify-center py-16">
-            <span className={`${edwardianScript.className} text-5xl text-black select-none`}>no items</span>
+            <span className="font-decorative text-5xl text-foreground select-none">no items</span>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 sm:gap-12">

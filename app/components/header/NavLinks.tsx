@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { navItems } from '../../navItems'
-import { unifrakturMaguntia } from '@/app/fonts'
 
 interface NavLinksProps {
     activePath?: string
@@ -11,21 +10,19 @@ interface NavLinksProps {
 export default function NavLinks({
     activePath = '',
     ulClassName = '',
-    linkClassName = '',
+    linkClassName = ''
 }: NavLinksProps) {
 
     return (
         <ul className={ulClassName}>
-
             {navItems.map(({ href, label }) => {
-
                 const isActive = activePath === href
 
                 return (
                     <li key={href}>
                         <Link
                             href={href}
-                            className={[unifrakturMaguntia.className, linkClassName, isActive ? "text-pink-400" : ''].filter(Boolean).join(' ')}
+                            className={`font-heading accent-text-shadow transition-colors ${linkClassName} ${isActive ? "text-accent" : ''}`}
                         >
                             {label}
                         </Link>

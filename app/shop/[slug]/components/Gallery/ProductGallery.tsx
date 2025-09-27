@@ -2,8 +2,9 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { screens } from '@/lib/breakpoints'
-import TextButton from '@/app/components/ui/buttons/TextButton'
+import ImageButton from '@/app/components/ui/buttons/ImageButton'
 import GalleryModal from './GalleryModal'
+import { IoMdArrowDropdown } from 'react-icons/io'
 
 export default function ProductGallery({ images, name }: { images: string[]; name: string }) {
   const [activeImage, setActiveImage] = useState(0)
@@ -16,15 +17,9 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
       <div className="relative grid grid-cols-[2rem_1fr_2rem] items-center">
         {canNavigate ? (
           <div className="flex justify-center">
-            <TextButton
-              variant="secondary"
-              onClick={goPrev}
-              className="text-2xl px-2 py-1"
-              aria-selected={false}
-              aria-label="Previous image"
-            >
-              {'<'}
-            </TextButton>
+            <ImageButton onClick={goPrev} ariaLabel="Previous image" className="p-2">
+              <IoMdArrowDropdown className="rotate-90" size={24} />
+            </ImageButton>
           </div>
         ) : <div />}
         <div className={`relative w-full aspect-square`}>
@@ -33,7 +28,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
             alt={name}
             fill
             sizes={`(min-width:${screens.lg}) 50vw, 100vw`}
-            className={`pink-img-shadow object-contain`}
+            className={`accent-img-shadow object-contain`}
             priority
           />
           <button
@@ -45,15 +40,9 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
         </div>
         {canNavigate ? (
           <div className="flex justify-center">
-            <TextButton
-              variant="secondary"
-              onClick={goNext}
-              className="text-2xl px-2 py-1"
-              aria-selected={false}
-              aria-label="Next image"
-            >
-              {'>'}
-            </TextButton>
+            <ImageButton onClick={goNext} ariaLabel="Next image" className="p-2">
+              <IoMdArrowDropdown className="-rotate-90" size={24} />
+            </ImageButton>
           </div>
         ) : <div />}
       </div>

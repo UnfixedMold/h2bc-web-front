@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { screens } from '@/lib/breakpoints'
-import { edwardianScript } from '@/app/fonts'
 
 export interface ProductCardProps {
     slug: string
@@ -41,7 +40,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                             alt={name}
                             fill
                             sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-                               className={`pink-img-shadow object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
+                               className={`accent-img-shadow object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
                             draggable={false}
                             priority={!!priority}
                         />
@@ -51,7 +50,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                                 alt={name}
                                 fill
                                 sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-                                   className={`pink-img-shadow object-contain transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100`}
+                                   className={`accent-img-shadow object-contain transition-opacity duration-200 ease-out opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100`}
                                 draggable={false}
                                 loading="lazy"
                             />
@@ -59,7 +58,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                     </div>
                     {soldOut && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <span className={`${edwardianScript.className} text-black/90 text-5xl select-none`}>Sold Out</span>
+                            <span className="font-decorative text-foreground/90 text-5xl select-none">Sold Out</span>
                         </div>
                     )}
                 </div>

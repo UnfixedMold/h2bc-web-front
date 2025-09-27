@@ -47,10 +47,10 @@ export default function ContactForm({
               type="email"
               required
               placeholder="you@example.com"
-              className="flex w-full max-w-none border border-black px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
+              className="flex w-full max-w-none border border-foreground px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
             />
             {state?.fieldErrors?.email && (
-              <p className="text-red-600 text-xs mt-1">{state.fieldErrors.email}</p>
+              <p className="text-error text-xs mt-1">{state.fieldErrors.email}</p>
             )}
           </div>
 
@@ -70,14 +70,14 @@ export default function ContactForm({
               onChange={setTopic}
               variant="primary"
               align="left"
-              inputClassName="flex w-full max-w-none border border-black px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
+              inputClassName="flex w-full max-w-none border border-foreground px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
               labelClassName="text-sm w-full"
               arrowSize={25}
               itemClassName="px-3 py-2 w-full text-sm"
               menuClassName="w-full min-w-0"
             />
             {state?.fieldErrors?.topic && (
-              <p className="text-red-600 text-xs mt-1">{state.fieldErrors.topic}</p>
+              <p className="text-error text-xs mt-1">{state.fieldErrors.topic}</p>
             )}
           </div>
         </div>
@@ -95,14 +95,14 @@ export default function ContactForm({
             className="h-32 resize-y"
           />
           {state?.fieldErrors?.message && (
-            <p className="text-red-600 text-xs mt-1">{state.fieldErrors.message}</p>
+            <p className="text-error text-xs mt-1">{state.fieldErrors.message}</p>
           )}
         </div>
 
         <SubmitButton />
 
-        {state?.ok && <p className="text-green-700 text-sm">Thanks — we got your message.</p>}
-        {state?.message && !state.ok && <p className="text-red-700 text-sm">{state.message}</p>}
+        {state?.ok && <p className="text-success text-sm">Thanks — we got your message.</p>}
+        {state?.message && !state.ok && <p className="text-error text-sm">{state.message}</p>}
       </form>
     </div>
   );

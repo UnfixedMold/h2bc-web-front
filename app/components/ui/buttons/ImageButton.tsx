@@ -5,13 +5,13 @@ import { ReactNode } from 'react'
 type ImageButtonSize = 'sm' | 'md' | 'lg'
 
 type Props = {
-  href: string
+  href?: string
   children: ReactNode
   external?: boolean
   ariaLabel?: string
   className?: string
-  active?: boolean
   size?: ImageButtonSize
+  onClick?: () => void
 }
 
 const imageButtonSizes = {
@@ -20,13 +20,18 @@ const imageButtonSizes = {
   lg: 'text-lg'
 }
 
-export default function ImageButton({ href, children, external, ariaLabel, className = '', active = false, size = 'md' }: Props) {
-  const base = 'inline-flex items-center text-black transition-all duration-200 align-middle';
-  const stateClasses = active
-    ? 'text-pink-500'
-    : 'hover:text-pink-500 hover:drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]';
+export default function ImageButton({ href, children, external, ariaLabel, className = '', size = 'md', onClick }: Props) {
+  const base = 'inline-flex items-center text-foreground transition-all duration-200 align-middle cursor-pointer hover:text-accent';
   const sizeClasses = imageButtonSizes[size];
-  const cls = className ? `${base} ${stateClasses} ${sizeClasses} ${className}` : `${base} ${stateClasses} ${sizeClasses}`;
+  const cls = className ? `${base} ${sizeClasses} ${className}` : `${base} ${sizeClasses}`;
+
+  if (onClick) {
+    return (
+      <button onClick={onClick} aria-label={ariaLabel} className={cls}>
+        {children}
+      </button>
+    );
+  }
 
   if (external) {
     return (
@@ -36,7 +41,7 @@ export default function ImageButton({ href, children, external, ariaLabel, class
     );
   }
   return (
-    <Link href={href} aria-label={ariaLabel} className={cls}>
+    <Link href={href!} aria-label={ariaLabel} className={cls}>
       {children}
     </Link>
   );

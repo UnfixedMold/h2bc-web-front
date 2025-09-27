@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
 import { RegionProvider } from "./providers/RegionProvider";
 import FooterBar from './components/footer';
 import { SiteHeader } from './components/header';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { unifraktur, edwardian } from './fonts';
 
 export const metadata: Metadata = {
   title: { default: 'h2bc', template: '%s | h2bc' },
@@ -28,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+      <body className={`${unifraktur.variable} ${edwardian.variable} antialiased min-h-screen flex flex-col`}>
         <RegionProvider>
           <SiteHeader />
           <div className="flex-1 flex flex-col">
