@@ -7,7 +7,7 @@ import Dropdown from '@/app/components/ui/inputs/Dropdown';
 import StepperInput from '@/app/components/ui/inputs/StepperInput';
 import { TextInput, TextArea } from '@/app/components/ui/inputs/TextFields';
 import Heading from '@/app/components/ui/Heading';
-import { FiHome, FiShoppingCart, FiUser, FiHeart, FiSearch } from 'react-icons/fi';
+import { FiHome, FiUser, FiHeart, FiSearch } from 'react-icons/fi';
 
 export default function TestComponentsPage() {
   const [dropdownValue, setDropdownValue] = useState('option1');
@@ -163,7 +163,6 @@ export default function TestComponentsPage() {
                 <Heading level={4} className="mb-2">States</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
                   <ImageButton href="/"><FiHome size={20} /></ImageButton>
-                  <ImageButton href="/shop" active><FiShoppingCart size={20} /></ImageButton>
                   <ImageButton href="/profile"><FiUser size={20} /></ImageButton>
                   <ImageButton href="/favorites"><FiHeart size={20} /></ImageButton>
                   <ImageButton href="https://example.com" external ariaLabel="Search"><FiSearch size={20} /></ImageButton>
