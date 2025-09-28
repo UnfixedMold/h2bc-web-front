@@ -62,8 +62,6 @@ export default function GalleryModal({
     setLoadingStates(prev => ({ ...prev, [src]: true }))
   }, [])
 
-  if (!open) return null
-
   const goPrev = useCallback(() => {
     setActiveIndex((activeIndex - 1 + images.length) % images.length)
   }, [activeIndex, images.length, setActiveIndex])
@@ -95,6 +93,8 @@ export default function GalleryModal({
       return () => document.removeEventListener('keydown', handleKeyDown)
     }
   }, [open, handleKeyDown])
+
+  if (!open) return null
 
   const modalContent = (
     <div
