@@ -1,11 +1,19 @@
 import Link from 'next/link'
-import { navItems } from '../../navItems'
 
 interface NavLinksProps {
     activePath?: string
     ulClassName?: string
     linkClassName?: string
 }
+
+
+const navItems = [
+  { href: '/shop', label: 'Shop' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+]
+
 
 export default function NavLinks({
     activePath = '',
