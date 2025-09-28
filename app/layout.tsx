@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Script from 'next/script';
 import { RegionProvider } from "./providers/RegionProvider";
 import FooterBar from './components/footer';
 import { SiteHeader } from './components/header';
@@ -26,11 +25,6 @@ export default function RootLayout({
           </div>
           <FooterBar />
         </RegionProvider>
-        <Script
-          type="module"
-          src="https://unpkg.com/@google/model-viewer@4.1.0/dist/model-viewer.min.js"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
