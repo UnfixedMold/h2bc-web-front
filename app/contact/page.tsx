@@ -1,4 +1,4 @@
-import PageLayout from '../components/ui/PageLayout'
+import Heading from '../components/ui/Heading'
 import ContactForm from './ContactForm'
 
 export const metadata = {
@@ -39,8 +39,9 @@ export default function ContactPage() {
   }
 
   return (
-    <PageLayout heading="Contact">
+    <>
+      <Heading level={1} font="blackletter" className="mb-8">Contact</Heading>
       <ContactForm action={submitAction} />
-    </PageLayout>
+    </>
   )
 }

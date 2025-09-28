@@ -4,7 +4,7 @@ import Script from 'next/script'
 
 export default function Home() {
   return (
-    <div className="flex-1 flex items-center justify-center p-6">
+    <div className="flex-1 flex items-center justify-center">
       <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <div className="aspect-square w-56 sm:w-64 md:w-72">
           {/* @ts-expect-error: model-viewer is a custom element */}

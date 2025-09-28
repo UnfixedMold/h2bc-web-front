@@ -1,4 +1,3 @@
-import PageLayout from '../components/ui/PageLayout'
 import TextButton from '../components/ui/buttons/TextButton'
 import Heading from '../components/ui/Heading'
 
@@ -9,7 +8,9 @@ export const metadata = {
 
 export default function ShippingReturnsPage() {
     return (
-        <PageLayout heading="Shipping and Returns">
+        <>
+            <Heading level={1} font="blackletter" className="mb-8">Shipping and Returns</Heading>
+
             <section className="mb-10">
                 <Heading level={4} bold className="mb-2">Shipping Policy</Heading>
                 <ul className="list-disc pl-6 space-y-2">
@@ -26,10 +27,10 @@ export default function ShippingReturnsPage() {
                     <li>Returns accepted within <strong>14 days</strong> of receiving your order.</li>
                     <li>Items must be unused, in original packaging, and in resellable condition.</li>
                     <li>Return shipping is paid by the customer.</li>
-                    <li>To start a return, please visit our <TextButton href="/contact" className="underline">CONTACT</TextButton> page. We’ll provide the return address.</li>
+                    <li>To start a return, please visit our <TextButton href="/contact" className="underline">CONTACT</TextButton> page. We'll provide the return address.</li>
                     <li>Refunds are issued within <strong>14 days</strong> after we receive the item, to your original payment method.</li>
                 </ul>
             </section>
-        </PageLayout>
+        </>
     )
 }

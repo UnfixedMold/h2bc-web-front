@@ -18,12 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={twMerge(unifraktur.variable, edwardian.variable, 'antialiased min-h-screen flex flex-col')}>
+      <body className={twMerge(unifraktur.variable, edwardian.variable, 'antialiased min-h-screen flex flex-col items-center')}>
         <RegionProvider>
           <SiteHeader />
-          <div className="flex-1 flex flex-col">
+          <main className="flex-1 flex flex-col max-w-7xl w-full px-6 sm:px-8 md:px-10">
             {children}
-          </div>
+          </main>
           <FooterBar />
         </RegionProvider>
       </body>

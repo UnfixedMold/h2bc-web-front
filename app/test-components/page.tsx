@@ -21,7 +21,7 @@ export default function TestComponentsPage() {
   ];
 
   return (
-    <div className="container mx-auto p-8 space-y-12">
+    <div className="space-y-12">
       <Heading level={1} className="mb-8">UI Components Test Page</Heading>
 
       {/* Headings Section */}
