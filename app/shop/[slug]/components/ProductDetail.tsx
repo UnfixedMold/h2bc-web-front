@@ -4,6 +4,7 @@ import TextButton from '@/app/components/ui/buttons/TextButton'
 import Button from '@/app/components/ui/buttons/Button'
 import StepperInput from '@/app/components/ui/inputs/StepperInput'
 import ProductGallery from './Gallery/ProductGallery'
+import Heading from '@/app/components/ui/Heading'
 
 export interface ProductDetailData {
   slug: string
@@ -38,7 +39,7 @@ export default function ProductDetail({ data }: { data: ProductDetailData }) {
 
       {/* Right: Details */}
       <section>
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl tracking-wide">{data.name}</h1>
+        <Heading level={1}>{data.name}</Heading>
         <div className="mt-2 text-xl sm:text-2xl">{formatPriceEUR(data.price, data.currency)}</div>
 
         {data.sizes.length > 0 && (

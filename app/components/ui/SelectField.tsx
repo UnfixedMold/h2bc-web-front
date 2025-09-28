@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState, useRef, useEffect } from 'react'
+import { twMerge } from 'tailwind-merge'
 import TextButton from './buttons/TextButton'
 
 type Option = { value: string; label: string }
@@ -21,7 +22,7 @@ export default function SelectField({ options, value, onChange, className = '', 
   const label = useMemo(() => options.find(o => o.value === value)?.label ?? '', [options, value]);
 
   return (
-    <div className={`relative ${wrapperClassName || ''}`}>
+    <div className={twMerge('relative', wrapperClassName)}>
       <button
         id={id}
         type="button"
@@ -32,11 +33,11 @@ export default function SelectField({ options, value, onChange, className = '', 
       >
         <span className="flex-1 min-w-0 truncate text-left">{label}</span>
         <span className="flex items-center justify-center w-6 h-6 ml-2">
-          <span className={`font-mono text-[12px] leading-[12px] origin-center select-none transition-transform ${open ? 'rotate-180' : 'rotate-0'}`}>v</span>
+          <span className={twMerge('font-mono text-[12px] leading-[12px] origin-center select-none transition-transform', open ? 'rotate-180' : 'rotate-0')}>v</span>
         </span>
       </button>
 
-      <div className={`absolute left-0 right-0 top-full z-10 bg-white border border-black mt-1 ${open ? '' : 'hidden'}`} role="listbox" aria-labelledby={id}>
+      <div className={twMerge('absolute left-0 right-0 top-full z-10 bg-white border border-black mt-1', open ? '' : 'hidden')} role="listbox" aria-labelledby={id}>
         {options.map((o) => (
           <TextButton
             key={o.value}
@@ -47,7 +48,6 @@ export default function SelectField({ options, value, onChange, className = '', 
               onChange(o.value);
               setOpen(false);
             }}
-            variant="primary"
           >
             {o.label}
           </TextButton>

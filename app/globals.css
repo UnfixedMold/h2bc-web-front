@@ -9,18 +9,18 @@
   --color-success: hsl(120 60% 35%);
   --color-error: hsl(0 70% 50%);
 
-  --font-body: Arial, Helvetica, sans-serif;
+  --font-sans-serif: Arial, Helvetica, sans-serif;
 }
 
 @theme inline {
-  --font-heading: var(--font-unifraktur), serif;
-  --font-decorative: var(--font-edwardian), cursive;
+  --font-blackletter: var(--font-unifraktur), serif;
+  --font-script: var(--font-edwardian), cursive;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-body);
+  font-family: var(--font-sans-serif);
 }
 
 @layer utilities {

@@ -1,6 +1,7 @@
 "use client";
 import Image from 'next/image'
 import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { screens } from '@/lib/breakpoints'
 import ImageButton from '@/app/components/ui/buttons/ImageButton'
 import GalleryModal from './GalleryModal'
@@ -51,7 +52,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
           {images.map((src, idx) => (
             <button
               key={src + idx}
-              className={`relative aspect-square border ${idx === activeImage ? 'border-black' : 'border-black/30'} cursor-pointer`}
+              className={twMerge('relative aspect-square border cursor-pointer', idx === activeImage ? 'border-black' : 'border-black/30')}
               onClick={() => setActiveImage(idx)}
               aria-label={`Show image ${idx + 1}`}
             >

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { twMerge } from 'tailwind-merge';
 import { RegionProvider } from "./providers/RegionProvider";
 import FooterBar from './components/footer';
 import { SiteHeader } from './components/header';
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${unifraktur.variable} ${edwardian.variable} antialiased min-h-screen flex flex-col`}>
+      <body className={twMerge(unifraktur.variable, edwardian.variable, 'antialiased min-h-screen flex flex-col')}>
         <RegionProvider>
           <SiteHeader />
           <div className="flex-1 flex flex-col">

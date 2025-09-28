@@ -6,6 +6,7 @@ import ImageButton from '@/app/components/ui/buttons/ImageButton';
 import Dropdown from '@/app/components/ui/inputs/Dropdown';
 import StepperInput from '@/app/components/ui/inputs/StepperInput';
 import { TextInput, TextArea } from '@/app/components/ui/inputs/TextFields';
+import Heading from '@/app/components/ui/Heading';
 import { FiHome, FiShoppingCart, FiUser, FiHeart, FiSearch } from 'react-icons/fi';
 
 export default function TestComponentsPage() {
@@ -21,46 +22,101 @@ export default function TestComponentsPage() {
 
   return (
     <div className="container mx-auto p-8 space-y-12">
-      <h1 className="text-4xl font-bold mb-8">UI Components Test Page</h1>
+      <Heading level={1} className="mb-8">UI Components Test Page</Heading>
+
+      {/* Headings Section */}
+      <section>
+        <Heading level={2} className="mb-6 border-b-2 border-black pb-2">Headings</Heading>
+
+        <div className="space-y-6">
+          <div>
+            <Heading level={3} className="mb-4">Heading Levels</Heading>
+            <div className="space-y-3">
+              <div>
+                <div className="text-sm text-muted mb-1">Level: h1</div>
+                <Heading level={1}>The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Level: h2</div>
+                <Heading level={2}>The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Level: h3</div>
+                <Heading level={3}>The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Level: h4</div>
+                <Heading level={4}>The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Level: h5</div>
+                <Heading level={5}>The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Level: h6</div>
+                <Heading level={6}>The quick brown fox jumps</Heading>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <Heading level={3} className="mb-4">Font Families</Heading>
+            <div className="space-y-3">
+              <div>
+                <div className="text-sm text-muted mb-1">Font: blackletter</div>
+                <Heading level={2} font="blackletter">The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Font: sans-serif (default)</div>
+                <Heading level={2}>The quick brown fox jumps</Heading>
+              </div>
+              <div>
+                <div className="text-sm text-muted mb-1">Font: script</div>
+                <Heading level={2} font="script">The quick brown fox jumps</Heading>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Buttons Section */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6 border-b-2 border-black pb-2">Buttons</h2>
+        <Heading level={2} className="mb-6 border-b-2 border-black pb-2">Buttons</Heading>
 
         {/* Regular Buttons */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-medium mb-4">Button Component - Sizes & Variants</h3>
+            <Heading level={3} className="mb-4">Button Component - Sizes & Variants</Heading>
             <div className="space-y-4">
               {/* Primary Variant */}
               <div>
-                <h4 className="text-md font-medium mb-2">Primary Variant</h4>
+                <Heading level={4} className="mb-2">Primary Variant</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
-                  <Button variant="primary" size="sm">Small Primary</Button>
-                  <Button variant="primary" size="md">Medium Primary</Button>
-                  <Button variant="primary" size="lg">Large Primary</Button>
-                  <Button variant="primary" size="md" disabled>Disabled Primary</Button>
+                  <Button variant="primary">Small Primary</Button>
+                  <Button variant="primary">Medium Primary</Button>
+                  <Button variant="primary">Large Primary</Button>
+                  <Button variant="primary" disabled>Disabled Primary</Button>
                 </div>
               </div>
 
               {/* Secondary Variant */}
               <div>
-                <h4 className="text-md font-medium mb-2">Secondary Variant</h4>
+                <Heading level={4} className="mb-2">Secondary Variant</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
-                  <Button variant="secondary" size="sm">Small Secondary</Button>
-                  <Button variant="secondary" size="md">Medium Secondary</Button>
-                  <Button variant="secondary" size="lg">Large Secondary</Button>
-                  <Button variant="secondary" size="md" disabled>Disabled Secondary</Button>
+                  <Button variant="secondary">Small Secondary</Button>
+                  <Button variant="secondary">Medium Secondary</Button>
+                  <Button variant="secondary">Large Secondary</Button>
+                  <Button variant="secondary" disabled>Disabled Secondary</Button>
                 </div>
               </div>
 
               {/* Full Width */}
               <div>
-                <h4 className="text-md font-medium mb-2">Full Width</h4>
+                <Heading level={4} className="mb-2">Full Width</Heading>
                 <div className="space-y-2 max-w-md">
-                  <Button variant="primary" size="sm" fullWidth>Small Primary Full Width</Button>
-                  <Button variant="secondary" size="md" fullWidth>Medium Secondary Full Width</Button>
-                  <Button variant="primary" size="lg" fullWidth uppercase>Large Primary Uppercase</Button>
+                  <Button variant="primary" fullWidth>Small Primary Full Width</Button>
+                  <Button variant="secondary" fullWidth>Medium Secondary Full Width</Button>
+                  <Button variant="primary" fullWidth uppercase>Large Primary Uppercase</Button>
                 </div>
               </div>
             </div>
@@ -68,19 +124,19 @@ export default function TestComponentsPage() {
 
           {/* Text Buttons */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Text Button Component</h3>
+            <Heading level={3} className="mb-4">Text Button Component</Heading>
             <div className="space-y-4">
               <div>
-                <h4 className="text-md font-medium mb-2">Sizes</h4>
+                <Heading level={4} className="mb-2">Sizes</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
-                  <TextButton size="sm">Small Text Button</TextButton>
-                  <TextButton size="md">Medium Text Button</TextButton>
-                  <TextButton size="lg">Large Text Button</TextButton>
+                  <TextButton>Small Text Button</TextButton>
+                  <TextButton>Medium Text Button</TextButton>
+                  <TextButton>Large Text Button</TextButton>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-md font-medium mb-2">States</h4>
+                <Heading level={4} className="mb-2">States</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
                   <TextButton>Normal Text Button</TextButton>
                   <TextButton active>Active Text Button</TextButton>
@@ -92,19 +148,19 @@ export default function TestComponentsPage() {
 
           {/* Image Buttons */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Image Button Component</h3>
+            <Heading level={3} className="mb-4">Image Button Component</Heading>
             <div className="space-y-4">
               <div>
-                <h4 className="text-md font-medium mb-2">Sizes</h4>
+                <Heading level={4} className="mb-2">Sizes</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
-                  <ImageButton href="/" size="sm"><FiHome size={16} /></ImageButton>
-                  <ImageButton href="/" size="md"><FiHome size={20} /></ImageButton>
-                  <ImageButton href="/" size="lg"><FiHome size={24} /></ImageButton>
+                  <ImageButton href="/"><FiHome size={16} /></ImageButton>
+                  <ImageButton href="/"><FiHome size={20} /></ImageButton>
+                  <ImageButton href="/"><FiHome size={24} /></ImageButton>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-md font-medium mb-2">States</h4>
+                <Heading level={4} className="mb-2">States</Heading>
                 <div className="flex flex-wrap gap-4 items-center">
                   <ImageButton href="/"><FiHome size={20} /></ImageButton>
                   <ImageButton href="/shop" active><FiShoppingCart size={20} /></ImageButton>
@@ -120,12 +176,12 @@ export default function TestComponentsPage() {
 
       {/* Inputs Section */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6 border-b-2 border-black pb-2">Input Components</h2>
+        <Heading level={2} className="mb-6 border-b-2 border-black pb-2">Input Components</Heading>
 
         <div className="space-y-6">
           {/* Text Fields */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Text Fields</h3>
+            <Heading level={3} className="mb-4">Text Fields</Heading>
             <div className="space-y-4 max-w-md">
               <div>
                 <label className="block text-sm mb-2">Text Input</label>
@@ -156,10 +212,10 @@ export default function TestComponentsPage() {
 
           {/* Dropdown */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Dropdown Component</h3>
+            <Heading level={3} className="mb-4">Dropdown Component</Heading>
             <div className="space-y-4">
               <div>
-                <h4 className="text-md font-medium mb-2">Primary Variant</h4>
+                <Heading level={4} className="mb-2">Primary Variant</Heading>
                 <div className="flex flex-wrap gap-4 items-start">
                   <div>
                     <label className="block text-sm mb-2">Left Aligned</label>
@@ -198,7 +254,7 @@ export default function TestComponentsPage() {
               </div>
 
               <div>
-                <h4 className="text-md font-medium mb-2">Secondary Variant</h4>
+                <Heading level={4} className="mb-2">Secondary Variant</Heading>
                 <div className="flex flex-wrap gap-4 items-start">
                   <div>
                     <label className="block text-sm mb-2">Left Aligned</label>
@@ -237,7 +293,7 @@ export default function TestComponentsPage() {
 
           {/* Stepper Input */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Stepper Input Component</h3>
+            <Heading level={3} className="mb-4">Stepper Input Component</Heading>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm mb-2">Quantity Selector (Current: {stepperValue})</label>
@@ -264,12 +320,12 @@ export default function TestComponentsPage() {
 
       {/* Interactive Examples */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6 border-b-2 border-black pb-2">Interactive Examples</h2>
+        <Heading level={2} className="mb-6 border-b-2 border-black pb-2">Interactive Examples</Heading>
 
         <div className="space-y-6">
           {/* Form Example */}
           <div className="max-w-md p-6 border border-black bg-gray-50">
-            <h3 className="text-lg font-medium mb-4">Sample Form</h3>
+            <Heading level={3} className="mb-4">Sample Form</Heading>
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
               <div>
                 <label className="block text-sm mb-2">Name</label>
@@ -307,8 +363,8 @@ export default function TestComponentsPage() {
               </div>
 
               <div className="flex gap-2">
-                <Button variant="primary" size="md" fullWidth>Submit</Button>
-                <Button variant="secondary" size="md">Cancel</Button>
+                <Button variant="primary" fullWidth>Submit</Button>
+                <Button variant="secondary">Cancel</Button>
               </div>
             </form>
           </div>

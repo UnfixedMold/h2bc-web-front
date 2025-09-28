@@ -41,7 +41,7 @@ export default function ShopContent({ products }: { products: ProductItem[] }) {
       <section>
         {filtered.length === 0 ? (
           <div className="flex items-center justify-center py-16">
-            <span className="font-decorative text-5xl text-foreground select-none">no items</span>
+            <span className="font-script text-5xl text-foreground select-none">no items</span>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 sm:gap-12">

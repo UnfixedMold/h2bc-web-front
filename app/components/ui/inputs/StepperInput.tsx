@@ -1,5 +1,6 @@
 "use client";
 import { HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 import TextButton from '../buttons/TextButton'
 
 type Props = Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> & {
@@ -26,7 +27,7 @@ export default function StepperButton({
   const canIncrement = typeof max === 'number' ? value < max : true
 
   return (
-    <div className={`inline-flex items-stretch border border-black${className ? ' ' + className : ''}`} {...rest}>
+    <div className={twMerge('inline-flex items-stretch border border-black', className)} {...rest}>
       <TextButton
         ariaSelected={false}
         disabled={!canDecrement}

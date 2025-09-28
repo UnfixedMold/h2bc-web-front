@@ -1,4 +1,5 @@
 import { InputHTMLAttributes, TextareaHTMLAttributes, forwardRef } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 // Shared style for both input and textarea
 const baseClass =
@@ -8,7 +9,7 @@ export const TextInput = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLIn
   ({ className = '', ...props }, ref) => (
     <input
       ref={ref}
-      className={`${baseClass} ${className}`.trim()}
+      className={twMerge(baseClass, className)}
       {...props}
     />
   )
@@ -20,7 +21,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<H
     <textarea
       ref={ref}
       rows={rows}
-      className={`${baseClass} ${className}`.trim()}
+      className={twMerge(baseClass, className)}
       {...props}
     />
   )

@@ -1,5 +1,6 @@
 import PageLayout from '../components/ui/PageLayout'
 import TextButton from '../components/ui/buttons/TextButton'
+import Heading from '../components/ui/Heading'
 
 export const metadata = {
     title: 'Shipping & Returns',
@@ -10,7 +11,7 @@ export default function ShippingReturnsPage() {
     return (
         <PageLayout heading="Shipping and Returns">
             <section className="mb-10">
-                <h2 className="text-base sm:text-lg font-semibold mb-2">Shipping Policy</h2>
+                <Heading level={4} bold className="mb-2">Shipping Policy</Heading>
                 <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Lithuania:</strong> LP Express lockers. Flat rate <strong>2.99 €</strong> per order. Free shipping for orders over <strong>30 €</strong>. Delivery in <strong>1–3 working days</strong>.</li>
                     <li><strong>European Union:</strong> Flat rate <strong>5.99 €</strong> per order. Free shipping for orders over <strong>50 €</strong>. Delivery in <strong>5–10 working days</strong>.</li>
@@ -20,7 +21,7 @@ export default function ShippingReturnsPage() {
             </section>
 
             <section className="mb-10">
-                <h2 className="text-base sm:text-lg font-semibold mb-2">Return Policy</h2>
+                <Heading level={4} bold className="mb-2">Return Policy</Heading>
                 <ul className="list-disc pl-6 space-y-2">
                     <li>Returns accepted within <strong>14 days</strong> of receiving your order.</li>
                     <li>Items must be unused, in original packaging, and in resellable condition.</li>

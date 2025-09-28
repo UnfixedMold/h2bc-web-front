@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import PageHeading from "./PageHeading";
+import { twMerge } from 'tailwind-merge';
+import Heading from "./Heading";
 
 interface PageLayoutProps {
   heading: ReactNode;
@@ -14,9 +15,9 @@ export default function PageLayout({
 }: PageLayoutProps) {
   return (
     <div className="flex justify-center">
-      <main className={`flex flex-col w-full max-w-4xl px-6 pt-8 sm:pt-10 pb-12 ${className}`}>
+      <main className={twMerge('flex flex-col w-full max-w-4xl px-6 pt-8 sm:pt-10 pb-12', className)}>
         <div className="mb-8">
-          <PageHeading>{heading}</PageHeading>
+          <Heading level={1} font="blackletter">{heading}</Heading>
         </div>
         {children}
       </main>
