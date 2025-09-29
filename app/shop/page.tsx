@@ -62,12 +62,7 @@ const PRODUCTS: ProductItem[] = [
 ]
 
 export default function ShopPage() {
-
     return (
-        <main className="w-full pt-8 sm:pt-10 pb-12">
-            <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <ShopContent products={PRODUCTS} />
-            </div>
-        </main>
+        <ShopContent products={PRODUCTS} />
     )
 }

@@ -1,18 +1,15 @@
-import { UnifrakturMaguntia } from 'next/font/google'
-import localFont from 'next/font/local'
+import { UnifrakturMaguntia } from "next/font/google";
+import localFont from "next/font/local";
 
-export const unifrakturMaguntia = UnifrakturMaguntia({
-  subsets: ['latin'],
-  weight: '400',
-})
+export const unifraktur = UnifrakturMaguntia({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-unifraktur",
+});
 
-export const edwardianScript = localFont({
-  src: [
-    {
-      path: '../public/fonts/Edwardian Script ITC Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-  display: 'swap',
-})
+export const edwardian = localFont({
+  src: [{ path: "../public/fonts/Edwardian Script ITC Regular.ttf", weight: "400", style: "normal" }],
+  display: "swap",
+  variable: "--font-edwardian"
+});

@@ -1,8 +1,8 @@
 "use client";
 import Link from 'next/link'
 import Image from 'next/image'
+import { twMerge } from 'tailwind-merge'
 import { screens } from '@/lib/breakpoints'
-import { edwardianScript } from '@/app/fonts'
 
 export interface ProductCardProps {
     slug: string
@@ -35,13 +35,13 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                 className="block"
             >
                 <div className={`relative w-full aspect-square`}>
-                    <div className={`relative w-full h-full ${soldOut ? 'opacity-40' : ''}`}>
+                    <div className={twMerge('relative w-full h-full', soldOut ? 'opacity-40' : '')}>
                         <Image
                             src={image}
                             alt={name}
                             fill
                             sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-                               className={`pink-img-shadow object-contain transition-opacity duration-200 ease-out ${hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : ''}`}
+                               className={twMerge('pink-img-shadow object-contain transition-opacity duration-200 ease-out', hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : '')}
                             draggable={false}
                             priority={!!priority}
                         />
@@ -59,7 +59,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                     </div>
                     {soldOut && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                            <span className={`${edwardianScript.className} text-black/90 text-5xl select-none`}>Sold Out</span>
+                            <span className="font-script text-foreground/90 text-5xl select-none">Sold Out</span>
                         </div>
                     )}
                 </div>

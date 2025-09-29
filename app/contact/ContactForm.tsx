@@ -1,16 +1,40 @@
 "use client";
-import { useEffect, useRef, useActionState, useState } from "react";
+import { useEffect, useRef, useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import Button from "@/app/components/ui/buttons/Button";
-import Dropdown from "@/app/components/ui/inputs/Dropdown";
-import { TextInput, TextArea } from "@/app/components/ui/inputs/TextFields";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type FormState = {
   ok?: boolean;
   message?: string;
   fieldErrors?: Record<string, string>;
 };
+
+const FormSchema = z.object({
+  email: z.string().email("Enter a valid email."),
+  topic: z.string().min(1, "Select a topic."),
+  message: z.string().min(5, "Message is too short."),
+});
 
 export default function ContactForm({
   action,
@@ -19,102 +43,130 @@ export default function ContactForm({
 }) {
   const [state, formAction] = useActionState(action, {} as FormState);
   const formRef = useRef<HTMLFormElement>(null);
-  const [topic, setTopic] = useState("order");
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+      topic: "order",
+      message: "",
+    },
+  });
 
   useEffect(() => {
     if (state?.ok && formRef.current) {
       formRef.current.reset();
-      setTopic("order");
+      form.reset();
     }
-  }, [state?.ok]);
+  }, [state?.ok, form]);
+
+  const handleFormSubmit = (data: z.infer<typeof FormSchema>) => {
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('topic', data.topic);
+    formData.append('message', data.message);
+    formAction(formData);
+  };
 
   return (
-    <div className="w-full max-w-none">
-      <form
-        ref={formRef}
-        action={formAction}
-        className="block w-full max-w-none flex flex-col gap-6"
-      >
-        {/* Row: Email + Topic */}
-        <div className="w-full max-w-none grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-          <div className="w-full max-w-none flex flex-col justify-center">
-            <label htmlFor="email" className="block text-sm mb-2 tracking-wide">
-              Email
-            </label>
-            <TextInput
-              id="email"
+    <div className="w-full">
+      <Form {...form}>
+        <form
+          ref={formRef}
+          onSubmit={form.handleSubmit(handleFormSubmit)}
+          className="space-y-8"
+        >
+          {/* Email + Topic Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
               name="email"
-              type="email"
-              required
-              placeholder="you@example.com"
-              className="flex w-full max-w-none border border-black px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
+              render={({ field }) => (
+                <FormItem className="flex flex-col space-y-2">
+                  <FormLabel className="text-sm font-medium tracking-wide">
+                    Email
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="you@example.com"
+                      className="h-11"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {state?.fieldErrors?.email && (
-              <p className="text-red-600 text-xs mt-1">{state.fieldErrors.email}</p>
-            )}
+
+            <FormField
+              control={form.control}
+              name="topic"
+              render={({ field }) => (
+                <FormItem className="flex flex-col space-y-2">
+                  <FormLabel className="text-sm font-medium tracking-wide">
+                    Topic
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select a topic" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="order">Order / Shipping</SelectItem>
+                      <SelectItem value="returns">Returns & Refunds</SelectItem>
+                      <SelectItem value="product">Product Question</SelectItem>
+                      <SelectItem value="collab">Collaboration</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          <div className="w-full max-w-none flex flex-col justify-center">
-            <label htmlFor="topic" className="block text-sm mb-2 tracking-wide">
-              Topic
-            </label>
-            <Dropdown
-              options={[
-                { value: "order", label: "Order / Shipping" },
-                { value: "returns", label: "Returns & Refunds"},
-                { value: "product", label: "Product Question"},
-                { value: "collab", label: "Collaboration"},
-                { value: "other", label: "Other"},
-              ]}
-              value={topic}
-              onChange={setTopic}
-              variant="primary"
-              align="left"
-              inputClassName="flex w-full max-w-none border border-black px-3 py-2 h-10 items-center focus:outline-none focus:ring-0"
-              labelClassName="text-sm w-full"
-              arrowSize={25}
-              itemClassName="px-3 py-2 w-full text-sm"
-              menuClassName="w-full min-w-0"
-            />
-            {state?.fieldErrors?.topic && (
-              <p className="text-red-600 text-xs mt-1">{state.fieldErrors.topic}</p>
-            )}
-          </div>
-        </div>
-
-        {/* Message */}
-        <div className="w-full max-w-none">
-          <label htmlFor="message" className="block text-sm mb-2 tracking-wide">
-            Message
-          </label>
-          <TextArea
-            id="message"
+          {/* Message */}
+          <FormField
+            control={form.control}
             name="message"
-            required
-            placeholder="Tell us what's up..."
-            className="h-32 resize-y"
+            render={({ field }) => (
+              <FormItem className="flex flex-col space-y-2">
+                <FormLabel className="text-sm font-medium tracking-wide">
+                  Message
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Tell us what's up..."
+                    className="min-h-32 resize-y"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {state?.fieldErrors?.message && (
-            <p className="text-red-600 text-xs mt-1">{state.fieldErrors.message}</p>
-          )}
-        </div>
 
-        <SubmitButton />
-
-        {state?.ok && <p className="text-green-700 text-sm">Thanks — we got your message.</p>}
-        {state?.message && !state.ok && <p className="text-red-700 text-sm">{state.message}</p>}
-      </form>
+          <SubmitButton />
+        </form>
+      </Form>
     </div>
   );
 }
 
 function SubmitButton() {
-  
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" variant="primary" fullWidth disabled={pending}>
-      {pending ? "Sending…" : "Send"}
+    <Button
+      type="submit"
+      variant="default"
+      disabled={pending}
+      size="lg"
+      className="w-full"
+    >
+      {pending ? "Sending…" : "Send Message"}
     </Button>
   );
 }
