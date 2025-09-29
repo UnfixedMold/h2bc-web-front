@@ -2,9 +2,9 @@
 import Image from 'next/image'
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
-import ImageButton from '@/app/components/ui/buttons/ImageButton'
+import { Button } from '@/components/ui/button'
 import { IoCloseSharp } from 'react-icons/io5'
-import { IoMdArrowDropdown } from 'react-icons/io'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface GalleryModalProps {
   open: boolean
@@ -109,7 +109,7 @@ export default function GalleryModal({
         <div className="relative w-full h-[80vh]">
           {/* Mobile: swipe horizontally between images */}
           <div
-            className="block sm:hidden w-full h-full overflow-x-auto snap-x snap-mandatory flex scrollbar-hide"
+            className="sm:hidden w-full h-full overflow-x-auto snap-x snap-mandatory flex scrollbar-hide"
             ref={mobileScrollRef}
             onScroll={handleMobileScroll}
           >
@@ -170,30 +170,35 @@ export default function GalleryModal({
             )}
             {canNavigate && (
               <>
-                <ImageButton
+                <Button
+                  variant="ghost"
                   onClick={goPrev}
-                  ariaLabel="Previous image"
-                  className="absolute left-2 top-1/2 -translate-y-1/2 p-2"
+                  aria-label="Previous image"
+                  size="icon"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10 rounded-full"
                 >
-                  <IoMdArrowDropdown className="rotate-90" size={24} />
-                </ImageButton>
-                <ImageButton
+                  <ChevronLeft />
+                </Button>
+                <Button
+                  variant="ghost"
                   onClick={goNext}
-                  ariaLabel="Next image"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2"
+                  aria-label="Next image"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10 rounded-full"
                 >
-                  <IoMdArrowDropdown className="-rotate-90" size={24} />
-                </ImageButton>
+                  <ChevronRight />
+                </Button>
               </>
             )}
           </div>
-          <ImageButton
+          <Button
+            variant="ghost"
             onClick={onClose}
-            ariaLabel="Close gallery"
-            className="absolute top-2 right-2 p-2"
+            aria-label="Close gallery"
+            className="absolute top-2 right-2 z-20 rounded-full h-8 w-8 p-0"
           >
-            <IoCloseSharp size={24} />
-          </ImageButton>
+            <IoCloseSharp size={16} />
+          </Button>
         </div>
       </div>
     </div>

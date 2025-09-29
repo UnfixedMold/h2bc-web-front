@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { twMerge } from 'tailwind-merge'
+import { cn } from '@/lib/utils'
 
 interface NavLinksProps {
     activePath?: string
@@ -9,10 +9,10 @@ interface NavLinksProps {
 
 
 const navItems = [
-  { href: '/shop', label: 'Shop' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+    { href: '/shop', label: 'Shop' },
+    { href: '/gallery', label: 'Gallery' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
 ]
 
 
@@ -25,19 +25,23 @@ export default function NavLinks({
     return (
         <ul className={ulClassName}>
             {navItems.map(({ href, label }) => {
-                const isActive = activePath === href
+                const isActive = activePath === href || activePath.startsWith(href + '/')
 
                 return (
                     <li key={href}>
                         <Link
                             href={href}
-                            className={twMerge('font-blackletter accent-text-shadow transition-colors', linkClassName, isActive ? "text-accent" : '')}
-                        >
-                            {label}
+                            className={cn(
+                                "font-blackletter hover:text-shadow-xl hover:text-shadow-pink-500 transition-all duration-300",
+                                linkClassName,
+                                isActive && "text-pink-500"
+                            )}
+                                >
+                                { label }
                         </Link>
                     </li>
-                )
-            })}
-        </ul>
+    )
+})}
+        </ul >
     )
 }

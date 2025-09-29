@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 interface HeadingProps {
   children: ReactNode
   level?: 1 | 2 | 3 | 4 | 5 | 6
-  font?: 'sans-serif' | 'blackletter' | 'script'
+  font?: 'sans' | 'blackletter' | 'script'
   bold?: boolean
   className?: string
 }
@@ -12,13 +12,13 @@ interface HeadingProps {
 export default function Heading({
   children,
   level = 1,
-  font = 'sans-serif',
+  font = 'sans',
   bold = false,
   className = ''
 }: HeadingProps) {
 
   const fontClasses = {
-    'sans-serif': 'font-sans-serif',
+    sans: 'font-sans',
     blackletter: 'font-blackletter',
     script: 'font-script'
   }

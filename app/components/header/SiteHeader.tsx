@@ -2,21 +2,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FiUser, FiShoppingCart } from "react-icons/fi";
-
+import { User, ShoppingBag, ChevronDown } from 'lucide-react';
 import { NavLinks } from ".";
 import BurgerMenu from "./BurgerMenu";
-import Dropdown from "../ui/inputs/Dropdown";
-import ImageButton from "@/app/components/ui/buttons/ImageButton";
 import { useRegion } from "@/app/providers/RegionProvider";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 
 const SHOP_LINKS = [
-  { href: "/profile", label: "Profile", Icon: FiUser },
-  { href: "/cart", label: "Cart", Icon: FiShoppingCart },
+  { href: "/profile", label: "Profile", Icon: User },
+  { href: "/cart", label: "Cart", Icon: ShoppingBag },
 ];
 
-const SHOP_ICON_SIZE = 25;
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -43,11 +46,6 @@ export default function SiteHeader() {
     value: selectedRegionId,
     onChange: setSelectedRegionId,
     getDisplayLabel,
-    variant: "secondary" as const,
-    inputClassName: "h-[29px] min-w-[60px] border-b-2",
-    labelClassName: "text-sm font-bold",
-    arrowSize: 25,
-    itemClassName: "px-4 py-3 min-w-[200px] text-xs",
     disabled: dropdownDisabled,
   };
   if (pathname === "/") return null;
@@ -63,7 +61,24 @@ export default function SiteHeader() {
           </div>
 
           <div className="md:hidden">
-            <Dropdown {...regionDropdownConfig} align="left" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" disabled={regionDropdownConfig.disabled} className="gap-1">
+                  {regionDropdownConfig.getDisplayLabel({ value: regionDropdownConfig.value }) || defaultShortName}
+                  <ChevronDown size={16} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {regionDropdownConfig.options.map((option) => (
+                  <DropdownMenuItem
+                    key={option.value}
+                    onClick={() => regionDropdownConfig.onChange(option.value)}
+                  >
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* desktop: logo on left */}
@@ -103,16 +118,34 @@ export default function SiteHeader() {
         </div>
 
         {/* RIGHT */}
-        <nav aria-label="Shop" className="flex items-center justify-end gap-5">
-          {/* desktop: region on right */}
+        <nav aria-label="Shop" className="flex items-center justify-end gap-2">
+          {/* desktop: region dropdown on right */}
           <div className="hidden md:block">
-            <Dropdown {...regionDropdownConfig} align="right" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" disabled={regionDropdownConfig.disabled} className="gap-1">
+                  {regionDropdownConfig.getDisplayLabel({ value: regionDropdownConfig.value }) || defaultShortName}
+                  <ChevronDown size={16} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {regionDropdownConfig.options.map((option) => (
+                  <DropdownMenuItem
+                    key={option.value}
+                    onClick={() => regionDropdownConfig.onChange(option.value)}
+                  >
+                    {option.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-
           {SHOP_LINKS.map(({ href, label, Icon }) => (
-            <ImageButton key={href} href={href} ariaLabel={label}>
-              <Icon size={SHOP_ICON_SIZE} />
-            </ImageButton>
+            <Button key={href} variant="ghost">
+              <Link href={href!} aria-label={label}>
+                <Icon />
+              </Link>
+            </Button>
           ))}
         </nav>
       </div>

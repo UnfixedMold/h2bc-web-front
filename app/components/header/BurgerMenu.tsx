@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import NavLinks from "./NavLinks";
-import ImageButton from "../ui/buttons/ImageButton";
+import { Button } from "@/components/ui/button";
 
 interface BurgerMenuProps {
   activePath: string;
@@ -15,17 +15,9 @@ export default function BurgerMenu({ activePath }: BurgerMenuProps) {
 
   return (
     <>
-      <button
-        type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
-        aria-expanded={open}
-        aria-controls="mobile-nav-links"
-        onClick={() => setOpen(!open)}
-        className="p-2 rounded-md hover:bg-black/5 active:bg-black/10 transition-colors"
-      >
-        <span className="sr-only">Menu</span>
-        {open ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
-      </button>
+      <Button variant="ghost" size="icon" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} aria-controls="mobile-nav-links" onClick={() => setOpen(!open)}>
+        {open ? <FiX /> : <FiMenu />}
+      </Button>
 
       {open && (
         <div
@@ -37,9 +29,8 @@ export default function BurgerMenu({ activePath }: BurgerMenuProps) {
 
       <div
         id="mobile-nav-links"
-        className={`absolute inset-x-0 top-full z-50 transition-all duration-200 ${
-          open ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-2"
-        }`}
+        className={`absolute inset-x-0 top-full z-50 transition-all duration-200 ${open ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-2"
+          }`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bg-white/95 backdrop-blur border-t border-black/10 shadow-lg">
