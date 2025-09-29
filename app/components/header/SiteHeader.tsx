@@ -7,6 +7,8 @@ import { NavLinks } from ".";
 import BurgerMenu from "./BurgerMenu";
 import { useRegion } from "@/app/providers/RegionProvider";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -141,10 +143,15 @@ export default function SiteHeader() {
             </DropdownMenu>
           </div>
           {SHOP_LINKS.map(({ href, label, Icon }) => (
-            <Button key={href} variant="ghost">
+            <Button key={href} variant="ghost" className="relative">
               <Link href={href!} aria-label={label}>
                 <Icon />
               </Link>
+              {label === "Cart" && (
+                <Badge className="absolute top-0 right-1 h-4 w-4 flex items-center justify-center p-0 text-white bg-pink-500 text-[10px] pointer-events-none">
+                  3
+                </Badge>
+              )}
             </Button>
           ))}
         </nav>
