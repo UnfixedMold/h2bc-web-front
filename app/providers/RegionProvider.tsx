@@ -58,7 +58,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
         setError(false)
 
       } catch (e) {
-        
+
         console.error("Failed to fetch regions:", e)
         setRegions([])
         setSelectedRegionId(DEFAULT_REGION_ID)
@@ -68,7 +68,7 @@ export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     fetchRegions()
-  }, [])
+  }, [selectedRegionId])
 
   return (
     <RegionContext.Provider

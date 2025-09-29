@@ -148,7 +148,7 @@ export default function SiteHeader() {
                 <Icon />
               </Link>
               {label === "Cart" && (
-                <Badge className="absolute top-0 right-1 h-4 w-4 flex items-center justify-center p-0 text-white bg-pink-500 text-[10px] pointer-events-none">
+                <Badge className="absolute top-1 right-2 h-4 w-4 flex items-center justify-center p-0 text-white bg-pink-500 text-[10px] pointer-events-none">
                   3
                 </Badge>
               )}

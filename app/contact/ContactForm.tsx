@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 
 type FormState = {
-  ok?: boolean;
+  ok: boolean;
   message?: string;
   fieldErrors?: Record<string, string>;
 };
@@ -41,7 +41,7 @@ export default function ContactForm({
 }: {
   action: (prevState: FormState, formData: FormData) => Promise<FormState>;
 }) {
-  const [state, formAction] = useActionState(action, {} as FormState);
+  const [state, formAction] = useActionState(action, { ok: false } as FormState);
   const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm<z.infer<typeof FormSchema>>({

@@ -35,7 +35,7 @@ export default function ShippingReturnsPage() {
                                     contact
                                 </Link>
                             </Button>
-                        } page. We'll provide the return address.</li>
+                        } page. We&apos;ll provide the return address.</li>
                         <li>Refunds are issued within <strong>14 days</strong> after we receive the item, to your original payment method.</li>
                     </ul>
                 </section>
