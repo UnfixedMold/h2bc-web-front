@@ -1,8 +1,11 @@
 "use client";
 import Link from 'next/link'
 import Image from 'next/image'
-import { twMerge } from 'tailwind-merge'
+import { cn } from '@/lib/utils'
 import { screens } from '@/lib/breakpoints'
+import ProductCardSkeleton from './ProductCardSkeleton'
+
+export { ProductCardSkeleton }
 
 export interface ProductCardProps {
     slug: string
@@ -14,6 +17,7 @@ export interface ProductCardProps {
     hoverImage?: string
     soldOut?: boolean
     priority?: boolean
+    loading?: boolean
 }
 
 function formatPriceEUR(value: number, currency = 'EUR') {
@@ -24,8 +28,12 @@ function formatPriceEUR(value: number, currency = 'EUR') {
     return `€${formatted} ${currency}`
 }
 
-export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut, priority }: ProductCardProps) {
+export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut, priority, loading }: ProductCardProps) {
     const href = `/shop/${slug}`
+
+    if (loading) {
+        return <ProductCardSkeleton />
+    }
 
     return (
         <div className="group w-full max-w-sm mx-auto">
@@ -35,13 +43,13 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                 className="block"
             >
                 <div className={`relative w-full aspect-square`}>
-                    <div className={twMerge('relative w-full h-full', soldOut ? 'opacity-40' : '')}>
+                    <div className={cn('relative w-full h-full', soldOut && 'opacity-40')}>
                         <Image
                             src={image}
                             alt={name}
                             fill
                             sizes={`(min-width:${screens.lg}) 25vw, (min-width:${screens.sm}) 50vw, 100vw`}
-                               className={twMerge('pink-img-shadow object-contain transition-opacity duration-200 ease-out', hoverImage ? 'group-hover:opacity-0 group-focus-visible:opacity-0' : '')}
+                               className={cn('pink-img-shadow object-contain transition-opacity duration-200 ease-out', hoverImage && 'group-hover:opacity-0 group-focus-visible:opacity-0')}
                             draggable={false}
                             priority={!!priority}
                         />
