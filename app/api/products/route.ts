@@ -19,8 +19,6 @@ export async function GET() {
       const totalQty =
         p.variants?.reduce((sum, v: any) => sum + (v.inventory_quantity ?? 0), 0) ?? 0
 
- 
-
       return {
         slug: p.handle,
         name: p.title,
