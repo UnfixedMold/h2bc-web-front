@@ -20,7 +20,7 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
           src={images[activeImage]}
           alt={name}
           fill
-          className="pink-img-shadow"
+          className="pink-img-shadow object-contain"
           priority
         />
         <button
