@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn } from '@/lib/utils'
+import { cn, formatPrice } from '@/lib/utils'
 import { screens } from '@/lib/breakpoints'
-import { formatPrice } from '@/lib/format-price'
 import ProductCardSkeleton from './ProductCardSkeleton'
 
 export { ProductCardSkeleton }

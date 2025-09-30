@@ -10,9 +10,17 @@ export async function setRegionCookie(regionId: string) {
   cookieStore.set('region_id', regionId, REGION_COOKIE_OPTIONS)
 }
 
-export async function getRegionCookie() {
+export async function getRegionCookie(): Promise<string> {
   const cookieStore = await cookies()
-  return cookieStore.get('region_id')?.value
+  const regionId = cookieStore.get('region_id')?.value
+
+  if (!regionId) {
+    const defaultRegionId = process.env.NEXT_PUBLIC_DEFAULT_REGION_ID!
+    cookieStore.set('region_id', defaultRegionId, REGION_COOKIE_OPTIONS)
+    return defaultRegionId
+  }
+
+  return regionId
 }
 
 const fetchRegionsFromAPI = unstable_cache(

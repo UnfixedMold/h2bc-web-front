@@ -2,6 +2,7 @@ import ShopContent from './components/ShopContent'
 import type { ProductItem } from './components/ShopContent'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
+import { getRegionCookie } from '@/app/actions/regions'
 
 export const metadata = {
     title: 'Shop',
@@ -9,7 +10,8 @@ export const metadata = {
 }
 
 export default async function ShopPage() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products`)
+    const regionId = await getRegionCookie()
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products?region_id=${regionId}`)
     const data = await response.json()
 
     if (data.error) {

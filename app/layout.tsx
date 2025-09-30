@@ -25,7 +25,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={cn(unifraktur.variable, edwardian.variable, "min-h-screen", "flex flex-col", "items-center")}>
         <Toaster position="top-center" richColors />
-        <RegionProvider regions={regions} initialRegionId={regionId!} error={error}>
+        <RegionProvider regions={regions} initialRegionId={regionId} error={error}>
           <SiteHeader />
           <main className="flex-1 flex flex-col max-w-7xl w-full px-6 sm:px-8 md:px-10">
             {children}
