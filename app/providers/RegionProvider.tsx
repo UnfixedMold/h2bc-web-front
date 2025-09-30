@@ -8,6 +8,7 @@ export type Region = {
   id: string
   name: string
   shortName?: string
+  currencyCode: string
 }
 
 interface RegionContextType {
@@ -15,6 +16,7 @@ interface RegionContextType {
   selectedRegionId: string
   setSelectedRegionId: (id: string) => void
   error: boolean
+  currencyCode: string
 }
 
 const RegionContext = createContext<RegionContextType | null>(null)
@@ -40,9 +42,12 @@ export const RegionProvider = ({
     })
   }
 
+  const selectedRegion = regions.find(r => r.id === selectedRegionId)
+  const currencyCode = selectedRegion?.currencyCode ?? process.env.NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE ?? 'USD'
+
   return (
     <RegionContext.Provider
-      value={{ regions, selectedRegionId, setSelectedRegionId, error }}
+      value={{ regions, selectedRegionId, setSelectedRegionId, error, currencyCode }}
     >
       {children}
     </RegionContext.Provider>

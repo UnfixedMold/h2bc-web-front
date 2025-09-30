@@ -1,8 +1,8 @@
-"use client";
 import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { screens } from '@/lib/breakpoints'
+import { formatPrice } from '@/lib/format-price'
 import ProductCardSkeleton from './ProductCardSkeleton'
 
 export { ProductCardSkeleton }
@@ -10,25 +10,16 @@ export { ProductCardSkeleton }
 export interface ProductCardProps {
     slug: string
     name: string
-    price: number
-    currency?: string
-    pricePrefix?: string
+    price: number | null
     image: string
     hoverImage?: string
     soldOut?: boolean
     priority?: boolean
     loading?: boolean
+    currencyCode: string
 }
 
-function formatPriceEUR(value: number, currency = 'EUR') {
-    const formatted = value.toLocaleString('lt-LT', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    })
-    return `€${formatted} ${currency}`
-}
-
-export default function ProductCard({ slug, name, price, currency = 'EUR', pricePrefix, image, hoverImage, soldOut, priority, loading }: ProductCardProps) {
+export default function ProductCard({ slug, name, price, image, hoverImage, soldOut, priority, loading, currencyCode }: ProductCardProps) {
     const href = `/shop/${slug}`
 
     if (loading) {
@@ -79,8 +70,7 @@ export default function ProductCard({ slug, name, price, currency = 'EUR', price
                 </Link>
             </div>
             <div className="mt-1 text-center text-base font-medium">
-                {pricePrefix ? `${pricePrefix} ` : ''}
-                {formatPriceEUR(price, currency)}
+                {formatPrice(price, currencyCode)}
             </div>
         </div>
     )

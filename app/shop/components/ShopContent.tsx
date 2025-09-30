@@ -2,14 +2,14 @@
 import { useMemo, useState } from 'react'
 import ProductCard from './ProductCard'
 import CategoryFilter from './CategoryFilter'
+import { useRegion } from '@/app/providers/RegionProvider'
 
 export type Category = 'ALL' | 'PRINT ON DEMAND' | 'BELTS' | 'BEANIES' | 'JEWELERY'
 
 export interface ProductItem {
   slug: string
   name: string
-  price: number
-  pricePrefix?: string
+  price: number | null
   image: string
   hoverImage?: string
   soldOut?: boolean
@@ -22,6 +22,7 @@ export const PRIORITY_COUNT = 4
 
 export default function ShopContent({ products }: { products: ProductItem[] }) {
   const [active, setActive] = useState<Category>('ALL')
+  const { currencyCode } = useRegion()
 
   const sorted = useMemo(() => {
     const inStock = products.filter(p => !p.soldOut)
@@ -46,7 +47,7 @@ export default function ShopContent({ products }: { products: ProductItem[] }) {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 sm:gap-12">
             {filtered.map((p, idx) => (
-              <ProductCard key={p.slug} {...p} priority={idx < PRIORITY_COUNT} />
+              <ProductCard key={p.slug} {...p} currencyCode={currencyCode} priority={idx < PRIORITY_COUNT} />
             ))}
           </div>
         )}

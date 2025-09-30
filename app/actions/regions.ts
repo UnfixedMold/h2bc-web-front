@@ -21,7 +21,8 @@ const fetchRegionsFromAPI = unstable_cache(
     return regions.map(r => ({
       id: r.id,
       name: r.name,
-      shortName: r.metadata?.shortName as string | undefined
+      shortName: r.metadata?.shortName as string | undefined,
+      currencyCode: r.currency_code
     }))
   },
   ['regions'],
