@@ -11,7 +11,7 @@ export async function GET() {
         'id,handle,title,' +
         'images,images.url,' +
         'categories,categories.name,' +
-        '*variants,+variants.inventory_quantity'
+        '+variants.*,*variants.calculated_price,+variants.inventory_quantity'
     })
 
     const mappedProducts = products.map((p: StoreProduct) => {
@@ -19,10 +19,13 @@ export async function GET() {
       const totalQty =
         p.variants?.reduce((sum, v: any) => sum + (v.inventory_quantity ?? 0), 0) ?? 0
 
+      const firstVariant = p.variants?.find((v: any) => v.rank === 0) ?? p.variants?.[0]
+      const calculatedPrice = firstVariant?.calculated_price?.calculated_amount ?? null
+
       return {
         slug: p.handle,
         name: p.title,
-        price: 0, // TODO: pricing
+        price: calculatedPrice,
         image: p.images?.[0]?.url ?? null,
         hoverImage: p.images?.[1]?.url ?? null,
         soldOut: totalQty <= 0,
