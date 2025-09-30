@@ -2,7 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import { User, ShoppingBag, ChevronDown } from 'lucide-react';
+import { toast } from "sonner";
 import { NavLinks } from ".";
 import BurgerMenu from "./BurgerMenu";
 import { useRegion } from "@/app/providers/RegionProvider";
@@ -25,13 +27,22 @@ const SHOP_LINKS = [
 
 export default function SiteHeader() {
   const pathname = usePathname();
-  const { regions, selectedRegionId, setSelectedRegionId, loading, error } = useRegion();
+  const { regions, selectedRegionId, setSelectedRegionId, error } = useRegion();
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Failed to load regions", {
+        description: "Using default region. Please refresh the page to try again.",
+      });
+    }
+  }, [error]);
+
   const regionOptions = regions.map(r => ({
     value: r.id,
     label: r.name,
     shortLabel: r.shortName
   }));
-  const dropdownDisabled = error || loading || regionOptions.length === 0;
+  const dropdownDisabled = regionOptions.length <= 1;
   const defaultShortName = process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME ?? "";
   const getDisplayLabel = (opt?: { value?: string }) => {
     if (dropdownDisabled) return defaultShortName;

@@ -14,6 +14,7 @@ interface RegionContextType {
   regions: Region[]
   selectedRegionId: string
   setSelectedRegionId: (id: string) => void
+  error: boolean
 }
 
 const RegionContext = createContext<RegionContextType | null>(null)
@@ -21,11 +22,13 @@ const RegionContext = createContext<RegionContextType | null>(null)
 export const RegionProvider = ({
   children,
   regions,
-  initialRegionId
+  initialRegionId,
+  error = false
 }: {
   children: React.ReactNode
   regions: Region[]
   initialRegionId: string
+  error?: boolean
 }) => {
   const [selectedRegionId, _setSelectedRegionId] = useState<string>(initialRegionId)
   const [, startTransition] = useTransition()
@@ -39,7 +42,7 @@ export const RegionProvider = ({
 
   return (
     <RegionContext.Provider
-      value={{ regions, selectedRegionId, setSelectedRegionId }}
+      value={{ regions, selectedRegionId, setSelectedRegionId, error }}
     >
       {children}
     </RegionContext.Provider>
