@@ -13,6 +13,7 @@ export default function NotFound() {
                 height={240}
                 priority
                 className='mb-8'
+                unoptimized
             />
             <Button variant="link" className='uppercase text-md'>
                 <Link href="/shop">{"<"} Go back home</Link>

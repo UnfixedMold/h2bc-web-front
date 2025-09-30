@@ -1,78 +1,53 @@
 
 "use client"
 
-import React, { createContext, useContext, useEffect, useState } from "react"
-import Cookies from "js-cookie"
-import { sdk } from "@/lib/medusa"
-
-const DEFAULT_REGION_ID = process.env.NEXT_PUBLIC_DEFAULT_REGION_ID!
-const DEFAULT_REGION_SHORT_NAME = process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME!
-
-export const REGION_COOKIE_EXPIRES = 365;
+import React, { createContext, useContext, useState, useTransition } from "react"
+import { setRegionCookie } from "@/app/actions/regions"
 
 export type Region = {
   id: string
   name: string
   shortName?: string
+  currencyCode: string
 }
 
 interface RegionContextType {
   regions: Region[]
   selectedRegionId: string
   setSelectedRegionId: (id: string) => void
-  loading: boolean
   error: boolean
-  defaultRegionShortName: string
+  currencyCode: string
 }
 
 const RegionContext = createContext<RegionContextType | null>(null)
 
-export const RegionProvider = ({ children }: { children: React.ReactNode }) => {
-  const cookieRegionId = Cookies.get("region_id")
-  const [regions, setRegions] = useState<Region[]>([])
-  const [selectedRegionId, _setSelectedRegionId] = useState<string>(cookieRegionId || DEFAULT_REGION_ID)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+export const RegionProvider = ({
+  children,
+  regions,
+  initialRegionId,
+  error = false
+}: {
+  children: React.ReactNode
+  regions: Region[]
+  initialRegionId: string
+  error?: boolean
+}) => {
+  const [selectedRegionId, _setSelectedRegionId] = useState<string>(initialRegionId)
+  const [, startTransition] = useTransition()
 
   const setSelectedRegionId = (id: string) => {
     _setSelectedRegionId(id)
-    Cookies.set("region_id", id, { expires: REGION_COOKIE_EXPIRES, path: "/" })
+    startTransition(async () => {
+      await setRegionCookie(id)
+    })
   }
 
-  useEffect(() => {
-    const fetchRegions = async () => {
-      try {
-        const { regions } = await sdk.store.region.list()
-        const mapped = regions.map(r => ({
-          id: r.id,
-          name: r.name,
-          shortName: r.metadata?.shortName
-        }))
-
-        setRegions(mapped)
-
-        if (!mapped.some(r => r.id === selectedRegionId)) {
-          setSelectedRegionId(mapped[0]?.id || DEFAULT_REGION_ID)
-        }
-
-        setError(false)
-
-      } catch (e) {
-        
-        console.error("Failed to fetch regions:", e)
-        setRegions([])
-        setSelectedRegionId(DEFAULT_REGION_ID)
-        setError(true)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchRegions()
-  }, [])
+  const selectedRegion = regions.find(r => r.id === selectedRegionId)
+  const currencyCode = selectedRegion?.currencyCode ?? process.env.NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE ?? 'USD'
 
   return (
     <RegionContext.Provider
-      value={{ regions, selectedRegionId, setSelectedRegionId, loading, error, defaultRegionShortName: DEFAULT_REGION_SHORT_NAME }}
+      value={{ regions, selectedRegionId, setSelectedRegionId, error, currencyCode }}
     >
       {children}
     </RegionContext.Provider>

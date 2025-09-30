@@ -3,10 +3,9 @@
 Frontend for the h2bc website. It includes:
 - Site pages (about + other sections)
 - Shop UI (products & related views)
-- Fetching from a headless CMS
-- Fetching from an ecommerce API
+- Fetching from an headless ecommerce API (MedusaJS)
 
-Built with Next.js, TypeScript, Tailwind. Details will be filled in as integrations land.
+Built with Next.js, TypeScript, Tailwind & shadcn. Details will be filled in as integrations land.
 
 ### Setup
 Prerequisites:
@@ -18,13 +17,7 @@ Install dependencies:
 npm install
 ```
 
-Optional environment variables (create `.env.local`):
-```
-NEXT_PUBLIC_CMS_URL=
-CMS_TOKEN=
-ECOM_API_URL=
-ECOM_API_KEY=
-```
+Set environment variables (see .env.example)
 
 ### Run
 ```bash

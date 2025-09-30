@@ -10,8 +10,14 @@ function isValidEmail(email: string) {
   return /.+@.+\..+/.test(email)
 }
 
+interface FormState {
+  ok: boolean
+  fieldErrors?: Record<string, string>
+  message?: string
+}
+
 export default function ContactPage() {
-  async function submitAction(_prev: any, formData: FormData) {
+  async function submitAction(_prev: FormState | undefined, formData: FormData): Promise<FormState> {
     'use server'
 
     const email = String(formData.get('email') || '').trim()
@@ -46,7 +52,7 @@ export default function ContactPage() {
             Contact
           </Heading>
           <p className="mt-4 text-lg text-muted-foreground">
-            Have a question or need assistance? Send us a message and we'll get back to you as soon as possible.
+            Have a question or need assistance? Send us a message and we&apos;ll get back to you as soon as possible.
           </p>
         </div>
         <ContactForm action={submitAction} />
