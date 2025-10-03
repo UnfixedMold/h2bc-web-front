@@ -6,18 +6,20 @@ import { Button } from '@/components/ui/button'
 import GalleryModal from './GalleryModal'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
-export default function ProductGallery({ images, name }: { images: string[]; name: string }) {
+export default function ProductGallery({ images, name }: { images: { id: string; url: string }[]; name: string }) {
   const [activeImage, setActiveImage] = useState(0)
   const canNavigate = images.length > 1
   const goPrev = () => setActiveImage(i => (i - 1 + images.length) % images.length)
   const goNext = () => setActiveImage(i => (i + 1) % images.length)
   const [open, setOpen] = useState(false)
 
+  if (images.length === 0) return null
+
   return (
     <section>
       <div className="relative w-full aspect-square">
         <Image
-          src={images[activeImage]}
+          src={images[activeImage].url}
           alt={name}
           fill
           className="pink-img-shadow object-contain"
@@ -52,14 +54,14 @@ export default function ProductGallery({ images, name }: { images: string[]; nam
       </div>
       {images.length > 1 && (
         <div className="mt-4 grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 gap-3">
-          {images.map((src, idx) => (
+          {images.map((img, idx) => (
             <button
-              key={src + idx}
+              key={img.id + '-' + idx}
               className={cn('relative aspect-square border cursor-pointer', idx === activeImage ? 'border-black' : 'border-black/30')}
               onClick={() => setActiveImage(idx)}
               aria-label={`Show image ${idx + 1}`}
             >
-              <Image src={src} alt={`${name} thumbnail ${idx + 1}`} fill className="object-contain" sizes="80px" />
+              <Image src={img.url} alt={`${name} thumbnail ${idx + 1}`} fill className="object-contain" sizes="80px" />
             </button>
           ))}
         </div>

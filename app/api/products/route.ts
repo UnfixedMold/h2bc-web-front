@@ -25,14 +25,15 @@ export async function GET(request: Request) {
         'id,handle,title,' +
         'images,images.url,' +
         'categories,categories.name,' +
-        '+variants.*,*variants.calculated_price,+variants.inventory_quantity'
+        '*variants, *variants.options, *variants.inventory_quantity'
     })
 
     const mappedProducts = products.map((p: StoreProduct) => {
+      const allVariantsManaged = p.variants?.every(v => v.manage_inventory) ?? false
       const totalQty =
-        p.variants?.reduce((sum, v: any) => sum + (v.inventory_quantity ?? 0), 0) ?? 0
+        p.variants?.reduce((sum, v) => sum + (v.inventory_quantity ?? 0), 0) ?? 0
 
-      const firstVariant = p.variants?.find((v: any) => v.rank === 0) ?? p.variants?.[0]
+      const firstVariant = p.variants?.[0]
       const calculatedPrice = firstVariant?.calculated_price?.calculated_amount ?? null
 
       return {
@@ -41,7 +42,7 @@ export async function GET(request: Request) {
         price: calculatedPrice,
         image: p.images?.[0]?.url ?? null,
         hoverImage: p.images?.[1]?.url ?? null,
-        soldOut: totalQty <= 0,
+        soldOut: allVariantsManaged && totalQty <= 0,
         category: p.categories?.[0]?.name ?? null
       }
     })

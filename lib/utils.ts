@@ -33,8 +33,19 @@ export function formatPrice(amount: number | null, currencyCode: string): string
     return 'NOT AVAILABLE'
   }
 
-  return new Intl.NumberFormat('en-US', {
+  const code = currencyCode.toUpperCase()
+
+  // Get currency symbol using Intl
+  const symbol = new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: currencyCode.toUpperCase(),
-  }).format(amount)
+    currency: code,
+    currencyDisplay: 'narrowSymbol'
+  }).formatToParts(0).find(part => part.type === 'currency')?.value || code
+
+  const formatted = amount.toLocaleString('lt-LT', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+
+  return `${symbol}${formatted} ${code}`
 }

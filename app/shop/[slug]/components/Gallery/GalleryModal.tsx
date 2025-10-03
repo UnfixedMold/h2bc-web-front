@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 interface GalleryModalProps {
   open: boolean
   onClose: () => void
-  images: string[]
+  images: { id: string; url: string }[]
   activeIndex: number
   setActiveIndex: (idx: number) => void
   name: string
@@ -113,29 +113,29 @@ export default function GalleryModal({
             ref={mobileScrollRef}
             onScroll={handleMobileScroll}
           >
-            {images.map((src, idx) => (
-              <div key={src + idx} className="relative w-full h-full shrink-0 snap-center">
-                {errorStates[src] ? (
+            {images.map((img, idx) => (
+              <div key={img.id + '-' + idx} className="relative w-full h-full shrink-0 snap-center">
+                {errorStates[img.url] ? (
                   <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500">
                     Failed to load image
                   </div>
                 ) : (
                   <>
-                    {loadingStates[src] && (
+                    {loadingStates[img.url] && (
                       <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
                       </div>
                     )}
                     <Image
-                      src={src}
+                      src={img.url}
                       alt={`${name} ${idx + 1}`}
                       fill
                       className="object-contain"
                       sizes="100vw"
                       priority={idx === activeIndex}
-                      onLoadStart={() => handleImageLoadStart(src)}
-                      onLoad={() => handleImageLoad(src)}
-                      onError={() => handleImageError(src)}
+                      onLoadStart={() => handleImageLoadStart(img.url)}
+                      onLoad={() => handleImageLoad(img.url)}
+                      onError={() => handleImageError(img.url)}
                     />
                   </>
                 )}
@@ -144,27 +144,27 @@ export default function GalleryModal({
           </div>
           {/* Desktop: single image with arrows */}
           <div className="hidden sm:block relative w-full h-full">
-            {errorStates[images[activeIndex]] ? (
+            {errorStates[images[activeIndex].url] ? (
               <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500">
                 Failed to load image
               </div>
             ) : (
               <>
-                {loadingStates[images[activeIndex]] && (
+                {loadingStates[images[activeIndex].url] && (
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
                   </div>
                 )}
                 <Image
-                  src={images[activeIndex]}
+                  src={images[activeIndex].url}
                   alt={name}
                   fill
                   className="object-contain"
                   sizes="100vw"
                   priority
-                  onLoadStart={() => handleImageLoadStart(images[activeIndex])}
-                  onLoad={() => handleImageLoad(images[activeIndex])}
-                  onError={() => handleImageError(images[activeIndex])}
+                  onLoadStart={() => handleImageLoadStart(images[activeIndex].url)}
+                  onLoad={() => handleImageLoad(images[activeIndex].url)}
+                  onError={() => handleImageError(images[activeIndex].url)}
                 />
               </>
             )}
