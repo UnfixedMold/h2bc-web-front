@@ -23,6 +23,8 @@ export async function getRegionCookie(): Promise<string> {
   return regionId
 }
 
+const CACHE_REVALIDATE_TIME = 3600
+
 const fetchRegionsFromAPI = unstable_cache(
   async () => {
     const { regions } = await sdk.store.region.list()
@@ -34,7 +36,7 @@ const fetchRegionsFromAPI = unstable_cache(
     }))
   },
   ['regions'],
-  { revalidate: 3600, tags: ['regions'] }
+  { revalidate: CACHE_REVALIDATE_TIME, tags: ['regions'] }
 )
 
 export async function getRegions() {
@@ -42,13 +44,13 @@ export async function getRegions() {
     const regions = await fetchRegionsFromAPI()
     return {
       regions,
-      error: false
+      error: null
     }
   } catch (error) {
     console.error("Failed to fetch regions:", error)
     return {
       regions: [],
-      error: true
+      error: "Failed to load regions. Using default region. Please refresh the page to try again."
     }
   }
 }

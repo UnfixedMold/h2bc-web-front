@@ -2,9 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import { User, ShoppingBag, ChevronDown } from 'lucide-react';
-import { toast } from "sonner";
 import { NavLinks } from ".";
 import BurgerMenu from "./BurgerMenu";
 import { useRegion } from "@/app/providers/RegionProvider";
@@ -27,15 +25,7 @@ const SHOP_LINKS = [
 
 export default function SiteHeader() {
   const pathname = usePathname();
-  const { regions, selectedRegionId, setSelectedRegionId, error } = useRegion();
-
-  useEffect(() => {
-    if (error) {
-      toast.error("Failed to load regions", {
-        description: "Using default region. Please refresh the page to try again.",
-      });
-    }
-  }, [error]);
+  const { regions, selectedRegionId, setSelectedRegionId } = useRegion();
 
   const regionOptions = regions.map(r => ({
     value: r.id,

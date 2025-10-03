@@ -5,7 +5,7 @@ import ProductActions from './components/ProductActions'
 import ProductDescription from './components/ProductDescription'
 import Heading from '@/app/components/Heading'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertCircle, Info } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { getRegionCookie } from '@/app/actions/regions'
 
 interface Props { params: Promise<{ slug: string }> }

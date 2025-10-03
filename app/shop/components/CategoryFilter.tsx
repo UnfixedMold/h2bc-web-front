@@ -1,16 +1,12 @@
-"use client";
-import { Category } from './ShopContent'
-import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export default function CategoryFilter({
   categories,
   active,
-  onChange,
 }: {
-  categories: Category[]
-  active: Category
-  onChange: (c: Category) => void
+  categories: string[]
+  active: string
 }) {
   return (
     <>
@@ -19,16 +15,16 @@ export default function CategoryFilter({
         <div className="flex w-max mx-auto whitespace-nowrap" role="tablist" aria-label="Product categories">
           {categories.map(cat => {
             const selected = active === cat
+            const href = cat === 'ALL' ? '/shop' : `/shop?category=${cat}`
             return (
-              <Button
+              <Link
                 key={cat}
-                variant="link"
-                onClick={() => onChange(cat)}
+                href={href}
                 aria-selected={selected}
-                className={cn(selected ? 'font-bold' : 'font-normal')}
+                className={cn('px-4 py-2 text-sm no-underline hover:underline', selected ? 'font-bold' : 'font-normal')}
               >
                 {active === cat ? `> ${cat}` : cat}
-              </Button>
+              </Link>
             )
           })}
         </div>
@@ -40,16 +36,16 @@ export default function CategoryFilter({
           <nav aria-label="Product categories" className="flex flex-col">
             {categories.map(cat => {
               const selected = active === cat
+              const href = cat === 'ALL' ? '/shop' : `/shop?category=${cat}`
               return (
-                <Button
+                <Link
                   key={cat}
-                  variant="link"
-                  onClick={() => onChange(cat)}
+                  href={href}
                   aria-selected={selected}
-                  className={cn(selected ? 'font-bold' : 'font-normal', "justify-start", "text-md")}
+                  className={cn('px-4 py-2 text-md no-underline hover:underline justify-start', selected ? 'font-bold' : 'font-normal')}
                 >
                   {active === cat ? `> ${cat}` : cat}
-                </Button>
+                </Link>
               )
             })}
           </nav>

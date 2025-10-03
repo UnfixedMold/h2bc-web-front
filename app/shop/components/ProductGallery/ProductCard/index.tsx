@@ -1,29 +1,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn, formatPrice } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { screens } from '@/lib/breakpoints'
-import ProductCardSkeleton from './ProductCardSkeleton'
+import ProductPrice from './ProductPrice'
+import type { ProductItem } from '../../../types'
 
-export { ProductCardSkeleton }
-
-export interface ProductCardProps {
-    slug: string
-    name: string
-    price: number | null
-    image: string
-    hoverImage?: string
-    soldOut?: boolean
+interface ProductCardProps extends Omit<ProductItem, 'category'> {
     priority?: boolean
-    loading?: boolean
-    currencyCode: string
 }
 
-export default function ProductCard({ slug, name, price, image, hoverImage, soldOut, priority, loading, currencyCode }: ProductCardProps) {
+export default function ProductCard({ slug, name, price, image, hoverImage, soldOut, priority }: ProductCardProps) {
     const href = `/shop/${slug}`
-
-    if (loading) {
-        return <ProductCardSkeleton />
-    }
 
     return (
         <div className="group w-full max-w-sm mx-auto">
@@ -68,9 +55,7 @@ export default function ProductCard({ slug, name, price, image, hoverImage, sold
                     {name}
                 </Link>
             </div>
-            <div className="mt-1 text-center text-base font-medium">
-                {formatPrice(price, currencyCode)}
-            </div>
+            <ProductPrice price={price} />
         </div>
     )
 }
