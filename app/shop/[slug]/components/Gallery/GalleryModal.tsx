@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import { IoCloseSharp } from 'react-icons/io5'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { screens } from '@/lib/breakpoints'
 
 interface GalleryModalProps {
   open: boolean
@@ -131,7 +132,7 @@ export default function GalleryModal({
                       alt={`${name} ${idx + 1}`}
                       fill
                       className="object-contain"
-                      sizes="100vw"
+                      sizes={`(max-width: ${screens.sm}) 100vw, 90vw`}
                       priority={idx === activeIndex}
                       onLoadStart={() => handleImageLoadStart(img.url)}
                       onLoad={() => handleImageLoad(img.url)}
@@ -160,7 +161,7 @@ export default function GalleryModal({
                   alt={name}
                   fill
                   className="object-contain"
-                  sizes="100vw"
+                  sizes="90vw"
                   priority
                   onLoadStart={() => handleImageLoadStart(images[activeIndex].url)}
                   onLoad={() => handleImageLoad(images[activeIndex].url)}

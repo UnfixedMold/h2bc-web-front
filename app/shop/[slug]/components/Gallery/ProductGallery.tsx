@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import GalleryModal from './GalleryModal'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { screens } from '@/lib/breakpoints'
 
 export default function ProductGallery({ images, name }: { images: { id: string; url: string }[]; name: string }) {
   const [activeImage, setActiveImage] = useState(0)
@@ -24,6 +25,7 @@ export default function ProductGallery({ images, name }: { images: { id: string;
           fill
           className="pink-img-shadow object-contain"
           priority
+          sizes={`(max-width: ${screens.md}) 100vw, 50vw`}
         />
         <button
           type="button"

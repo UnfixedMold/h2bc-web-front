@@ -32,7 +32,7 @@ export default function Home() {
       <Script
         type="module"
         src="https://unpkg.com/@google/model-viewer@4.1.0/dist/model-viewer.min.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
     </div>
   )

@@ -6,10 +6,12 @@ export const unifraktur = UnifrakturMaguntia({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-unifraktur",
+  preload: false,
 });
 
 export const edwardian = localFont({
   src: [{ path: "../public/fonts/Edwardian Script ITC Regular.ttf", weight: "400", style: "normal" }],
   display: "swap",
-  variable: "--font-edwardian"
+  variable: "--font-edwardian",
+  preload: false,
 });

@@ -20,7 +20,7 @@ import {
 
 
 const SHOP_LINKS = [
-  { href: "/profile", label: "Profile", Icon: User },
+  // { href: "/profile", label: "Profile", Icon: User },
   { href: "/cart", label: "Cart", Icon: ShoppingBag },
 ];
 

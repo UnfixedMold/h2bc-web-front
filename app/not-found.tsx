@@ -10,7 +10,7 @@ export default function NotFound() {
                 src="/404.gif"
                 alt="404 Not Found gif"
                 width={320}
-                height={240}
+                height={256}
                 priority
                 className='mb-8'
                 unoptimized
