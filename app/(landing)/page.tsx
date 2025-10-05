@@ -1,4 +1,4 @@
-import { NavLinks } from '../components/header'
+import { NavLinks } from '@/components/layout/header'
 import Script from 'next/script'
 
 

@@ -6,8 +6,8 @@ import BurgerMenu from "./BurgerMenu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RegionSelector from "./RegionSelector";
-import { getRegions, getRegionCookie } from '@/app/actions/regions';
-import ClientToastErrorHandler from '@/components/ClientToastErrorHandler';
+import { getRegions, getRegionCookie } from '@/actions/regions';
+import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler';
 
 const SHOP_LINKS = [
   { href: "/cart", label: "Cart", Icon: ShoppingBag },

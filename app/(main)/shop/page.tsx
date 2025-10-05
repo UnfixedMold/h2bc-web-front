@@ -1,10 +1,10 @@
-import CategoryFilter from './components/CategoryFilter'
-import ProductGallery from './components/ProductGallery'
-import ClientToastErrorHandler from '@/components/ClientToastErrorHandler'
+import CategoryFilter from '@/components/shop/category-filter'
+import ProductGrid from '@/components/shop/product-grid'
+import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
-import { getCategories } from '@/app/actions/categories'
-import { getProducts } from '@/app/actions/products'
+import { getCategories } from '@/actions/categories'
+import { getProducts } from '@/actions/products'
 
 export const metadata = {
     title: 'Shop',
@@ -44,7 +44,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
             <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8">
                 <CategoryFilter categories={['ALL', ...categories]} active={activeCategory} />
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 sm:gap-12">
-                    <ProductGallery products={filtered} />
+                    <ProductGrid products={filtered} />
                 </section>
             </div>
         </ClientToastErrorHandler>

@@ -1,4 +1,4 @@
-import Heading from '../../components/Heading'
+import Heading from '@/components/layout/heading'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 

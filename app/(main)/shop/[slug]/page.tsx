@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation'
-import ProductGallery from './components/Gallery/ProductGallery'
-import ProductDetails from './components/ProductDetails'
-import ProductDescription from './components/ProductDescription'
-import Heading from '@/app/components/Heading'
+import ProductImageCarousel from '@/components/shop/product-detail/product-image-carousel'
+import ProductDetails from '@/components/shop/product-detail/product-details'
+import ProductDescription from '@/components/shop/product-detail/product-description'
+import Heading from '@/components/layout/heading'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
-import { getProductDetails } from '@/app/actions/products'
+import { getProductDetails } from '@/actions/products'
 
 interface Props { params: Promise<{ slug: string }> }
 
@@ -35,7 +35,7 @@ export default async function ProductDetailPage({ params }: Props) {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left: Gallery */}
-            <ProductGallery images={product!.images} name={product!.name} />
+            <ProductImageCarousel images={product!.images} name={product!.name} />
 
             {/* Right: Details */}
             <section>

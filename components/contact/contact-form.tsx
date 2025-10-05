@@ -1,11 +1,11 @@
-"use client";
-import { useEffect, useRef, useActionState } from "react";
-import { useFormStatus } from "react-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { useState } from "react"
+
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -13,69 +13,71 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
 
-type FormState = {
-  ok: boolean;
-  message?: string;
-  fieldErrors?: Record<string, string>;
-};
+import { submitContactForm } from "@/actions/contact"
+import { contactFormSchema, contactTopics, type ContactFormData } from "./types"
 
-const FormSchema = z.object({
-  email: z.string().email("Enter a valid email."),
-  topic: z.string().min(1, "Select a topic."),
-  message: z.string().min(5, "Message is too short."),
-});
+export default function ContactForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-export default function ContactForm({
-  action,
-}: {
-  action: (prevState: FormState, formData: FormData) => Promise<FormState>;
-}) {
-  const [state, formAction] = useActionState(action, { ok: false } as FormState);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    mode: "onSubmit", // Validate on submit only
     defaultValues: {
       email: "",
       topic: "order",
       message: "",
     },
-  });
+  })
 
-  useEffect(() => {
-    if (state?.ok && formRef.current) {
-      formRef.current.reset();
-      form.reset();
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true)
+
+    try {
+      const response = await submitContactForm(data)
+
+      if (response.success) {
+        toast.success(response.message || "Message sent successfully!")
+        form.reset()
+      } else {
+        // Show field errors if any
+        if (response.errors) {
+          Object.entries(response.errors).forEach(([field, error]) => {
+            if (error) {
+              form.setError(field as keyof ContactFormData, {
+                message: error
+              })
+            }
+          })
+        }
+
+        // Show general error message
+        if (response.message) {
+          toast.error(response.message)
+        }
+      }
+    } catch (error) {
+      console.error('Form submission error:', error)
+      toast.error("Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
     }
-  }, [state?.ok, form]);
-
-  const handleFormSubmit = (data: z.infer<typeof FormSchema>) => {
-    const formData = new FormData();
-    formData.append('email', data.email);
-    formData.append('topic', data.topic);
-    formData.append('message', data.message);
-    formAction(formData);
-  };
+  }
 
   return (
     <div className="w-full">
       <Form {...form}>
-        <form
-          ref={formRef}
-          onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="space-y-8"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" noValidate>
           {/* Email + Topic Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <FormField
@@ -114,11 +116,11 @@ export default function ContactForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="order">Order / Shipping</SelectItem>
-                      <SelectItem value="returns">Returns & Refunds</SelectItem>
-                      <SelectItem value="product">Product Question</SelectItem>
-                      <SelectItem value="collab">Collaboration</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
+                      {Object.entries(contactTopics).map(([value, label]) => (
+                        <SelectItem key={value} value={value}>
+                          {label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -148,25 +150,17 @@ export default function ContactForm({
             )}
           />
 
-          <SubmitButton />
+          <Button
+            type="submit"
+            variant="default"
+            disabled={isSubmitting}
+            size="lg"
+            className="w-full"
+          >
+            {isSubmitting ? "Sending…" : "Send Message"}
+          </Button>
         </form>
       </Form>
     </div>
-  );
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button
-      type="submit"
-      variant="default"
-      disabled={pending}
-      size="lg"
-      className="w-full"
-    >
-      {pending ? "Sending…" : "Send Message"}
-    </Button>
-  );
+  )
 }

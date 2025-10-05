@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { setRegionCookie } from '@/app/actions/regions';
+import { setRegionCookie } from '@/actions/regions';
 import { useTransition } from 'react';
 
 interface Region {

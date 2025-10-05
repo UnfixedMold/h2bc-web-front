@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState, ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
-import SizeSelector from './SizeSelector'
+import SizeSelector from './size-selector'
 import { formatPrice } from '@/lib/utils'
 import type { SizeOption, ProductVariant, ProductOption } from './types'
 import { Alert, AlertDescription } from '@/components/ui/alert'

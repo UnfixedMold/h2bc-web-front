@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import GalleryModal from './GalleryModal'
+import ProductImageModal from './product-image-modal'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { screens } from '@/lib/breakpoints'
 
-export default function ProductGallery({ images, name }: { images: { id: string; url: string }[]; name: string }) {
+export default function ProductImageCarousel({ images, name }: { images: { id: string; url: string }[]; name: string }) {
   const [activeImage, setActiveImage] = useState(0)
   const canNavigate = images.length > 1
   const goPrev = () => setActiveImage(i => (i - 1 + images.length) % images.length)
@@ -68,7 +68,7 @@ export default function ProductGallery({ images, name }: { images: { id: string;
           ))}
         </div>
       )}
-      <GalleryModal
+      <ProductImageModal
         open={open}
         onClose={() => setOpen(false)}
         images={images}

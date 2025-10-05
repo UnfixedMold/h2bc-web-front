@@ -7,7 +7,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { screens } from '@/lib/breakpoints'
 
-interface GalleryModalProps {
+interface ProductImageModalProps {
   open: boolean
   onClose: () => void
   images: { id: string; url: string }[]
@@ -16,14 +16,14 @@ interface GalleryModalProps {
   name: string
 }
 
-export default function GalleryModal({
+export default function ProductImageModal({
   open,
   onClose,
   images,
   activeIndex,
   setActiveIndex,
   name,
-}: GalleryModalProps) {
+}: ProductImageModalProps) {
   const canNavigate = images.length > 1
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const mobileScrollRef = useRef<HTMLDivElement | null>(null)

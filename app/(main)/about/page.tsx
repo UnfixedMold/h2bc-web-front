@@ -1,4 +1,4 @@
-import Heading from '../../components/Heading'
+import Heading from '@/components/layout/heading'
 
 export const metadata = {
   title: 'About',
