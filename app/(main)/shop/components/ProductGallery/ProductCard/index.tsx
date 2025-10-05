@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn } from '@/lib/utils'
+import { cn, formatPrice } from '@/lib/utils'
 import { screens } from '@/lib/breakpoints'
-import ProductPrice from './ProductPrice'
 import type { ProductItem } from '../../../types'
 
 interface ProductCardProps extends Omit<ProductItem, 'category'> {
@@ -55,7 +54,9 @@ export default function ProductCard({ slug, name, price, image, hoverImage, sold
                     {name}
                 </Link>
             </div>
-            <ProductPrice price={price} />
+            <div className="mt-1 text-center text-base font-medium">
+                {formatPrice(price)}
+            </div>
         </div>
     )
 }

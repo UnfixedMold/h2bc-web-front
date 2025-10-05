@@ -7,7 +7,7 @@ import type { SizeOption, ProductVariant, ProductOption } from './types'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Info } from 'lucide-react'
 
-interface ProductActionsProps {
+interface ProductDetailsProps {
   slug: string
   sizes: SizeOption[]
   variants: ProductVariant[]
@@ -16,14 +16,14 @@ interface ProductActionsProps {
   descriptionSlot?: ReactNode
 }
 
-export default function ProductActions({
+export default function ProductDetails({
   slug,
   sizes,
   variants,
   options,
   alert,
   descriptionSlot
-}: ProductActionsProps) {
+}: ProductDetailsProps) {
   const [size, setSize] = useState<SizeOption | null>(
     sizes.find(s => s.available) ?? sizes[0] ?? null
   )
@@ -39,15 +39,13 @@ export default function ProductActions({
   }, [size, sizeOption, variants])
 
   const canAdd = useMemo(() => {
-    if (!selectedVariant) return false
-    if (selectedVariant.manage_inventory && selectedVariant.inventory_quantity <= 0) return false
-    return true
+    return selectedVariant && (!selectedVariant.manage_inventory || selectedVariant.inventory_quantity > 0)
   }, [selectedVariant])
 
   return (
     <>
       <div className="mt-2 text-xl sm:text-2xl">
-        {formatPrice(selectedVariant?.price ?? null, selectedVariant?.currency ?? 'EUR')}
+        {formatPrice(selectedVariant?.price, selectedVariant?.currency)}
       </div>
 
       {alert && (

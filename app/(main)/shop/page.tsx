@@ -3,9 +3,8 @@ import ProductGallery from './components/ProductGallery'
 import ClientToastErrorHandler from '@/components/ClientToastErrorHandler'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
-import { getRegionCookie } from '@/app/actions/regions'
 import { getCategories } from '@/app/actions/categories'
-import type { ProductItem } from './types'
+import { getProducts } from '@/app/actions/products'
 
 export const metadata = {
     title: 'Shop',
@@ -13,9 +12,7 @@ export const metadata = {
 }
 
 export default async function ShopPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
-    const regionId = await getRegionCookie()
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products?region_id=${regionId}`)
-    const { products, error: productsError }: { products: ProductItem[], error: string | null } = await response.json()
+    const { products, error: productsError } = await getProducts()
 
     if (productsError) {
         return (

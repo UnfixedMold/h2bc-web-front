@@ -1,8 +1,10 @@
+"use client"
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 interface NavLinksProps {
-    activePath?: string
     ulClassName?: string
     linkClassName?: string
 }
@@ -17,15 +19,15 @@ const navItems = [
 
 
 export default function NavLinks({
-    activePath = '',
     ulClassName = '',
     linkClassName = ''
 }: NavLinksProps) {
+    const pathname = usePathname()
 
     return (
         <ul className={ulClassName}>
             {navItems.map(({ href, label }) => {
-                const isActive = activePath === href || activePath.startsWith(href + '/')
+                const isActive = pathname === href || pathname.startsWith(href + '/')
 
                 return (
                     <li key={href}>
@@ -36,12 +38,12 @@ export default function NavLinks({
                                 linkClassName,
                                 isActive && "text-pink-500"
                             )}
-                                >
-                                { label }
+                        >
+                            {label}
                         </Link>
                     </li>
-    )
-})}
-        </ul >
+                )
+            })}
+        </ul>
     )
 }

@@ -1,5 +1,3 @@
-"use client";
-import { usePathname } from "next/navigation";
 import SocialIcons from './SocialIcons';
 import RightsNotice from './RightsNotice';
 import { Button } from '@/components/ui/button';
@@ -12,8 +10,6 @@ const FOOTER_LINKS = [
 ];
 
 export default function FooterBar() {
-    const pathname = usePathname();
-    if (pathname === "/") return null;
     return (
         <footer className="w-full px-4 sm:px-8 md:px-12 lg:px-18 py-6 sm:py-8 md:py-10 lg:py-10 text-sm">
             <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between w-full">

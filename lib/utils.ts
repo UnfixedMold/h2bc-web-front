@@ -28,12 +28,12 @@ export function validateQueryParams<T extends z.ZodType>(
   return { success: true, data: validation.data }
 }
 
-export function formatPrice(amount: number | null, currencyCode: string): string {
-  if (amount === null) {
+export function formatPrice(amount?: number | null, currencyCode?: string): string {
+  if (!amount) {
     return 'NOT AVAILABLE'
   }
 
-  const code = currencyCode.toUpperCase()
+  const code = (currencyCode || process.env.NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE || 'EUR').toUpperCase()
 
   // Get currency symbol using Intl
   const symbol = new Intl.NumberFormat('en-US', {
