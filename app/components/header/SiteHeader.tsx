@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import RegionSelector from "./RegionSelector";
 import { getRegions, getRegionCookie } from '@/app/actions/regions';
+import ClientToastErrorHandler from '@/components/ClientToastErrorHandler';
 
 const SHOP_LINKS = [
   { href: "/cart", label: "Cart", Icon: ShoppingBag },
@@ -17,7 +18,8 @@ export default async function SiteHeader() {
   const currentRegionId = await getRegionCookie();
 
   return (
-    <header className="relative z-50 w-full px-4 sm:px-8 md:px-12 lg:px-18 py-6 sm:py-8 md:py-10 lg:py-12">
+    <ClientToastErrorHandler error={error}>
+      <header className="relative z-50 w-full px-4 sm:px-8 md:px-12 lg:px-18 py-6 sm:py-8 md:py-10 lg:py-12">
       <div className="grid grid-cols-3 items-center">
         {/* LEFT */}
         <div className="flex items-center gap-2">
@@ -86,5 +88,6 @@ export default async function SiteHeader() {
         </nav>
       </div>
     </header>
+    </ClientToastErrorHandler>
   );
 }
