@@ -73,6 +73,7 @@ The codebase uses a **Data Layer Adapter (DLA)** pattern:
 3. Current flow: Server Component → Data Layer (direct import)
 
 Examples:
+
 - Shop page directly calls `getProducts()` from `lib/data/products.ts` (Server Component)
 - Contact form previously used Server Actions but is being refactored to call `submitContactMessage` from `lib/data/contact.ts` directly
 
