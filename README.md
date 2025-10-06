@@ -10,6 +10,15 @@
   E-commerce storefront built with Next.js 15 and Medusa.js
 </p>
 
+<p align="center">
+  <a href="https://instagram.com/_h2bc">
+    <img src="https://img.shields.io/badge/@_h2bc-555555?style=flat&logo=instagram&logoColor=white" alt="Instagram" />
+  </a>
+  <a href="https://youtube.com/@_h2bc">
+    <img src="https://img.shields.io/badge/@_h2bc-555555?style=flat&logo=youtube&logoColor=white" alt="YouTube" />
+  </a>
+</p>
+
 ---
 
 ### Prerequisites
@@ -103,3 +112,10 @@ npm start
 
 - [Website](https://ui.shadcn.com/)
 - [Documentation](https://ui.shadcn.com/docs)
+
+---
+
+# License
+
+This project is licensed under a custom **All Rights Reserved** license.  
+See the [LICENSE](./LICENSE) file for details.
