@@ -2,8 +2,13 @@ import 'server-only'
 
 import { unstable_cache } from "next/cache"
 import { cookies } from 'next/headers'
-import { REGION_COOKIE_OPTIONS } from '@/lib/constants'
 import { sdk } from "@/lib/medusa"
+
+const REGION_COOKIE_OPTIONS = {
+  maxAge: 60 * 60 * 24 * 365, // 1 year
+  path: '/',
+  httpOnly: true,
+}
 
 export async function setRegionCookie(regionId: string) {
   const cookieStore = await cookies()
