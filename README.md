@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/bw-logo.svg" alt="h2bc logo" width="200" />
+  <img src="public/bw-logo.svg" alt="h2bc logo" width="120" />
 </p>
 
 <h1 align="center">
