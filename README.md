@@ -1,40 +1,105 @@
-## h2bc web frontend
+<p align="center">
+  <img src="public/bw-logo.svg" alt="h2bc logo" width="200" />
+</p>
 
-Frontend for the h2bc website. It includes:
+<h1 align="center">
+  h2bc web storefront
+</h1>
 
-- Site pages (about + other sections)
-- Shop UI (products & related views)
-- Fetching from an headless ecommerce API (MedusaJS)
+<p align="center">
+  E-commerce storefront built with Next.js 15 and Medusa.js
+</p>
 
-Built with Next.js, TypeScript, Tailwind & shadcn. Details will be filled in as integrations land.
+---
 
-### Setup
+### Prerequisites
 
-Prerequisites:
+To use this storefront, you need a Medusa server running locally on port 9000.
+For a quick setup, run:
 
-- Node 20+ (LTS recommended)
-- npm (bundled) or pnpm / yarn if you prefer
+```shell
+npx create-medusa-app@latest
+```
 
-Install dependencies:
+Check out [create-medusa-app docs](https://docs.medusajs.com/learn/installation) for more details.
 
-```bash
+---
+
+# Overview
+
+Built with:
+
+- [Next.js 15](https://nextjs.org/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Medusa.js](https://medusajs.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+
+Features:
+
+- Product catalog with filtering
+- Product detail pages
+- Multi-region/currency support
+- Contact form with validation
+- Next.js 15 features:
+  - App Router
+  - Server Components
+  - Server Actions
+  - Turbopack
+
+---
+
+# Quickstart
+
+### Setting up environment variables
+
+Navigate into the project directory and copy the example:
+
+```shell
+cd h2bc-web-front/
+cp .env.example .env.local
+```
+
+Edit `.env.local` with your Medusa backend configuration.
+
+### Install dependencies
+
+```shell
 npm install
 ```
 
-Set environment variables (see .env.example)
+### Start developing
 
-### Run
-
-```bash
+```shell
 npm run dev
-# visit http://localhost:3000
 ```
 
-### Build
+Your site is now running at http://localhost:3000
 
-```bash
+### Build for production
+
+```shell
 npm run build
-npm start   # production server
+npm start
 ```
 
-© h2bc – All rights reserved.
+---
+
+# Resources
+
+## Medusa
+
+- [Website](https://www.medusajs.com/)
+- [GitHub](https://github.com/medusajs)
+- [Documentation](https://docs.medusajs.com/)
+
+## Next.js
+
+- [Website](https://nextjs.org/)
+- [GitHub](https://github.com/vercel/next.js)
+- [Documentation](https://nextjs.org/docs)
+
+## shadcn/ui
+
+- [Website](https://ui.shadcn.com/)
+- [Documentation](https://ui.shadcn.com/docs)

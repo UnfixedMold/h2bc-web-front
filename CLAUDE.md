@@ -10,6 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` - Build for production with Turbopack
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
 
 ### Testing
 
@@ -17,52 +18,88 @@ No test framework is currently configured in this project.
 
 ## Architecture
 
-This is a Next.js 15 e-commerce frontend built with TypeScript, Tailwind CSS, and React 19. The application uses the App Router structure.
+This is a Next.js 15 e-commerce frontend built with TypeScript, Tailwind CSS v4, and React 19. The application uses the App Router with route groups.
 
 ### Key Integrations
 
 - **Medusa.js**: E-commerce backend integration via `@medusajs/js-sdk`
-  - SDK instance: `lib/medusa.js`
+  - SDK instance: [lib/medusa.js](lib/medusa.js)
   - Configured with environment variables for backend URL and publishable key
-- **Model Viewer**: 3D model display using Google's model-viewer web component
-- **Region Management**: Global context for handling multiple regions/currencies via cookies
+- **shadcn/ui**: Component library with Radix UI primitives
+- **Form handling**: React Hook Form with Zod validation
+- **Notifications**: Sonner for toast messages
+- **Styling**: Tailwind CSS v4 with CVA (class-variance-authority) and tailwind-merge
 
 ### Directory Structure
 
-- `app/` - Next.js App Router pages and components
-  - `components/` - Shared UI components (footer, header, buttons, inputs)
-  - `shop/` - E-commerce pages and shop-specific components
-  - `providers/` - React context providers (RegionProvider)
-- `lib/` - Utility libraries and SDK configurations
-- `types/` - TypeScript type definitions
+Route groups organize the application:
 
-### State Management
+- `app/(landing)/` - Landing page with separate layout
+- `app/(main)/` - Main application pages (about, contact, gallery, shop, shipping-returns) sharing a common layout with header/footer
+- `components/` - Organized by feature area:
+  - `ui/` - shadcn/ui base components (button, input, form, etc.)
+  - `layout/` - Header and footer components
+  - `shop/` - Product cards, grids, filters, and detail views
+  - `contact/` - Contact form components
+  - `feedback/` - Error handling components
+- `lib/` - Utilities and SDK configurations
+  - `data/` - Server-side data access layer (DAL) modules
+  - `breakpoints.ts` - Centralized Tailwind breakpoint constants
+  - `utils.ts` - Common utilities (cn helper, etc.)
 
-- **RegionProvider**: Global context for region/currency selection
-  - Persists selected region in cookies (365 day expiration)
-  - Fetches regions from Medusa backend on app initialization
-  - Falls back to environment variable defaults on API failure
+### Naming Conventions
+
+- **Components**: kebab-case for file names (e.g., `product-card.tsx`, `site-header.tsx`)
+- All component names follow this convention as per recent refactoring
+
+### Data Access Pattern
+
+The codebase uses a **Data Layer Adapter (DLA)** pattern over Server Actions:
+
+1. **Server Actions** (`actions.ts`) - Entry points marked with `'use server'`, handle client-server boundary
+2. **Data Layer** (`lib/data/`) - Business logic and external API calls marked with `'server-only'`
+3. Flow: Client Component → Server Action → Data Layer → External API/Service
+
+Example: Contact form uses `submitContactAction` (Server Action) → `submitContactMessage` (Data Layer)
+
+### Region Management
+
+- Regions/currencies are managed via cookies with a 1-year expiration
+- Region data fetched from Medusa backend with Next.js cache (`unstable_cache`, 1-hour revalidation)
+- Cookie-based persistence in [lib/data/regions.ts](lib/data/regions.ts)
+- Fallback to environment variable defaults on API failure
+- Selected via region selector in header
 
 ### Environment Variables
 
-Required in `.env.local`:
+Required in `.env.local` (see [.env.example](.env.example)):
 
 - `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` - Medusa store API key
-- `NEXT_PUBLIC_MEDUSA_BACKEND_URL` - Medusa backend URL (defaults to localhost:9000)
+- `NEXT_PUBLIC_MEDUSA_BACKEND_URL` - Medusa backend URL (defaults to http://localhost:9000)
 - `NEXT_PUBLIC_DEFAULT_REGION_ID` - Fallback region ID
-- `NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME` - Default region display name
+- `NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME` - Default region display name (e.g., "€ LT")
+- `NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE` - Default currency code (e.g., "eur")
 
 ### Styling Approach
 
 - Tailwind CSS v4 with PostCSS
-- Centralized breakpoints in `lib/breakpoints.ts` matching Tailwind defaults
-- Geist fonts (sans and mono) loaded from Google Fonts
-- Component library pattern with consistent button and input components
+- Centralized breakpoints in [lib/breakpoints.ts](lib/breakpoints.ts) matching Tailwind defaults
+- Custom fonts: UnifrakturMaguntia (Google) and Edwardian Script ITC (local)
+- Component variants managed with `class-variance-authority`
+- Utility `cn()` function combines clsx + tailwind-merge for conditional classes
+
+### Next.js Configuration
+
+- Image optimization configured for Medusa backend (`localhost:9000/static/**`)
+- Cache headers set for static assets (products, fonts: 1 year immutable)
+- Turbopack enabled for dev and build
 
 ### Code Patterns
 
 - TypeScript strict mode enabled
-- ESLint with Next.js and TypeScript rules
-- File-based routing with App Router
-- React Server Components by default, Client Components marked with "use client"
+- ESLint with Next.js, TypeScript, and Prettier integration
+- File-based routing with App Router and route groups
+- React Server Components by default, Client Components marked with `"use client"`
 - Cookie-based state persistence for user preferences
+- Server-side validation with Zod, client-side with React Hook Form
+- XSS prevention with `xss` library in data layer
