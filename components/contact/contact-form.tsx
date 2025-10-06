@@ -23,9 +23,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
-import { submitContactAction } from './actions'
 import { contactFormSchema, contactTopics, type ContactFormData } from './types'
+import { submitContactMessage } from '@/lib/data/contact'
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -44,7 +43,7 @@ export default function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      const response = await submitContactAction(data)
+      const response = await submitContactMessage(data)
 
       if (response.success) {
         toast.success(response.message || 'Message sent successfully!')
