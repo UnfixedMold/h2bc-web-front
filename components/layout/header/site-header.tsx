@@ -2,10 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingBag } from 'lucide-react';
 import { NavLinks } from ".";
-import BurgerMenu from "./BurgerMenu";
+import BurgerMenu from "./burger-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import RegionSelector from "./RegionSelector";
+import RegionSelector from "./region-selector";
 import { getRegions, getRegionCookie } from '@/lib/data/regions';
 import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler';
 

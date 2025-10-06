@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { X } from "lucide-react";
-import NavLinks from "./NavLinks";
+import NavLinks from "./nav-links";
 import { Button } from "@/components/ui/button";
 import {
   Collapsible,

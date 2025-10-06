@@ -1,5 +1,5 @@
-import SocialIcons from './SocialIcons';
-import RightsNotice from './RightsNotice';
+import SocialIcons from './social-icons';
+import RightsNotice from './rights-notice';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
