@@ -1,15 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ShoppingBag } from 'lucide-react'
 import { NavLinks } from '.'
 import BurgerMenu from './burger-menu'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import RegionSelector from './region-selector'
+import CartBadge from './cart-badge'
 import { getRegions, getRegionCookie } from '@/lib/data/regions'
 import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler'
-
-const SHOP_LINKS = [{ href: '/cart', label: 'Cart', Icon: ShoppingBag }]
 
 export default async function SiteHeader() {
   const { regions, error } = await getRegions()
@@ -83,18 +79,8 @@ export default async function SiteHeader() {
                 error={error}
               />
             </div>
-            {SHOP_LINKS.map(({ href, label, Icon }) => (
-              <Button key={href} variant="ghost" className="relative">
-                <Link href={href!} aria-label={label}>
-                  <Icon />
-                </Link>
-                {label === 'Cart' && (
-                  <Badge className="absolute top-1 right-2 h-4 w-4 flex items-center justify-center p-0 text-white bg-pink-500 text-[10px] pointer-events-none">
-                    3
-                  </Badge>
-                )}
-              </Button>
-            ))}
+
+            <CartBadge />
           </nav>
         </div>
       </header>
