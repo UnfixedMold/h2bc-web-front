@@ -1,18 +1,18 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { FiMenu } from "react-icons/fi";
-import { X } from "lucide-react";
-import NavLinks from "./nav-links";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react'
+import { FiMenu } from 'react-icons/fi'
+import { X } from 'lucide-react'
+import NavLinks from './nav-links'
+import { Button } from '@/components/ui/button'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/ui/collapsible'
 
 export default function BurgerMenu() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -28,5 +28,5 @@ export default function BurgerMenu() {
         />
       </CollapsibleContent>
     </Collapsible>
-  );
+  )
 }

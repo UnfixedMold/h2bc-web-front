@@ -1,40 +1,47 @@
-'use client';
+'use client'
 
-import { ChevronDown } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { ChevronDown } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { setRegionAction } from './actions';
-import { useTransition } from 'react';
+} from '@/components/ui/dropdown-menu'
+import { setRegionAction } from './actions'
+import { useTransition } from 'react'
 
 interface Region {
-  id: string;
-  name: string;
-  shortName?: string;
-  currencyCode: string;
+  id: string
+  name: string
+  shortName?: string
+  currencyCode: string
 }
 
 interface RegionSelectorProps {
-  regions: Region[];
-  currentRegionId: string;
-  error: string | null;
+  regions: Region[]
+  currentRegionId: string
+  error: string | null
 }
 
-export default function RegionSelector({ regions, currentRegionId, error }: RegionSelectorProps) {
-  const [isPending, startTransition] = useTransition();
-  const currentRegion = regions.find(r => r.id === currentRegionId);
-  const displayLabel = currentRegion?.shortName || process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME || "";
-  const disabled = !!error || regions.length <= 1 || isPending;
+export default function RegionSelector({
+  regions,
+  currentRegionId,
+  error,
+}: RegionSelectorProps) {
+  const [isPending, startTransition] = useTransition()
+  const currentRegion = regions.find((r) => r.id === currentRegionId)
+  const displayLabel =
+    currentRegion?.shortName ||
+    process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME ||
+    ''
+  const disabled = !!error || regions.length <= 1 || isPending
 
   const handleRegionChange = (regionId: string) => {
     startTransition(async () => {
-      await setRegionAction(regionId);
-    });
-  };
+      await setRegionAction(regionId)
+    })
+  }
 
   return (
     <DropdownMenu>
@@ -55,5 +62,5 @@ export default function RegionSelector({ regions, currentRegionId, error }: Regi
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

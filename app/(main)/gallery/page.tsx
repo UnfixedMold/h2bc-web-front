@@ -4,14 +4,18 @@ export const metadata = {
 }
 
 const VIDEOS: { id: string; title: string }[] = [
-  { id: 'qI8fDbBXW2s', title: '2DRIP' }
+  { id: 'qI8fDbBXW2s', title: '2DRIP' },
 ]
 
 export default function GalleryPage() {
   return (
     <div className="space-y-16">
-      {VIDEOS.map(v => (
-        <div key={v.id} className="relative w-full" style={{aspectRatio:'16/9'}}>
+      {VIDEOS.map((v) => (
+        <div
+          key={v.id}
+          className="relative w-full"
+          style={{ aspectRatio: '16/9' }}
+        >
           <iframe
             src={`https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1&color=white`}
             title={v.title}

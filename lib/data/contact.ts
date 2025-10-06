@@ -1,9 +1,14 @@
 import 'server-only'
 
 import xss from 'xss'
-import { contactFormSchema, type ContactFormResponse } from '@/components/contact/types'
+import {
+  contactFormSchema,
+  type ContactFormResponse,
+} from '@/components/contact/types'
 
-export async function submitContactMessage(data: unknown): Promise<ContactFormResponse> {
+export async function submitContactMessage(
+  data: unknown
+): Promise<ContactFormResponse> {
   try {
     // 1. Validate structure with Zod
     const validated = contactFormSchema.safeParse(data)
@@ -16,8 +21,8 @@ export async function submitContactMessage(data: unknown): Promise<ContactFormRe
         errors: {
           email: errors.email?.[0],
           topic: errors.topic?.[0],
-          message: errors.message?.[0]
-        }
+          message: errors.message?.[0],
+        },
       }
     }
 
@@ -33,17 +38,17 @@ export async function submitContactMessage(data: unknown): Promise<ContactFormRe
     console.log('Sanitized contact form submission:', sanitized)
 
     // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 500))
 
     return {
       success: true,
-      message: 'Message sent successfully! We\'ll get back to you soon.'
+      message: "Message sent successfully! We'll get back to you soon.",
     }
   } catch (error) {
     console.error('Contact form error:', error)
     return {
       success: false,
-      message: 'Something went wrong. Please try again later.'
+      message: 'Something went wrong. Please try again later.',
     }
   }
 }

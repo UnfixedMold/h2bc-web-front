@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { useState } from "react"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { useState } from 'react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -13,30 +13,30 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 
-import { submitContactAction } from "./actions"
-import { contactFormSchema, contactTopics, type ContactFormData } from "./types"
+import { submitContactAction } from './actions'
+import { contactFormSchema, contactTopics, type ContactFormData } from './types'
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
-    mode: "onSubmit", // Validate on submit only
+    mode: 'onSubmit', // Validate on submit only
     defaultValues: {
-      email: "",
-      topic: "order",
-      message: "",
+      email: '',
+      topic: 'order',
+      message: '',
     },
   })
 
@@ -47,7 +47,7 @@ export default function ContactForm() {
       const response = await submitContactAction(data)
 
       if (response.success) {
-        toast.success(response.message || "Message sent successfully!")
+        toast.success(response.message || 'Message sent successfully!')
         form.reset()
       } else {
         // Show field errors if any
@@ -55,7 +55,7 @@ export default function ContactForm() {
           Object.entries(response.errors).forEach(([field, error]) => {
             if (error) {
               form.setError(field as keyof ContactFormData, {
-                message: error
+                message: error,
               })
             }
           })
@@ -68,7 +68,7 @@ export default function ContactForm() {
       }
     } catch (error) {
       console.error('Form submission error:', error)
-      toast.error("Something went wrong. Please try again.")
+      toast.error('Something went wrong. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -77,7 +77,11 @@ export default function ContactForm() {
   return (
     <div className="w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" noValidate>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8"
+          noValidate
+        >
           {/* Email + Topic Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <FormField
@@ -109,7 +113,10 @@ export default function ContactForm() {
                   <FormLabel className="text-sm font-medium tracking-wide">
                     Topic
                   </FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger className="h-11">
                         <SelectValue placeholder="Select a topic" />
@@ -157,7 +164,7 @@ export default function ContactForm() {
             size="lg"
             className="w-full"
           >
-            {isSubmitting ? "Sending…" : "Send Message"}
+            {isSubmitting ? 'Sending…' : 'Send Message'}
           </Button>
         </form>
       </Form>

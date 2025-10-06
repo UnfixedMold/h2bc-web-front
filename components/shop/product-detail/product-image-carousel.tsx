@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Image from 'next/image'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -7,11 +7,18 @@ import ProductImageModal from './product-image-modal'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { screens } from '@/lib/breakpoints'
 
-export default function ProductImageCarousel({ images, name }: { images: { id: string; url: string }[]; name: string }) {
+export default function ProductImageCarousel({
+  images,
+  name,
+}: {
+  images: { id: string; url: string }[]
+  name: string
+}) {
   const [activeImage, setActiveImage] = useState(0)
   const canNavigate = images.length > 1
-  const goPrev = () => setActiveImage(i => (i - 1 + images.length) % images.length)
-  const goNext = () => setActiveImage(i => (i + 1) % images.length)
+  const goPrev = () =>
+    setActiveImage((i) => (i - 1 + images.length) % images.length)
+  const goNext = () => setActiveImage((i) => (i + 1) % images.length)
   const [open, setOpen] = useState(false)
 
   if (images.length === 0) return null
@@ -59,11 +66,20 @@ export default function ProductImageCarousel({ images, name }: { images: { id: s
           {images.map((img, idx) => (
             <button
               key={img.id + '-' + idx}
-              className={cn('relative aspect-square border cursor-pointer', idx === activeImage ? 'border-black' : 'border-black/30')}
+              className={cn(
+                'relative aspect-square border cursor-pointer',
+                idx === activeImage ? 'border-black' : 'border-black/30'
+              )}
               onClick={() => setActiveImage(idx)}
               aria-label={`Show image ${idx + 1}`}
             >
-              <Image src={img.url} alt={`${name} thumbnail ${idx + 1}`} fill className="object-contain" sizes="80px" />
+              <Image
+                src={img.url}
+                alt={`${name} thumbnail ${idx + 1}`}
+                fill
+                className="object-contain"
+                sizes="80px"
+              />
             </button>
           ))}
         </div>

@@ -1,10 +1,10 @@
-import FooterBar from '@/components/layout/footer';
-import { SiteHeader } from '@/components/layout/header';
+import FooterBar from '@/components/layout/footer'
+import { SiteHeader } from '@/components/layout/header'
 
 export default function MainLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <>
@@ -14,5 +14,5 @@ export default function MainLayout({
       </main>
       <FooterBar />
     </>
-  );
+  )
 }

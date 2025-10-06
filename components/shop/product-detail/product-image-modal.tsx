@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -27,7 +27,9 @@ export default function ProductImageModal({
   const canNavigate = images.length > 1
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const mobileScrollRef = useRef<HTMLDivElement | null>(null)
-  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({})
+  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>(
+    {}
+  )
   const [errorStates, setErrorStates] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
@@ -42,25 +44,28 @@ export default function ProductImageModal({
   }, [open, activeIndex])
 
   // Throttle scroll handler for better performance
-  const handleMobileScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const el = e.currentTarget
-    const idx = Math.round(el.scrollLeft / el.clientWidth)
-    if (idx !== activeIndex && idx >= 0 && idx < images.length) {
-      setActiveIndex(idx)
-    }
-  }, [activeIndex, images.length, setActiveIndex])
+  const handleMobileScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const el = e.currentTarget
+      const idx = Math.round(el.scrollLeft / el.clientWidth)
+      if (idx !== activeIndex && idx >= 0 && idx < images.length) {
+        setActiveIndex(idx)
+      }
+    },
+    [activeIndex, images.length, setActiveIndex]
+  )
 
   const handleImageLoad = useCallback((src: string) => {
-    setLoadingStates(prev => ({ ...prev, [src]: false }))
+    setLoadingStates((prev) => ({ ...prev, [src]: false }))
   }, [])
 
   const handleImageError = useCallback((src: string) => {
-    setLoadingStates(prev => ({ ...prev, [src]: false }))
-    setErrorStates(prev => ({ ...prev, [src]: true }))
+    setLoadingStates((prev) => ({ ...prev, [src]: false }))
+    setErrorStates((prev) => ({ ...prev, [src]: true }))
   }, [])
 
   const handleImageLoadStart = useCallback((src: string) => {
-    setLoadingStates(prev => ({ ...prev, [src]: true }))
+    setLoadingStates((prev) => ({ ...prev, [src]: true }))
   }, [])
 
   const goPrev = useCallback(() => {
@@ -71,11 +76,14 @@ export default function ProductImageModal({
     setActiveIndex((activeIndex + 1) % images.length)
   }, [activeIndex, images.length, setActiveIndex])
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') onClose()
-    if (e.key === 'ArrowLeft') goPrev()
-    if (e.key === 'ArrowRight') goNext()
-  }, [onClose, goPrev, goNext])
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') goPrev()
+      if (e.key === 'ArrowRight') goNext()
+    },
+    [onClose, goPrev, goNext]
+  )
 
   // Body scroll lock
   useEffect(() => {
@@ -106,7 +114,10 @@ export default function ProductImageModal({
       ref={dialogRef}
       tabIndex={-1}
     >
-      <div className="relative w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="relative w-full max-w-6xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="relative w-full h-[80vh]">
           {/* Mobile: swipe horizontally between images */}
           <div
@@ -115,7 +126,10 @@ export default function ProductImageModal({
             onScroll={handleMobileScroll}
           >
             {images.map((img, idx) => (
-              <div key={img.id + '-' + idx} className="relative w-full h-full shrink-0 snap-center">
+              <div
+                key={img.id + '-' + idx}
+                className="relative w-full h-full shrink-0 snap-center"
+              >
                 {errorStates[img.url] ? (
                   <div className="flex items-center justify-center w-full h-full bg-gray-100 text-gray-500">
                     Failed to load image
@@ -163,7 +177,9 @@ export default function ProductImageModal({
                   className="object-contain"
                   sizes="90vw"
                   priority
-                  onLoadStart={() => handleImageLoadStart(images[activeIndex].url)}
+                  onLoadStart={() =>
+                    handleImageLoadStart(images[activeIndex].url)
+                  }
                   onLoad={() => handleImageLoad(images[activeIndex].url)}
                   onError={() => handleImageError(images[activeIndex].url)}
                 />

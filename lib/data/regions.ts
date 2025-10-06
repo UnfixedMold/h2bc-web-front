@@ -1,8 +1,8 @@
 import 'server-only'
 
-import { unstable_cache } from "next/cache"
+import { unstable_cache } from 'next/cache'
 import { cookies } from 'next/headers'
-import { sdk } from "@/lib/medusa"
+import { sdk } from '@/lib/medusa'
 
 const REGION_COOKIE_OPTIONS = {
   maxAge: 60 * 60 * 24 * 365, // 1 year
@@ -33,11 +33,11 @@ const CACHE_REVALIDATE_TIME = 3600
 const fetchRegionsFromAPI = unstable_cache(
   async () => {
     const { regions } = await sdk.store.region.list()
-    return regions.map(r => ({
+    return regions.map((r) => ({
       id: r.id,
       name: r.name,
       shortName: r.metadata?.shortName as string | undefined,
-      currencyCode: r.currency_code
+      currencyCode: r.currency_code,
     }))
   },
   ['regions'],
@@ -49,13 +49,14 @@ export async function getRegions() {
     const regions = await fetchRegionsFromAPI()
     return {
       regions,
-      error: null
+      error: null,
     }
   } catch (error) {
-    console.error("Failed to fetch regions:", error)
+    console.error('Failed to fetch regions:', error)
     return {
       regions: [],
-      error: "Failed to load regions. Using default region. Please refresh the page to try again."
+      error:
+        'Failed to load regions. Using default region. Please refresh the page to try again.',
     }
   }
 }

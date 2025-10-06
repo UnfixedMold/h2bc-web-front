@@ -1,7 +1,6 @@
 import { NavLinks } from '@/components/layout/header'
 import Script from 'next/script'
 
-
 export default function Home() {
   return (
     <div className="flex-1 flex items-center justify-center">
@@ -17,17 +16,17 @@ export default function Home() {
             auto-rotate
             auto-rotate-speed="500"
             class="block w-full h-full"
-            style={{
-              '--progress-bar-height': 0,
-              '--progress-bar-color': 'transparent',
-              '--poster-color': 'transparent',
-            } as React.CSSProperties}
+            style={
+              {
+                '--progress-bar-height': 0,
+                '--progress-bar-color': 'transparent',
+                '--poster-color': 'transparent',
+              } as React.CSSProperties
+            }
           />
         </div>
 
-        <NavLinks
-          ulClassName="flex flex-col items-center justify-center space-y-5 text-4xl md:mt-0 sm:flex-row sm:space-y-0 sm:gap-8 md:flex-col md:space-y-5 md:gap-0"
-        />
+        <NavLinks ulClassName="flex flex-col items-center justify-center space-y-5 text-4xl md:mt-0 sm:flex-row sm:space-y-0 sm:gap-8 md:flex-col md:space-y-5 md:gap-0" />
       </div>
       <Script
         type="module"

@@ -14,13 +14,12 @@ export default function Heading({
   level = 1,
   font = 'sans',
   bold = false,
-  className = ''
+  className = '',
 }: HeadingProps) {
-
   const fontClasses = {
     sans: 'font-sans',
     blackletter: 'font-blackletter',
-    script: 'font-script'
+    script: 'font-script',
   }
 
   const defaultSizes = {
@@ -29,7 +28,7 @@ export default function Heading({
     3: 'text-xl sm:text-2xl lg:text-3xl',
     4: 'text-lg sm:text-xl lg:text-2xl',
     5: 'text-base sm:text-lg',
-    6: 'text-sm'
+    6: 'text-sm',
   }
 
   const baseClasses = twMerge(

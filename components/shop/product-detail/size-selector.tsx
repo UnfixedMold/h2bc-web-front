@@ -10,14 +10,18 @@ interface SizeSelectorProps {
   onSizeChange: (size: SizeOption) => void
 }
 
-export default function SizeSelector({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) {
+export default function SizeSelector({
+  sizes,
+  selectedSize,
+  onSizeChange,
+}: SizeSelectorProps) {
   if (sizes.length === 0) return null
 
   return (
     <div className="mt-6">
       <div className="mb-2 text-sm text-muted-foreground">Size</div>
       <div className="flex gap-4">
-        {sizes.map(s => (
+        {sizes.map((s) => (
           <Button
             key={s.value}
             variant="link"
@@ -26,7 +30,8 @@ export default function SizeSelector({ sizes, selectedSize, onSizeChange }: Size
             className={cn(
               selectedSize?.value === s.value ? 'font-bold' : 'font-normal',
               !s.available && 'opacity-50 cursor-not-allowed',
-              "text-md", "p-0"
+              'text-md',
+              'p-0'
             )}
           >
             {`${selectedSize?.value === s.value ? '>' : ' '} ${s.value}`}
