@@ -3,8 +3,8 @@ import ProductGrid from '@/components/shop/product-grid'
 import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
-import { getCategories } from '@/actions/categories'
-import { getProducts } from '@/actions/products'
+import { getCategories } from '@/lib/data/categories'
+import { getProducts } from '@/lib/data/products'
 
 export const metadata = {
     title: 'Shop',

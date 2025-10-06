@@ -1,9 +1,9 @@
-'use server'
+import 'server-only'
 
 import xss from 'xss'
 import { contactFormSchema, type ContactFormResponse } from '@/components/contact/types'
 
-export async function submitContactForm(data: unknown): Promise<ContactFormResponse> {
+export async function submitContactMessage(data: unknown): Promise<ContactFormResponse> {
   try {
     // 1. Validate structure with Zod
     const validated = contactFormSchema.safeParse(data)

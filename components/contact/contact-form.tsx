@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { submitContactForm } from "@/actions/contact"
+import { submitContactAction } from "./actions"
 import { contactFormSchema, contactTopics, type ContactFormData } from "./types"
 
 export default function ContactForm() {
@@ -44,7 +44,7 @@ export default function ContactForm() {
     setIsSubmitting(true)
 
     try {
-      const response = await submitContactForm(data)
+      const response = await submitContactAction(data)
 
       if (response.success) {
         toast.success(response.message || "Message sent successfully!")

@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { setRegionCookie } from '@/actions/regions';
+import { setRegionAction } from './actions';
 import { useTransition } from 'react';
 
 interface Region {
@@ -32,7 +32,7 @@ export default function RegionSelector({ regions, currentRegionId, error }: Regi
 
   const handleRegionChange = (regionId: string) => {
     startTransition(async () => {
-      await setRegionCookie(regionId);
+      await setRegionAction(regionId);
     });
   };
 

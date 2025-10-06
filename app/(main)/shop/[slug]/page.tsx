@@ -5,14 +5,14 @@ import ProductDescription from '@/components/shop/product-detail/product-descrip
 import Heading from '@/components/layout/heading'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertCircle } from 'lucide-react'
-import { getProductDetails } from '@/actions/products'
+import { getProductByHandle } from '@/lib/data/products'
 
 interface Props { params: Promise<{ slug: string }> }
 
 export default async function ProductDetailPage({ params }: Props) {
     const { slug } = await params
 
-    const { product, error, notFound: isNotFound } = await getProductDetails(slug)
+    const { product, error, notFound: isNotFound } = await getProductByHandle(slug)
 
     if (isNotFound) {
         notFound()

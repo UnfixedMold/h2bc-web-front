@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { unstable_cache } from "next/cache"
 import { sdk } from "@/lib/medusa"
@@ -146,7 +146,7 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
   )()
 }
 
-export async function getProductDetails(handle: string) {
+export async function getProductByHandle(handle: string) {
   try {
     const regionId = await getRegionCookie()
     const product = await fetchProductDetails(handle, regionId)
