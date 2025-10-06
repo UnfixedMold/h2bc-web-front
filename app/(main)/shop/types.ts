@@ -6,4 +6,5 @@ export interface ProductItem {
   hoverImage?: string
   soldOut?: boolean
   category: string
+  currencyCode: string | null
 }

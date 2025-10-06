@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 
 interface IconBadgeProps {
   children: React.ReactNode
-  badge?: string | number
+  badge?: string
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
   className?: string
   badgeClassName?: string

@@ -48,7 +48,7 @@ export default async function ShopPage({
       : sorted.filter((p) => p.category === activeCategory)
 
   return (
-    <ClientToastErrorHandler error={categoriesError}>
+    <ClientToastErrorHandler errors={[categoriesError]}>
       <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8">
         <CategoryFilter
           categories={['ALL', ...categories]}

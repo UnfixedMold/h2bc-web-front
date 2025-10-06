@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { setRegionAction } from './actions'
 import { useTransition } from 'react'
 
 interface Region {
@@ -20,33 +19,35 @@ interface Region {
 
 interface RegionSelectorProps {
   regions: Region[]
-  currentRegionId: string
-  error: string | null
+  currentRegion?: Region | null
+  disabled: boolean
+  onRegionChange: (regionId: string) => Promise<void>
 }
 
 export default function RegionSelector({
   regions,
-  currentRegionId,
-  error,
+  currentRegion,
+  disabled,
+  onRegionChange,
 }: RegionSelectorProps) {
   const [isPending, startTransition] = useTransition()
-  const currentRegion = regions.find((r) => r.id === currentRegionId)
-  const displayLabel =
-    currentRegion?.shortName ||
-    process.env.NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME ||
-    ''
-  const disabled = !!error || regions.length <= 1 || isPending
+
+  const displayLabel = currentRegion?.shortName || '???'
 
   const handleRegionChange = (regionId: string) => {
     startTransition(async () => {
-      await setRegionAction(regionId)
+      await onRegionChange(regionId)
     })
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" disabled={disabled} className="gap-1">
+        <Button
+          variant="ghost"
+          disabled={disabled || isPending}
+          className="gap-1"
+        >
           {displayLabel}
           <ChevronDown size={16} />
         </Button>

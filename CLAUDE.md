@@ -20,6 +20,10 @@ No test framework is currently configured in this project.
 
 This is a Next.js 15 e-commerce frontend built with TypeScript, Tailwind CSS v4, and React 19. The application uses the App Router with route groups.
 
+### Prerequisites
+
+Requires a Medusa server running locally on port 9000. For quick setup: `npx create-medusa-app@latest`
+
 ### Key Integrations
 
 - **Medusa.js**: E-commerce backend integration via `@medusajs/js-sdk`
@@ -54,21 +58,35 @@ Route groups organize the application:
 
 ### Data Access Pattern
 
-The codebase uses a **Data Layer Adapter (DLA)** pattern over Server Actions:
+The codebase uses a **Data Layer Adapter (DLA)** pattern:
 
-1. **Server Actions** (`actions.ts`) - Entry points marked with `'use server'`, handle client-server boundary
-2. **Data Layer** (`lib/data/`) - Business logic and external API calls marked with `'server-only'`
-3. Flow: Client Component → Server Action → Data Layer → External API/Service
+1. **Data Layer** (`lib/data/`) - Server-side modules marked with `'use server'`, containing:
+   - Business logic and external API calls
+   - Caching via `cached` wrapper from [lib/cache.ts](lib/cache.ts)
+   - Error handling and fallbacks
+   - Return structured objects with `{ data, error }` pattern
+2. **Server Actions** (`actions.ts` files) - Optional entry points when client interaction needed
+3. Flow: Client Component → Data Layer (direct) OR Client Component → Server Action → Data Layer
 
-Example: Contact form uses `submitContactAction` (Server Action) → `submitContactMessage` (Data Layer)
+Examples:
+- Shop page directly calls `getProducts()` from [lib/data/products.ts](lib/data/products.ts) (Server Component)
+- Contact form uses `submitContactAction` (Server Action) → `submitContactMessage` (Data Layer)
 
 ### Region Management
 
 - Regions/currencies are managed via cookies with a 1-year expiration
-- Region data fetched from Medusa backend with Next.js cache (`unstable_cache`, 1-hour revalidation)
+- Region data fetched from Medusa backend with custom cache wrapper (`cached` from [lib/cache.ts](lib/cache.ts), 1-hour revalidation)
 - Cookie-based persistence in [lib/data/regions.ts](lib/data/regions.ts)
 - Fallback to environment variable defaults on API failure
 - Selected via region selector in header
+
+### Caching
+
+The project uses a custom cache wrapper (`cached` from [lib/cache.ts](lib/cache.ts)) instead of Next.js `unstable_cache` directly:
+
+- Wraps `unstable_cache` with ability to disable caching via `DISABLE_CACHE=true` environment variable
+- Used throughout all data layer functions for consistent caching behavior
+- Supports same API as `unstable_cache`: cache keys, revalidation times, and tags
 
 ### Environment Variables
 
@@ -77,8 +95,8 @@ Required in `.env.local` (see [.env.example](.env.example)):
 - `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` - Medusa store API key
 - `NEXT_PUBLIC_MEDUSA_BACKEND_URL` - Medusa backend URL (defaults to http://localhost:9000)
 - `NEXT_PUBLIC_DEFAULT_REGION_ID` - Fallback region ID
-- `NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME` - Default region display name (e.g., "€ LT")
-- `NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE` - Default currency code (e.g., "eur")
+- `NEXT_PUBLIC_BASE_URL` - Frontend URL (defaults to http://localhost:3000)
+- `DISABLE_CACHE` - Set to `true` to disable Next.js caching during development (optional, defaults to false)
 
 ### Styling Approach
 
