@@ -17,7 +17,8 @@ export default async function SiteHeader() {
   const currentRegion = regions.find((r) => r.id === regionId) || null
 
   const { cart } = await getCart()
-  const cartItemCount = cart?.items?.length ?? 0
+  const cartItemCount =
+    cart?.items?.reduce((total, item) => total + item.quantity, 0) ?? 0
 
   return (
     <ClientToastErrorHandler errors={[regionsError, currentRegionError]}>
