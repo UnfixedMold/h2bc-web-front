@@ -105,3 +105,29 @@ export async function addItemToCart(
     }
   }
 }
+
+export async function removeItemFromCart(itemId: string): Promise<CartResult> {
+  const cartId = await getCartId()
+
+  if (!cartId) {
+    return {
+      cart: null,
+      error: 'No cart found',
+    }
+  }
+
+  try {
+    const { parent: cart } = await sdk.store.cart.deleteLineItem(cartId, itemId)
+
+    return {
+      cart: cart || null,
+      error: null,
+    }
+  } catch (error) {
+    console.error('Failed to remove item from cart:', error)
+    return {
+      cart: null,
+      error: 'Failed to remove item from cart.',
+    }
+  }
+}
