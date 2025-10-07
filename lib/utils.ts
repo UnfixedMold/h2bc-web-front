@@ -32,17 +32,19 @@ export function validateQueryParams<T extends z.ZodType>(
 
 export function formatPrice(
   amount?: number | null,
-  currencyCode?: string
+  currencyCode?: string | null
 ): string {
+  const FRACTION_DIGITS = 2
+
   if (!amount) {
     return 'NOT AVAILABLE'
   }
 
-  const code = (
-    currencyCode ||
-    process.env.NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE ||
-    'EUR'
-  ).toUpperCase()
+  if (!currencyCode) {
+    return `??${amount.toFixed(FRACTION_DIGITS)} ???`
+  }
+
+  const code = currencyCode.toUpperCase()
 
   // Get currency symbol using Intl
   const symbol =
@@ -52,11 +54,11 @@ export function formatPrice(
       currencyDisplay: 'narrowSymbol',
     })
       .formatToParts(0)
-      .find((part) => part.type === 'currency')?.value || code
+      .find((part) => part.type === 'currency')?.value || '??'
 
   const formatted = amount.toLocaleString('lt-LT', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: FRACTION_DIGITS,
+    maximumFractionDigits: FRACTION_DIGITS,
   })
 
   return `${symbol}${formatted} ${code}`

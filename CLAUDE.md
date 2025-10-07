@@ -20,10 +20,14 @@ No test framework is currently configured in this project.
 
 This is a Next.js 15 e-commerce frontend built with TypeScript, Tailwind CSS v4, and React 19. The application uses the App Router with route groups.
 
+### Prerequisites
+
+Requires a Medusa server running locally on port 9000. For quick setup: `npx create-medusa-app@latest`
+
 ### Key Integrations
 
 - **Medusa.js**: E-commerce backend integration via `@medusajs/js-sdk`
-  - SDK instance: [lib/medusa.js](lib/medusa.js)
+  - SDK instance: `lib/medusa.js` (Note: .js extension despite being used in TypeScript)
   - Configured with environment variables for backend URL and publishable key
 - **shadcn/ui**: Component library with Radix UI primitives
 - **Form handling**: React Hook Form with Zod validation
@@ -44,6 +48,8 @@ Route groups organize the application:
   - `feedback/` - Error handling components
 - `lib/` - Utilities and SDK configurations
   - `data/` - Server-side data access layer (DAL) modules
+  - `cache.ts` - Custom cache wrapper around Next.js `unstable_cache`
+  - `cookies.ts` - Cookie management utilities (region_id, cart_id)
   - `breakpoints.ts` - Centralized Tailwind breakpoint constants
   - `utils.ts` - Common utilities (cn helper, etc.)
 
@@ -54,36 +60,65 @@ Route groups organize the application:
 
 ### Data Access Pattern
 
-The codebase uses a **Data Layer Adapter (DLA)** pattern over Server Actions:
+The codebase uses a **Data Layer Adapter (DLA)** pattern:
 
-1. **Server Actions** (`actions.ts`) - Entry points marked with `'use server'`, handle client-server boundary
-2. **Data Layer** (`lib/data/`) - Business logic and external API calls marked with `'server-only'`
-3. Flow: Client Component → Server Action → Data Layer → External API/Service
+1. **Data Layer** (`lib/data/`) - Server-side modules marked with `'use server'`, containing:
+   - Business logic and external API calls to Medusa backend
+   - Caching via `cached` wrapper from `lib/cache.ts`
+   - Error handling and fallbacks
+   - Return structured objects with `{ data, error }` pattern
+2. **Server Actions** (`actions.ts` files) - DEPRECATED in favor of direct data layer imports
+   - Previously used as entry points for client-server interaction
+   - Being phased out; new code should call data layer functions directly from Server Components
+3. Current flow: Server Component → Data Layer (direct import)
 
-Example: Contact form uses `submitContactAction` (Server Action) → `submitContactMessage` (Data Layer)
+Examples:
+
+- Shop page directly calls `getProducts()` from `lib/data/products.ts` (Server Component)
+- Contact form previously used Server Actions but is being refactored to call `submitContactMessage` from `lib/data/contact.ts` directly
 
 ### Region Management
 
 - Regions/currencies are managed via cookies with a 1-year expiration
-- Region data fetched from Medusa backend with Next.js cache (`unstable_cache`, 1-hour revalidation)
-- Cookie-based persistence in [lib/data/regions.ts](lib/data/regions.ts)
-- Fallback to environment variable defaults on API failure
+- Cookie utilities in `lib/cookies.ts` (`getRegionId`, `setRegionId`)
+- Region data fetched from Medusa backend with custom cache wrapper (`cached` from `lib/cache.ts`, 1-hour revalidation)
+- Middleware (`middleware.ts`) sets default region_id cookie if not present
+- Fallback to `NEXT_PUBLIC_DEFAULT_REGION_ID` environment variable
 - Selected via region selector in header
+
+### Cart Management
+
+- Cart ID managed via cookies with a 1-year expiration
+- Cookie utilities in `lib/cookies.ts` (`getCartId`, `setCartId`)
+- Cart data fetched from Medusa backend via `lib/data/cart.ts`
+- Cached with dynamic tags based on cart ID
+
+### Caching
+
+The project uses a custom cache wrapper (`cached` from `lib/cache.ts`) instead of Next.js `unstable_cache` directly:
+
+- Wraps `unstable_cache` with ability to disable caching via `DISABLE_CACHE=true` environment variable
+- Used throughout all data layer functions for consistent caching behavior
+- Supports same API as `unstable_cache`: cache keys, revalidation times, and tags
+- Cache revalidation times vary by data type:
+  - Products: 60 seconds
+  - Regions: 3600 seconds (1 hour)
+  - Cart: No automatic revalidation (invalidated on cart updates)
 
 ### Environment Variables
 
-Required in `.env.local` (see [.env.example](.env.example)):
+Required in `.env.local` (see `.env.example`):
 
 - `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` - Medusa store API key
 - `NEXT_PUBLIC_MEDUSA_BACKEND_URL` - Medusa backend URL (defaults to http://localhost:9000)
-- `NEXT_PUBLIC_DEFAULT_REGION_ID` - Fallback region ID
-- `NEXT_PUBLIC_DEFAULT_REGION_SHORT_NAME` - Default region display name (e.g., "€ LT")
-- `NEXT_PUBLIC_DEFAULT_REGION_CURRENCY_CODE` - Default currency code (e.g., "eur")
+- `NEXT_PUBLIC_DEFAULT_REGION_ID` - Fallback region ID (used by middleware)
+- `NEXT_PUBLIC_BASE_URL` - Frontend URL (defaults to http://localhost:3000)
+- `DISABLE_CACHE` - Set to `true` to disable Next.js caching during development (optional, defaults to false)
 
 ### Styling Approach
 
 - Tailwind CSS v4 with PostCSS
-- Centralized breakpoints in [lib/breakpoints.ts](lib/breakpoints.ts) matching Tailwind defaults
+- Centralized breakpoints in `lib/breakpoints.ts` matching Tailwind defaults
 - Custom fonts: UnifrakturMaguntia (Google) and Edwardian Script ITC (local)
 - Component variants managed with `class-variance-authority`
 - Utility `cn()` function combines clsx + tailwind-merge for conditional classes
@@ -93,6 +128,7 @@ Required in `.env.local` (see [.env.example](.env.example)):
 - Image optimization configured for Medusa backend (`localhost:9000/static/**`)
 - Cache headers set for static assets (products, fonts: 1 year immutable)
 - Turbopack enabled for dev and build
+- Middleware runs on all routes except API routes, static files, and Next.js internal routes
 
 ### Code Patterns
 
@@ -100,6 +136,6 @@ Required in `.env.local` (see [.env.example](.env.example)):
 - ESLint with Next.js, TypeScript, and Prettier integration
 - File-based routing with App Router and route groups
 - React Server Components by default, Client Components marked with `"use client"`
-- Cookie-based state persistence for user preferences
+- Cookie-based state persistence for user preferences (region, cart)
 - Server-side validation with Zod, client-side with React Hook Form
-- XSS prevention with `xss` library in data layer
+- XSS prevention with `xss` library in data layer (e.g., contact form sanitization)

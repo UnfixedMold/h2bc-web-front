@@ -16,6 +16,7 @@ export default function ProductCard({
   hoverImage,
   soldOut,
   priority,
+  currencyCode,
 }: ProductCardProps) {
   const href = `/shop/${slug}`
 
@@ -70,7 +71,7 @@ export default function ProductCard({
         </Link>
       </div>
       <div className="mt-1 text-center text-base font-medium">
-        {formatPrice(price)}
+        {formatPrice(price, currencyCode)}
       </div>
     </div>
   )

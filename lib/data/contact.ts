@@ -1,4 +1,4 @@
-import 'server-only'
+'use server'
 
 import xss from 'xss'
 import {

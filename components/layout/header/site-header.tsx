@@ -1,22 +1,27 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ShoppingBag } from 'lucide-react'
 import { NavLinks } from '.'
 import BurgerMenu from './burger-menu'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import RegionSelector from './region-selector'
-import { getRegions, getRegionCookie } from '@/lib/data/regions'
+import CartBadge from './cart-badge'
+import { getRegions } from '@/lib/data/regions'
 import ClientToastErrorHandler from '@/components/feedback/client-toast-error-handler'
-
-const SHOP_LINKS = [{ href: '/cart', label: 'Cart', Icon: ShoppingBag }]
+import { getRegionId, setRegionId } from '@/lib/cookies'
+import { getCart } from '@/lib/data/cart'
 
 export default async function SiteHeader() {
-  const { regions, error } = await getRegions()
-  const currentRegionId = await getRegionCookie()
+  const regionId = await getRegionId()
+  const currentRegionError = !regionId ? 'Failed to load region' : null
+  const { regions, error: regionsError } = await getRegions()
+  const regionSelectorDisabled = !!regionsError || regions.length <= 1
+  const currentRegion = regions.find((r) => r.id === regionId) || null
+
+  const { cart } = await getCart()
+  const cartItemCount =
+    cart?.items?.reduce((total, item) => total + item.quantity, 0) ?? 0
 
   return (
-    <ClientToastErrorHandler error={error}>
+    <ClientToastErrorHandler errors={[regionsError, currentRegionError]}>
       <header className="relative z-50 w-full px-4 sm:px-8 md:px-12 lg:px-18 py-6 sm:py-8 md:py-10 lg:py-12">
         <div className="grid grid-cols-3 items-center">
           {/* LEFT */}
@@ -29,8 +34,9 @@ export default async function SiteHeader() {
             <div className="md:hidden">
               <RegionSelector
                 regions={regions}
-                currentRegionId={currentRegionId}
-                error={error}
+                currentRegion={currentRegion}
+                disabled={regionSelectorDisabled}
+                onRegionChange={setRegionId}
               />
             </div>
 
@@ -79,22 +85,13 @@ export default async function SiteHeader() {
             <div className="hidden md:block">
               <RegionSelector
                 regions={regions}
-                currentRegionId={currentRegionId}
-                error={error}
+                currentRegion={currentRegion}
+                disabled={regionSelectorDisabled}
+                onRegionChange={setRegionId}
               />
             </div>
-            {SHOP_LINKS.map(({ href, label, Icon }) => (
-              <Button key={href} variant="ghost" className="relative">
-                <Link href={href!} aria-label={label}>
-                  <Icon />
-                </Link>
-                {label === 'Cart' && (
-                  <Badge className="absolute top-1 right-2 h-4 w-4 flex items-center justify-center p-0 text-white bg-pink-500 text-[10px] pointer-events-none">
-                    3
-                  </Badge>
-                )}
-              </Button>
-            ))}
+
+            <CartBadge itemCount={cartItemCount} />
           </nav>
         </div>
       </header>

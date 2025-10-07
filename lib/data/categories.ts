@@ -1,11 +1,11 @@
-import 'server-only'
+'use server'
 
-import { unstable_cache } from 'next/cache'
 import { sdk } from '@/lib/medusa'
+import { cached } from '@/lib/cache'
 
 const CACHE_REVALIDATE_TIME = 3600
 
-const fetchCategoriesFromAPI = unstable_cache(
+const fetchCategoriesFromAPI = cached(
   async () => {
     const { product_categories } = await sdk.store.category.list()
     return product_categories.map((c) => c.name)

@@ -1,14 +1,14 @@
-import 'server-only'
+'use server'
 
-import { unstable_cache } from 'next/cache'
 import { sdk } from '@/lib/medusa'
 import type { StoreProduct } from '@medusajs/types'
-import { getRegionCookie } from './regions'
+import { getRegionId } from '@/lib/cookies'
+import { cached } from '@/lib/cache'
 
 const CACHE_REVALIDATE_TIME = 60
 
 const fetchProducts = async (regionId: string) => {
-  return unstable_cache(
+  return cached(
     async () => {
       const { products } = await sdk.store.product.list({
         region_id: regionId,
@@ -29,13 +29,12 @@ const fetchProducts = async (regionId: string) => {
           ) ?? 0
 
         const firstVariant = p.variants?.[0]
-        const calculatedPrice =
-          firstVariant?.calculated_price?.calculated_amount ?? null
 
         return {
           slug: p.handle,
           name: p.title,
-          price: calculatedPrice,
+          price: firstVariant?.calculated_price?.calculated_amount ?? null,
+          currencyCode: firstVariant?.calculated_price?.currency_code ?? null,
           image: p.images?.[0]?.url ?? '',
           hoverImage: p.images?.[1]?.url,
           soldOut: allVariantsManaged && totalQty <= 0,
@@ -52,8 +51,16 @@ const fetchProducts = async (regionId: string) => {
 }
 
 export async function getProducts() {
+  const regionId = await getRegionId()
+
+  if (!regionId) {
+    return {
+      products: [],
+      error: 'Region is not set',
+    }
+  }
+
   try {
-    const regionId = await getRegionCookie()
     const products = await fetchProducts(regionId)
 
     return {
@@ -64,13 +71,13 @@ export async function getProducts() {
     console.error('Failed to fetch products:', error)
     return {
       products: [],
-      error: (error as Error)?.message || 'Failed to fetch products',
+      error: 'Failed to fetch products',
     }
   }
 }
 
 const fetchProductDetails = async (handle: string, regionId: string) => {
-  return unstable_cache(
+  return cached(
     async () => {
       const { products } = await sdk.store.product.list({
         handle,
@@ -171,8 +178,15 @@ const fetchProductDetails = async (handle: string, regionId: string) => {
 }
 
 export async function getProductByHandle(handle: string) {
+  const regionId = await getRegionId()
+
+  if (!regionId) {
+    return {
+      products: [],
+      error: 'Region is not set',
+    }
+  }
   try {
-    const regionId = await getRegionCookie()
     const product = await fetchProductDetails(handle, regionId)
 
     return {
@@ -184,7 +198,7 @@ export async function getProductByHandle(handle: string) {
     console.error('Failed to fetch product:', error)
     return {
       product: null,
-      error: (error as Error)?.message || 'Failed to fetch product',
+      error: 'Failed to fetch product',
       notFound: false,
     }
   }

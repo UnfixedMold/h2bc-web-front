@@ -1,14 +1,16 @@
 'use client'
 import { useMemo, useState, ReactNode } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import SizeSelector from './size-selector'
 import { formatPrice } from '@/lib/utils'
 import type { SizeOption, ProductVariant, ProductOption } from './types'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Info } from 'lucide-react'
+import { addItemToCart } from '@/lib/data/cart'
+import { toast } from 'sonner'
 
 interface ProductDetailsProps {
-  slug: string
   sizes: SizeOption[]
   variants: ProductVariant[]
   options: ProductOption[]
@@ -17,13 +19,13 @@ interface ProductDetailsProps {
 }
 
 export default function ProductDetails({
-  slug,
   sizes,
   variants,
   options,
   alert,
   descriptionSlot,
 }: ProductDetailsProps) {
+  const router = useRouter()
   const [size, setSize] = useState<SizeOption | null>(
     sizes.find((s) => s.available) ?? sizes[0] ?? null
   )
@@ -42,6 +44,8 @@ export default function ProductDetails({
     )
   }, [size, sizeOption, variants])
 
+  const [isAdding, setIsAdding] = useState(false)
+
   const canAdd = useMemo(() => {
     return (
       selectedVariant &&
@@ -49,6 +53,23 @@ export default function ProductDetails({
         selectedVariant.inventory_quantity > 0)
     )
   }, [selectedVariant])
+
+  const handleAddToCart = async () => {
+    if (!selectedVariant?.id) {
+      toast.error('No variant selected')
+      return
+    }
+
+    setIsAdding(true)
+    const { error } = await addItemToCart(selectedVariant.id)
+    setIsAdding(false)
+
+    if (error) {
+      toast.error(error)
+    } else {
+      router.refresh()
+    }
+  }
 
   return (
     <>
@@ -71,20 +92,15 @@ export default function ProductDetails({
         variant="default"
         size="lg"
         className="w-full mt-8"
-        disabled={!canAdd}
-        onClick={() => {
-          if (!canAdd) return
-          console.log('Add to cart', {
-            slug,
-            variantId: selectedVariant?.id,
-            size,
-          })
-        }}
+        disabled={!canAdd || isAdding}
+        onClick={handleAddToCart}
       >
         {selectedVariant?.manage_inventory &&
         selectedVariant.inventory_quantity <= 0
           ? 'Out of Stock'
-          : 'Add to cart'}
+          : isAdding
+            ? 'Adding...'
+            : 'Add to cart'}
       </Button>
     </>
   )

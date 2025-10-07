@@ -46,7 +46,6 @@ export default async function ProductDetailPage({ params }: Props) {
         <Heading level={1}>{product!.name}</Heading>
 
         <ProductDetails
-          slug={product!.slug}
           sizes={product!.sizes}
           variants={product!.variants}
           options={product!.options}

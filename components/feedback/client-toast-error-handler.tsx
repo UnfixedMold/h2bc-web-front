@@ -3,16 +3,18 @@ import { useEffect, ReactNode } from 'react'
 import { toast } from 'sonner'
 
 export default function ClientToastErrorHandler({
-  error,
+  errors,
   children,
 }: {
-  error: string | null
+  errors: (string | null)[]
   children: ReactNode
 }) {
   useEffect(() => {
-    if (error) {
-      toast.error(error)
-    }
+    errors.forEach((error) => {
+      if (error) {
+        toast.error(error)
+      }
+    })
   })
 
   return children
