@@ -2,8 +2,15 @@
 
 import { sdk } from '@/lib/medusa'
 import { getCartId, setCartId, getRegionId } from '@/lib/cookies'
+import type { HttpTypes } from '@medusajs/types'
+import { FetchError } from '@medusajs/js-sdk'
 
-export async function getCart() {
+type CartResult = {
+  cart: HttpTypes.StoreCart | null
+  error: string | null
+}
+
+export async function getCart(): Promise<CartResult> {
   const cartId = await getCartId()
 
   if (!cartId) {
@@ -28,17 +35,17 @@ export async function getCart() {
   }
 }
 
-export async function initCart() {
-  try {
-    const regionId = await getRegionId()
+export async function initCart(): Promise<CartResult> {
+  const regionId = await getRegionId()
 
-    if (!regionId) {
-      return {
-        cart: null,
-        error: 'No region selected',
-      }
+  if (!regionId) {
+    return {
+      cart: null,
+      error: 'No region selected',
     }
+  }
 
+  try {
     const { cart } = await sdk.store.cart.create({
       region_id: regionId,
     })
@@ -58,22 +65,25 @@ export async function initCart() {
   }
 }
 
-export async function addItemToCart(variantId: string, quantity: number = 1) {
-  try {
-    let cartId = await getCartId()
+export async function addItemToCart(
+  variantId: string,
+  quantity: number = 1
+): Promise<CartResult> {
+  let cartId = await getCartId()
 
-    // Initialize cart if it doesn't exist
-    if (!cartId) {
-      const { cart, error } = await initCart()
-      if (error || !cart) {
-        return {
-          cart: null,
-          error: error || 'Failed to initialize cart.',
-        }
+  // Initialize cart if it doesn't exist
+  if (!cartId) {
+    const { cart, error } = await initCart()
+    if (error || !cart) {
+      return {
+        cart: null,
+        error: error || 'Failed to initialize cart.',
       }
-      cartId = cart.id
     }
+    cartId = cart.id
+  }
 
+  try {
     const { cart } = await sdk.store.cart.createLineItem(cartId, {
       variant_id: variantId,
       quantity,
@@ -84,10 +94,14 @@ export async function addItemToCart(variantId: string, quantity: number = 1) {
       error: null,
     }
   } catch (error) {
-    console.error('Failed to add item to cart:', error)
+    const message =
+      error instanceof FetchError && error.status === 400
+        ? error.message
+        : 'Failed to add item to cart.'
+
     return {
       cart: null,
-      error: 'Failed to add item to cart.',
+      error: message,
     }
   }
 }
